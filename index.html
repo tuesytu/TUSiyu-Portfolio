@@ -20,6 +20,7 @@
             --uniform-padding: 8rem 4rem;
             --other-work-scroll-sec: 45s;
             --other-work-card-height: 180px;
+            --cover-panel-ratio: 1.39;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
@@ -109,6 +110,79 @@
 
         .content-wrap { max-width: 1200px; margin: 0 auto; }
         header.hero, section { padding: var(--uniform-padding); border-bottom: 1.5px solid var(--text-black); }
+        header.hero {
+            min-height: calc(100vw / var(--cover-panel-ratio));
+            position: relative;
+            overflow: visible;
+        }
+        .hero-title-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 4rem;
+        }
+        .hero-title {
+            font-size: var(--title-size);
+            margin: 0;
+            line-height: 1.02;
+        }
+        .hero-welcome-note {
+            position: absolute;
+            left: var(--welcome-x, 1.5rem);
+            top: var(--welcome-y, 1.5rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            height: 40px;
+            width: 56px;
+            padding: 0 14px;
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            border-radius: 999px;
+            z-index: 50;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            pointer-events: none;
+            transition: width 0.45s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: transparent;
+            isolation: isolate;
+        }
+        .hero-welcome-note::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--accent-orange);
+            z-index: -1;
+            filter: url(#tag-torn-paper) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
+        }
+        .hero-welcome-note-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            flex: 0 0 auto;
+            box-shadow: 0 0 0 2px rgba(34, 34, 34, 0.15);
+        }
+        .hero-welcome-note-text {
+            opacity: 0;
+            transform: translateX(6px);
+            transition: opacity 0.18s ease 0.2s, transform 0.3s ease 0.2s;
+        }
+        .hero-welcome-note.is-active {
+            width: min(78vw, 260px);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .hero-welcome-note.is-active .hero-welcome-note-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
         #about, #works, #other-work {
             padding: 5.5rem 4rem;
         }
@@ -684,7 +758,7 @@
             color: white;
             padding: 10.5rem 4rem 3.5rem;
             text-align: center;
-            min-height: calc(100vh - var(--nav-height));
+            min-height: calc(100vw / var(--cover-panel-ratio));
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -711,6 +785,19 @@
             font-family: 'PingFang SC', 'Space Mono', monospace;
             font-size: 0.95rem;
             line-height: 1.4;
+        }
+
+        /* 桌面端：封面和黑色页都以可视区域满屏为基准 */
+        @media (hover: hover) and (pointer: fine) {
+            header.hero,
+            footer {
+                min-height: calc(100vh - var(--nav-height));
+            }
+        }
+
+        /* 触屏端：保持桌面比例，不强制占满手机屏幕 */
+        @media (hover: none), (pointer: coarse) {
+            .hero-welcome-note { display: none; }
         }
 
         @media (max-width: 1024px) {
@@ -742,6 +829,7 @@
             nav .mono-bold { font-size: 0.72rem; }
             .nav-link { padding: 6px 12px; }
             .skill-row { gap: 48px; }
+            .hero-title-wrap { margin-bottom: 5.6rem; }
             .footer-main { transform: translateY(-40px); }
         }
 
@@ -786,11 +874,14 @@
 
     <header class="hero content-wrap" data-theme="theme-beige">
         <div class="mono-bold" style="margin-bottom: 2rem; color: var(--accent-orange);">PORTFOLIO WORKS 2026</div>
-        <h1 class="hand-font" style="font-size: var(--title-size); margin-bottom: 4rem;">TU Siyu<br>Portfolio</h1>
+        <div class="hero-title-wrap">
+            <h1 class="hand-font hero-title">TU Siyu<br>Portfolio</h1>
+        </div>
+        <div class="hero-welcome-note"><span class="hero-welcome-note-dot" aria-hidden="true"></span><span class="hero-welcome-note-text">Welcome to my playground</span></div>
         <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
-            <div class="mono-regular" style="font-family: 'PingFang SC', sans-serif;">
-                <span class="cn">电话/微信：17358988562</span><br>
-                <span class="cn">邮箱：</span>tuesytu@gmail.com
+            <div class="mono-regular" style="font-family: 'Space Mono', monospace;">
+                TEL/Wechat: 17358988562<br>
+                Email: tuesytu@gmail.com
             </div>
             <div class="mono-bold">SCROLL TO DISCOVER ↓</div>
         </div>
@@ -802,7 +893,7 @@
             <div class="section-nav-header">01 / <span class="cn">技能概括</span> <span class="en">SKILLS OVERVIEW</span></div>
             <div class="skills-container">
                 <div class="skill-row">
-                    <div class="skill-orb-wrapper" data-sw="CURSOR, CLAUDE, STITCH"><div class="skill-orb">VIBE<br>编程</div></div>
+                    <div class="skill-orb-wrapper" data-sw="CURSOR, CLAUDE, STITCH"><div class="skill-orb">VIBE<br>CODING</div></div>
                     <div class="skill-orb-wrapper" data-sw="FIGMA, PS"><div class="skill-orb">UI/UX<br>设计</div></div>
                     <div class="skill-orb-wrapper" data-sw="AUTOCAD, RHINO, SOLIDWORKS"><div class="skill-orb">硬件产品<br>设计</div></div>
                 </div>
@@ -1114,6 +1205,59 @@
                         font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="white">${shortLabel}</text>
                 </svg>
             `)}`;
+        }
+
+        const hero = document.querySelector('header.hero');
+        const heroWelcomeNote = hero ? hero.querySelector('.hero-welcome-note') : null;
+        let heroIdleTimer = null;
+        let heroLastPointer = null;
+
+        function placeHeroNote(clientX, clientY) {
+            if (!hero || !heroWelcomeNote) return;
+            const rect = hero.getBoundingClientRect();
+            const margin = 8;
+            const noteWidth = Math.min(window.innerWidth * 0.78, 260);
+            const noteHeight = 40;
+            const x = Math.max(margin, Math.min(clientX - rect.left + 2, rect.width - noteWidth - margin));
+            const y = Math.max(margin, Math.min(clientY - rect.top + 2, rect.height - noteHeight - margin));
+            heroWelcomeNote.style.setProperty('--welcome-x', `${x}px`);
+            heroWelcomeNote.style.setProperty('--welcome-y', `${y}px`);
+        }
+
+        function clearHeroTimer() {
+            if (heroIdleTimer) {
+                clearTimeout(heroIdleTimer);
+                heroIdleTimer = null;
+            }
+        }
+
+        function scheduleHeroNote() {
+            if (!hero || !heroWelcomeNote || !heroLastPointer) return;
+            clearHeroTimer();
+            heroIdleTimer = setTimeout(() => {
+                placeHeroNote(heroLastPointer.x, heroLastPointer.y);
+                heroWelcomeNote.classList.add('is-active');
+            }, 500);
+        }
+
+        if (hero && heroWelcomeNote && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            hero.addEventListener('mouseenter', (event) => {
+                heroLastPointer = { x: event.clientX, y: event.clientY };
+                heroWelcomeNote.classList.remove('is-active');
+                scheduleHeroNote();
+            });
+
+            hero.addEventListener('mousemove', (event) => {
+                heroLastPointer = { x: event.clientX, y: event.clientY };
+                heroWelcomeNote.classList.remove('is-active');
+                scheduleHeroNote();
+            });
+
+            hero.addEventListener('mouseleave', () => {
+                clearHeroTimer();
+                heroLastPointer = null;
+                heroWelcomeNote.classList.remove('is-active');
+            });
         }
 
         const wrappers = document.querySelectorAll('.skill-orb-wrapper');
