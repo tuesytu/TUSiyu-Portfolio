@@ -891,25 +891,36 @@
         @media (hover: none), (pointer: coarse) {
             .hero-welcome-note { display: none; }
             :root {
-                --touch-panel-height: min(calc(100vw / var(--cover-panel-ratio)), calc(100vh - var(--nav-height)));
+                /* 手机端直接写死每屏高度，避免设备比例导致布局漂移 */
+                --touch-panel-height: 620px;
             }
             header.hero,
+            #about,
             #works,
-            #other-work {
+            #other-work,
+            footer {
                 height: var(--touch-panel-height);
                 min-height: 0;
+                max-height: var(--touch-panel-height);
                 padding-top: 4rem;
                 padding-bottom: 2.8rem;
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
             }
+            #about > .content-wrap,
             #works > .content-wrap,
             #other-work > .content-wrap {
                 flex: 1 1 auto;
                 display: flex;
                 flex-direction: column;
                 min-height: 0;
+            }
+            #about .skills-container {
+                flex: 1 1 auto;
+                justify-content: center;
+                margin-top: 0;
+                gap: 48px;
             }
             #works .portfolio-grid {
                 flex: 1 1 auto;
@@ -922,6 +933,9 @@
                 margin-top: 0;
                 justify-content: center;
                 overflow: hidden;
+            }
+            footer {
+                padding-top: 7rem;
             }
         }
 
@@ -956,6 +970,9 @@
             .skill-row { gap: 48px; }
             .hero-title-wrap { margin-bottom: 5.6rem; }
             .footer-main { transform: translateY(-40px); }
+            :root {
+                --touch-panel-height: 560px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
