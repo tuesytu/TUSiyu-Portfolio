@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TU Siyu Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-beige: #f2e7df;
+            --accent-orange: #d06444;
+            --accent-yellow: #ffc12d;
+            --text-black: #222222;
+            --module-green: #96a388;
+            --module-orange: #e8a08a;
+            --module-yellow: #f9d371;
+            --grid-line: rgba(34, 34, 34, 0.08);
+            --title-size: 5.5rem;
+            --nav-height: 72px;
+            --uniform-padding: 8rem 4rem;
+            --other-work-scroll-sec: 45s;
+            --other-work-card-height: 180px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
+        body {
+            background-color: var(--bg-beige);
+            font-family: 'PingFang SC', 'Space Mono', monospace;
+            color: var(--text-black);
+            transition: background-color 0.8s ease;
+            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 60px 60px;
+            overflow-x: hidden;
+        }
+
+        .hand-font {
+            font-family: 'Arial Black', sans-serif;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            filter: url(#rough-edge);
+        }
+        .mono-bold {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .mono-regular {
+            font-family: 'Space Mono', 'PingFang SC', monospace;
+            font-weight: 400;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .cn {
+            font-family: 'PingFang SC', sans-serif !important;
+            text-transform: none !important;
+            letter-spacing: 0 !important;
+            font-size: 0.9em;
+        }
+        .en {
+            font-family: 'Space Mono', monospace !important;
+            font-size: 0.85em;
+        }
+
+        nav {
+            height: var(--nav-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 4rem;
+            border-bottom: 1.5px solid var(--text-black);
+            background-color: inherit;
+            position: sticky;
+            top: 0;
+            z-index: 4000;
+        }
+        .nav-brand {
+            position: absolute;
+            left: 4rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+        }
+        .nav-link {
+            background: none;
+            border: 0;
+            padding: 6px 20px;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            border-radius: 100px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .nav-link:hover {
+            background: var(--accent-orange);
+            color: white;
+            filter: url(#rough-edge);
+            transform: scale(1.05);
+        }
+
+        .content-wrap { max-width: 1200px; margin: 0 auto; }
+        header.hero, section { padding: var(--uniform-padding); border-bottom: 1.5px solid var(--text-black); }
+        #about, #works, #other-work {
+            padding: 5.5rem 4rem;
+        }
+        #about, #works, #education, #projects, #internships, #other-work { scroll-margin-top: var(--nav-height); }
+        #education, #projects, #internships { padding-top: 4.2rem; padding-bottom: 3.5rem; }
+
+        .theme-beige { background-color: #f2e7df; }
+        .theme-green { background-color: #96a388; }
+        .theme-orange { background-color: #e8a08a; }
+        .theme-yellow { background-color: #f9d371; }
+
+        .section-nav-header {
+            color: var(--accent-orange);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+        #education .section-nav-header,
+        #projects .section-nav-header,
+        #internships .section-nav-header { margin-top: 0; }
+        #education .section-nav-header,
+        #projects .section-nav-header { color: white; }
+
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
+            align-items: center;
+            margin-top: 3.25rem;
+        }
+        .skill-row {
+            display: flex;
+            gap: 100px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .skill-orb-wrapper {
+            position: relative;
+            width: 135px;
+            height: 135px;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
+        }
+        .skill-orb {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 2.5px solid var(--text-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+            z-index: 10;
+            filter: url(#rough-edge);
+            font-family: 'Arial Black', 'PingFang SC', sans-serif;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+        }
+        .software-tag {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--tag-fg, #ffffff);
+            padding: 5px 14px;
+            font-size: 0.65rem;
+            border-radius: 100px;
+            font-weight: 900;
+            text-transform: uppercase;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 20;
+            background: transparent;
+            isolation: isolate;
+        }
+        .software-tag::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--tag-bg, var(--accent-orange));
+            z-index: 0;
+            filter: url(#tag-torn-paper) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+            pointer-events: none;
+        }
+        .software-tag > * {
+            position: relative;
+            z-index: 1;
+        }
+        .software-tag-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 5px;
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.2);
+            flex: 0 0 auto;
+        }
+        .software-tag-label {
+            line-height: 1;
+            letter-spacing: 0.2px;
+        }
+        .skill-orb-wrapper.active .software-tag { opacity: 1; }
+
+        .edu-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 2fr;
+            align-items: center;
+            padding: 1.15rem 0;
+            gap: 1.5rem;
+        }
+        .edu-row + .edu-row { margin-top: 0.25rem; }
+        .edu-time { color: var(--accent-orange); font-size: 1.4rem; font-weight: 700; }
+        .edu-school { font-size: 1.8rem; }
+        .tag-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+            gap: 16px;
+        }
+        .main-tag {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 800;
+            filter: url(#rough-edge);
+            white-space: nowrap;
+        }
+        .detail-tag {
+            background: var(--accent-orange);
+            color: white;
+            padding: 10px 0;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-family: 'PingFang SC', sans-serif;
+            opacity: 0;
+            max-width: 0;
+            overflow: hidden;
+            transition: 0.35s ease;
+            white-space: nowrap;
+            z-index: 5;
+        }
+        .tag-group:hover .detail-tag {
+            opacity: 1;
+            max-width: 320px;
+            padding: 10px 20px;
+        }
+
+        .exp-row {
+            display: grid;
+            grid-template-columns: 1.2fr 3.2fr;
+            gap: 4rem;
+            padding: 1.35rem 0;
+        }
+        .exp-row + .exp-row { margin-top: 0.25rem; }
+        .exp-left {
+            border-right: 1.5px solid var(--text-black);
+            padding-right: 2.5rem;
+        }
+        .exp-title {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+        }
+        .exp-bullet {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .exp-bullet::before {
+            content: '●';
+            position: absolute;
+            left: 0;
+            color: var(--accent-orange);
+        }
+        #projects .exp-left .mono-regular,
+        #projects .exp-right .mono-regular,
+        #internships .exp-left .mono-regular,
+        #internships .exp-right .mono-regular {
+            font-family: 'PingFang SC', sans-serif;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            margin-top: 3.25rem;
+            perspective: 1500px;
+        }
+        .project-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        .project-stack-visual {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            transition: transform 0.2s cubic-bezier(0.33, 1, 0.55, 1);
+        }
+        .project-stack-caption {
+            width: 100%;
+            text-align: center;
+            padding-top: 0.65rem;
+            transition: transform 0.2s cubic-bezier(0.33, 1, 0.55, 1);
+        }
+        .stack-layer {
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 3px 4px 14px rgba(0, 0, 0, 0.07);
+            transition: transform 0.22s cubic-bezier(0.33, 1, 0.55, 1);
+        }
+        .stack-layer.layer-bg-1,
+        .stack-layer.layer-bg-2 {
+            filter: url(#other-work-torn) drop-shadow(0 5px 14px rgba(0, 0, 0, 0.09));
+            box-shadow: none;
+        }
+        .layer-bg-1 { transform: rotate(-4deg); z-index: 1; }
+        .layer-bg-2 { transform: rotate(5deg); z-index: 2; }
+        .stack-layer.layer-main {
+            z-index: 3;
+            overflow: visible;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;
+        }
+        .layer-main-frame {
+            position: absolute;
+            inset: -3px;
+            background: #fff;
+            border-radius: 2px;
+            filter: url(#other-work-torn) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.1));
+            z-index: 0;
+            pointer-events: none;
+        }
+        .layer-main-body {
+            position: absolute;
+            inset: 11px;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-radius: 1px;
+            z-index: 1;
+        }
+        .project-card-cover {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            display: block;
+            filter: none;
+        }
+        .project-card-title {
+            font-size: 1.35rem;
+            color: var(--accent-orange);
+            line-height: 1.15;
+        }
+        .project-card-title .project-index {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.72em;
+            letter-spacing: 0.06em;
+            margin-right: 0.5rem;
+            opacity: 0.9;
+            vertical-align: baseline;
+        }
+        .project-stack:hover .layer-bg-1 { transform: rotate(-10deg) translate(-12px, 5px); }
+        .project-stack:hover .layer-bg-2 { transform: rotate(13deg) translate(12px, 5px); }
+        .project-stack:hover .project-stack-visual { transform: translateY(-8px); }
+        .project-stack:hover .project-stack-caption { transform: translateY(10px); }
+
+        #project-detail-overlay {
+            position: fixed;
+            top: var(--nav-height);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3000;
+            background: var(--bg-beige);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            transform-origin: top;
+            animation: unfold-down 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            padding: 4rem;
+        }
+        @keyframes unfold-down {
+            0% { transform: rotateX(-90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; }
+        }
+        @keyframes fold-back {
+            0% { transform: rotateX(0deg); opacity: 1; }
+            100% { transform: rotateX(-90deg); opacity: 0; }
+        }
+        .close-detail {
+            position: fixed;
+            top: calc(var(--nav-height) + 2rem);
+            right: 4rem;
+            padding: 1rem 2rem;
+            background: var(--module-green);
+            color: #fff;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            z-index: 3100;
+            filter: url(#rough-edge);
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+        .close-detail:hover {
+            background: var(--accent-yellow);
+            color: var(--text-black);
+        }
+        .detail-content {
+            max-width: 1120px;
+            width: 100%;
+            margin: 0 auto;
+            padding-top: 2rem;
+        }
+        .detail-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 3.5rem;
+            margin-top: 2rem;
+        }
+        .detail-copy {
+            font-family: 'PingFang SC', sans-serif;
+            font-size: 1rem;
+            line-height: 1.9;
+            width: 100%;
+            max-width: 42rem;
+            align-self: flex-start;
+            text-align: left;
+        }
+        .detail-intro-cn {
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+        .detail-intro-en {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.2rem;
+            line-height: 1.45;
+        }
+        .detail-intro-body {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+        .detail-visual-column {
+            width: 100%;
+            max-width: min(920px, 100%);
+            margin-inline: auto;
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .detail-video-wrap {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        .detail-video-wrap[hidden] {
+            display: none !important;
+        }
+        .detail-video-inner {
+            position: relative;
+            padding: 14px 16px 16px;
+            isolation: isolate;
+        }
+        .detail-video-inner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            z-index: 0;
+            filter: url(#other-work-torn) drop-shadow(0 6px 16px rgba(34, 34, 34, 0.08));
+            pointer-events: none;
+        }
+        .detail-video-aspect {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111;
+        }
+        .detail-video-wrap video {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: block;
+            vertical-align: middle;
+            object-fit: contain;
+            background: #111;
+        }
+        .detail-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+            align-items: center;
+        }
+        .detail-gallery-item {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            padding: 14px 16px 16px;
+            isolation: isolate;
+        }
+        .detail-gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            z-index: 0;
+            filter: url(#other-work-torn) drop-shadow(0 6px 16px rgba(34, 34, 34, 0.08));
+            pointer-events: none;
+        }
+        .detail-gallery-item img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: auto;
+            display: block;
+            vertical-align: middle;
+        }
+
+        #other-work .other-work-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        #other-work .other-work-row {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            margin: -30px 0;
+        }
+        #other-work .other-work-row:hover {
+            z-index: 50;
+        }
+        #other-work .other-work-track {
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+            width: max-content;
+            padding: 80px 0;
+        }
+        @keyframes other-work-scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes other-work-scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        #other-work .other-work-row.row-one .other-work-track {
+            animation: other-work-scroll-left var(--other-work-scroll-sec) linear infinite;
+        }
+        #other-work .other-work-row.row-two .other-work-track {
+            animation: other-work-scroll-right var(--other-work-scroll-sec) linear infinite;
+        }
+        #other-work .other-work-grid:hover .other-work-track {
+            animation-play-state: paused;
+        }
+        #other-work .other-work-card {
+            height: var(--other-work-card-height);
+            width: auto;
+            position: relative;
+            padding: 12px;
+            flex-shrink: 0;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s ease, filter 0.35s ease;
+            transform: rotate(var(--other-work-rot, 0deg));
+            z-index: 2;
+        }
+        #other-work .other-work-card:nth-child(5n+1) { --other-work-rot: -2deg; }
+        #other-work .other-work-card:nth-child(5n+2) { --other-work-rot: 3deg; }
+        #other-work .other-work-card:nth-child(5n+3) { --other-work-rot: -1.5deg; }
+        #other-work .other-work-card:nth-child(5n+4) { --other-work-rot: 2.5deg; }
+        #other-work .other-work-card:nth-child(5n+5) { --other-work-rot: -3deg; }
+        #other-work .other-work-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            z-index: 1;
+            filter: url(#other-work-rough-edge);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            pointer-events: none;
+        }
+        #other-work .other-work-card img {
+            height: 100%;
+            width: auto;
+            display: block;
+            position: relative;
+            z-index: 2;
+            vertical-align: middle;
+        }
+        #other-work .other-work-sticker {
+            position: absolute;
+            z-index: 20;
+            opacity: 0;
+            filter: url(#other-work-rough-edge);
+            transition: opacity 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        #other-work .other-work-sticker-yellow {
+            width: 45px;
+            height: 45px;
+            background: var(--accent-yellow);
+            border-radius: 50%;
+            bottom: -15px;
+            left: -15px;
+            transform: scale(0.2);
+        }
+        #other-work .other-work-sticker-red {
+            width: 75px;
+            height: 32px;
+            background: var(--accent-orange);
+            top: -12px;
+            right: -20px;
+            transform: rotate(25deg) scale(0.2);
+        }
+        #other-work .other-work-card:hover {
+            transform: scale(1.18) rotate(0deg);
+            z-index: 100;
+        }
+        #other-work .other-work-card:hover .other-work-sticker {
+            opacity: 1;
+        }
+        #other-work .other-work-card:hover .other-work-sticker-yellow {
+            transform: scale(1);
+        }
+        #other-work .other-work-card:hover .other-work-sticker-red {
+            transform: rotate(25deg) scale(1);
+        }
+        /* 仅当前排有卡片被悬停时，同排其余卡片轻微弱化（另一排不受影响） */
+        #other-work .other-work-row:has(.other-work-card:hover) .other-work-card:not(:hover) {
+            opacity: 0.78;
+            filter: grayscale(0.22) blur(0.45px);
+        }
+
+        footer {
+            background: var(--text-black);
+            color: white;
+            padding: 10.5rem 4rem 3.5rem;
+            text-align: center;
+            min-height: calc(100vh - var(--nav-height));
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .footer-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-80px);
+        }
+        .footer-title {
+            color: var(--accent-yellow);
+            font-size: var(--title-size);
+            margin: 0;
+        }
+        .footer-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            font-family: 'PingFang SC', 'Space Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 1024px) {
+            :root { --title-size: 4rem; --uniform-padding: 5rem 1.5rem; }
+            #about, #works, #other-work { padding: 3.75rem 1.5rem; }
+            nav { padding: 0 1.5rem; gap: 1rem; }
+            .nav-brand { left: 1.5rem; }
+            .nav-links { gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+            .edu-row, .exp-row { grid-template-columns: 1fr; }
+            .exp-left {
+                border-right: 0;
+                padding-right: 0;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+                padding-bottom: 1.2rem;
+            }
+            .tag-group { justify-content: flex-start; }
+            .tag-group:hover .detail-tag { opacity: 0; max-width: 0; padding: 10px 0; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .footer-meta { grid-template-columns: 1fr; gap: 0.8rem; }
+            .close-detail {
+                right: 1.5rem;
+                top: calc(var(--nav-height) + 1rem);
+                padding: 0.85rem 1.4rem;
+            }
+            #project-detail-overlay { padding: 2rem 1.5rem; }
+        }
+
+        @media (max-width: 640px) {
+            nav .mono-bold { font-size: 0.72rem; }
+            .nav-link { padding: 6px 12px; }
+            .skill-row { gap: 48px; }
+            .footer-main { transform: translateY(-40px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #other-work .other-work-track { animation: none !important; }
+            #other-work .other-work-row:has(.other-work-card:hover) .other-work-card:not(:hover) {
+                opacity: 1;
+                filter: none;
+            }
+        }
+    </style>
+</head>
+<body class="theme-beige">
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="rough-edge">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
+        </filter>
+        <!-- 软件标签底色：横向噪声偏多，底边更像撕纸 -->
+        <filter id="tag-torn-paper" x="-35%" y="-35%" width="170%" height="170%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.14 0.045" numOctaves="4" seed="7" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="4.2" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="other-work-torn" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.055 0.038" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="other-work-rough-edge" x="-25%" y="-25%" width="150%" height="150%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+        </filter>
+    </svg>
+
+    <nav>
+        <div class="hand-font nav-brand">Portfolio</div>
+        <div class="mono-bold nav-links">
+            <button class="nav-link" data-target="about"><span class="cn">关于我</span> <span class="en">ABOUT ME</span></button>
+            <button class="nav-link" data-target="works"><span class="cn">作品集</span> <span class="en">PROJECTS</span></button>
+            <button class="nav-link" data-target="other-work"><span class="cn">其他作品</span> <span class="en">OTHER WORKS</span></button>
+        </div>
+    </nav>
+
+    <header class="hero content-wrap" data-theme="theme-beige">
+        <div class="mono-bold" style="margin-bottom: 2rem; color: var(--accent-orange);">PORTFOLIO WORKS 2026</div>
+        <h1 class="hand-font" style="font-size: var(--title-size); margin-bottom: 4rem;">TU Siyu<br>Portfolio</h1>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
+            <div class="mono-regular" style="font-family: 'PingFang SC', sans-serif;">
+                <span class="cn">电话/微信：17358988562</span><br>
+                <span class="cn">邮箱：</span>tuesytu@gmail.com
+            </div>
+            <div class="mono-bold">SCROLL TO DISCOVER ↓</div>
+        </div>
+    </header>
+
+    <section id="about" data-theme="theme-beige">
+        <div class="content-wrap">
+            <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 3rem;"><span class="display-cn">关于我</span> ABOUT ME</h2>
+            <div class="section-nav-header">01 / <span class="cn">技能概括</span> <span class="en">SKILLS OVERVIEW</span></div>
+            <div class="skills-container">
+                <div class="skill-row">
+                    <div class="skill-orb-wrapper" data-sw="CURSOR, CLAUDE, STITCH"><div class="skill-orb">VIBE<br>编程</div></div>
+                    <div class="skill-orb-wrapper" data-sw="FIGMA, PS"><div class="skill-orb">UI/UX<br>设计</div></div>
+                    <div class="skill-orb-wrapper" data-sw="AUTOCAD, RHINO, SOLIDWORKS"><div class="skill-orb">硬件产品<br>设计</div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-orb-wrapper" data-sw="PYTHON, JAVA, ARDUINO"><div class="skill-orb">硬件<br>编程</div></div>
+                    <div class="skill-orb-wrapper" data-sw="RHINO, BLENDER, KEYSHOT"><div class="skill-orb">3D建模<br>渲染</div></div>
+                    <div class="skill-orb-wrapper" data-sw="FIGMA, AE"><div class="skill-orb">界面<br>动效</div></div>
+                    <div class="skill-orb-wrapper" data-sw="雅思7(6.5)"><div class="skill-orb">商务<br>英语</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" data-theme="theme-green">
+        <div class="content-wrap">
+            <div class="section-nav-header">02 / <span class="cn">教育背景</span> <span class="en">ACADEMIC BACKGROUND</span></div>
+            <div class="edu-row">
+                <div class="edu-time">2020 - 2024</div>
+                <div class="edu-school hand-font">重庆大学</div>
+                <div class="tag-group">
+                    <div class="main-tag">本科 · 工业设计</div>
+                    <div class="detail-tag">产品设计, 汽车设计, 机械设计</div>
+                </div>
+            </div>
+            <div class="edu-row">
+                <div class="edu-time">2025 - PRESENT</div>
+                <div class="edu-school hand-font">香港理工大学</div>
+                <div class="tag-group">
+                    <div class="main-tag">硕士 · 智能系统设计</div>
+                    <div class="detail-tag">UIUX, 硬件交互, AI编程</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" data-theme="theme-orange">
+        <div class="content-wrap">
+            <div class="section-nav-header">03 / <span class="cn">项目经历</span> <span class="en">PROJECT EXPERIENCE</span></div>
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="mono-bold">2022.06 - 2023.06</div>
+                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">产品机械设计</div>
+                </div>
+                <div class="exp-right">
+                    <h3 class="hand-font exp-title">市政管道安装机器</h3>
+                    <div class="mono-regular">
+                        <p class="exp-bullet">主导概念方案与机械结构草图设计</p>
+                        <p class="exp-bullet">完成三维建模与运动仿真，可视化展示机器人的工作流程与稳定性</p>
+                        <p class="exp-bullet">主导搭建实物样机，利用Arduino编写基础控制程序，实现机器人的抓取、移动与管道对接演示</p>
+                    </div>
+                </div>
+            </div>
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="mono-bold">2025.07 - 2026.02</div>
+                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">UX设计 & 软件开发</div>
+                </div>
+                <div class="exp-right">
+                    <h3 class="hand-font exp-title">AI辅助快闪店设计优化工具</h3>
+                    <div class="mono-regular">
+                        <p class="exp-bullet">负责工具全流程用户体验设计，主导前期设计师与实地调研，完成界面原型与交互流程设计</p>
+                        <p class="exp-bullet">基于SwiftUI实现可交互iOS原型，利于AI工具辅助编写主页和报告页面的代码运行程序，并独立完成二次迭代的全部开发工作</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="internships" data-theme="theme-yellow">
+        <div class="content-wrap">
+            <div class="section-nav-header">04 / <span class="cn">实习经历</span> <span class="en">INTERNSHIP EXPERIENCE</span></div>
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="mono-bold">2023.06 - 2023.09</div>
+                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">产品设计实习</div>
+                </div>
+                <div class="exp-right">
+                    <h3 class="hand-font exp-title">碧昂设计工作室</h3>
+                    <div class="mono-regular">
+                        <p class="exp-bullet">协助设计师完成产品外观设计工作、参与设计提案讨论与用户调研，产出渲染效果图</p>
+                        <p class="exp-bullet">3D打印与模型制作，独立完成样机组装与功能测试</p>
+                    </div>
+                </div>
+            </div>
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="mono-bold">2024.07 - 2025.05</div>
+                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">管道工程设计实习</div>
+                </div>
+                <div class="exp-right">
+                    <h3 class="hand-font exp-title">和德石油天然气工程公司</h3>
+                    <div class="mono-regular">
+                        <p class="exp-bullet">根据现场施工情况修改与优化管道设计图</p>
+                        <p class="exp-bullet">协助管道工程设计，制作竣工图纸</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="works" data-theme="theme-beige">
+        <div class="content-wrap">
+            <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 0;"><span class="display-cn">作品集</span> PROJECTS</h2>
+            <div class="portfolio-grid">
+                <div class="project-stack" data-project="popmind">
+                    <div class="project-stack-visual">
+                        <div class="stack-layer layer-bg-1"></div>
+                        <div class="stack-layer layer-bg-2"></div>
+                        <div class="stack-layer layer-main">
+                            <div class="layer-main-frame" aria-hidden="true"></div>
+                            <div class="layer-main-body">
+                                <img class="project-card-cover" src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/Project-images/1Popmind/Cover.png" alt="PopMind 封面">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-stack-caption">
+                        <div class="hand-font project-card-title"><span class="project-index">01</span>PopMind</div>
+                    </div>
+                </div>
+                <div class="project-stack" data-project="pawards">
+                    <div class="project-stack-visual">
+                        <div class="stack-layer layer-bg-1"></div>
+                        <div class="stack-layer layer-bg-2"></div>
+                        <div class="stack-layer layer-main">
+                            <div class="layer-main-frame" aria-hidden="true"></div>
+                            <div class="layer-main-body">
+                                <img class="project-card-cover" src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/Project-images/2Pawoard/Cover.png" alt="Pawards 封面">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-stack-caption">
+                        <div class="hand-font project-card-title"><span class="project-index">02</span>Pawards</div>
+                    </div>
+                </div>
+                <div class="project-stack" data-project="mycloy">
+                    <div class="project-stack-visual">
+                        <div class="stack-layer layer-bg-1"></div>
+                        <div class="stack-layer layer-bg-2"></div>
+                        <div class="stack-layer layer-main">
+                            <div class="layer-main-frame" aria-hidden="true"></div>
+                            <div class="layer-main-body">
+                                <img class="project-card-cover" src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/Project-images/3Mycloy/cover.png" alt="Mycloy 封面">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-stack-caption">
+                        <div class="hand-font project-card-title"><span class="project-index">03</span>Mycloy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="project-detail-overlay">
+        <button type="button" class="close-detail" onclick="closeProject()">BACK</button>
+        <div class="detail-content">
+            <h2 id="detail-title" class="hand-font" style="font-size: 5rem; margin-bottom: 1rem;">PROJECT TITLE</h2>
+            <div class="detail-meta">
+                <div class="detail-copy" id="detail-copy"></div>
+                <div class="detail-visual-column">
+                    <div id="detail-video-wrap" class="detail-video-wrap" hidden>
+                        <div class="detail-video-inner">
+                            <div id="detail-video-aspect" class="detail-video-aspect">
+                                <video id="detail-project-video" controls playsinline preload="metadata"></video>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="detail-gallery" class="detail-gallery"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="other-work" data-theme="theme-beige">
+        <div class="content-wrap">
+            <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 3rem;"><span class="display-cn">其他作品</span> OTHER WORKS</h2>
+        </div>
+        <div class="other-work-grid">
+            <div class="other-work-row row-one">
+                <div class="other-work-track">
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/01.png" alt="Other work 01"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/02.png" alt="Other work 02"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/03.png" alt="Other work 03"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/04.png" alt="Other work 04"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/05.png" alt="Other work 05"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/06.png" alt="Other work 06"></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/01.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/02.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/03.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/04.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/05.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/06.png" alt=""></div>
+                </div>
+            </div>
+            <div class="other-work-row row-two">
+                <div class="other-work-track">
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/07.png" alt="Other work 07"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/08.png" alt="Other work 08"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/09.png" alt="Other work 09"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/10.png" alt="Other work 10"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/11.png" alt="Other work 11"></div>
+                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/12.png" alt="Other work 12"></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/07.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/08.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/09.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/10.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/11.png" alt=""></div>
+                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/other-work-images/12.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-main"><h2 class="hand-font footer-title">See You</h2></div>
+        <div class="footer-meta">
+            <div>TEL/Wechat: 17358988562</div>
+            <div>E-mail: tuesytu@gmail.com</div>
+            <div>TU Siyu Personal portfolio</div>
+        </div>
+    </footer>
+
+    <script>
+        const PJ_IMG = 'https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/noggin-html-preview/Project-images';
+        const PJ_RAW_IMG = 'https://raw.githubusercontent.com/tuesytu/Portfolio/main/noggin-html-preview/Project-images';
+        const projectData = {
+            popmind: {
+                title: 'PopMind',
+                subtitleCn: 'AI辅助快闪店设计优化工具',
+                subtitleEn: 'AI-Assisted Pop-Up Store Optimization Tool',
+                body: 'PopMind 针对快闪店设计过程中因多利益相关者参与导致的沟通低效、信息传递不直观及设计考量不全面等问题，通过 AI 介入模拟人流量、分析不同用户群体的动线与行为，优化设计工作流，从而为消费者创造更优质的体验。',
+                video: `${PJ_RAW_IMG}/1Popmind/popmind%20demo.mp4`,
+                gallery: [
+                    `${PJ_IMG}/1Popmind/Cover.png`,
+                    `${PJ_IMG}/1Popmind/1Intro.png`,
+                    `${PJ_IMG}/1Popmind/2Research.png`,
+                    `${PJ_IMG}/1Popmind/3idetion.png`,
+                    `${PJ_IMG}/1Popmind/4user%20flow.png`,
+                    `${PJ_IMG}/1Popmind/5System.png`,
+                    `${PJ_IMG}/1Popmind/6interface.png`
+                ]
+            },
+            pawards: {
+                title: 'Pawards',
+                subtitleCn: '宠物丰容共创平台',
+                subtitleEn: 'Pet Enrichment Collaboration Platform',
+                body: '宠物丰容这一新养宠理念兴起，Pawards为实体丰容产品提供数字化配套化体验，记录宠物游戏数据、追踪成长轨迹，并搭建用户社区分享DIY玩法，让丰容从单一产品扩展为持续进化的互动生态系统；构建高互动养宠方式的同时呼吁创意探索与可持续性。',
+                gallery: [
+                    `${PJ_IMG}/2Pawoard/Cover.png`,
+                    `${PJ_IMG}/2Pawoard/1Intro.png`,
+                    `${PJ_IMG}/2Pawoard/2resesrch.png`,
+                    `${PJ_IMG}/2Pawoard/3solution.png`,
+                    `${PJ_IMG}/2Pawoard/4user%20flow.png`,
+                    `${PJ_IMG}/2Pawoard/5design%20system.png`,
+                    `${PJ_IMG}/2Pawoard/6interface%20overview.png`,
+                    `${PJ_IMG}/2Pawoard/7interface.png`,
+                    `${PJ_IMG}/2Pawoard/8interface.png`
+                ]
+            },
+            mycloy: {
+                title: 'Mycloy',
+                subtitleCn: '菌丝体玩具培育设计平台',
+                subtitleEn: 'Mycelium Cultivation Collaboration Platform',
+                body: '菌丝体作为新兴可持续材料，开始应用于儿童教育领域。Mycloy将实体培育与数字创造相结合，引导儿童亲手培育菌丝体玩具，在平台上学习材料知识、设计专属玩法、分享创意作品、见证成长轨迹。让一件手工作品，延伸为持续生长的创造项目，在动手实践中培养环保意识与设计思维',
+                gallery: [
+                    `${PJ_IMG}/3Mycloy/cover.png`,
+                    `${PJ_IMG}/3Mycloy/1background.png`,
+                    `${PJ_IMG}/3Mycloy/2ideation.png`,
+                    `${PJ_IMG}/3Mycloy/3design%20system.png`,
+                    `${PJ_IMG}/3Mycloy/4interface.png`
+                ]
+            }
+        };
+
+        const DS = {
+            ink: '#222222',
+            accentOrange: '#d06444',
+            moduleOrange: '#e8a08a',
+            moduleGreen: '#96a388',
+            moduleYellow: '#f9d371',
+            labelYellow: '#ffc12d'
+        };
+
+        const ICON_BASE = 'https://cdn.jsdelivr.net/gh/tuesytu/Portfolio@main/icon-image/';
+        const softwareIconMap = {
+            CURSOR: { color: DS.ink, icon: `${ICON_BASE}Cursor.png` },
+            CLAUDE: { color: DS.moduleOrange, icon: `${ICON_BASE}Claude.png` },
+            STITCH: { color: DS.moduleGreen, icon: `${ICON_BASE}Stitch.png` },
+            FIGMA: { color: DS.accentOrange, icon: `${ICON_BASE}figma.png` },
+            PS: { color: DS.ink, icon: `${ICON_BASE}PS.png` },
+            AUTOCAD: { color: DS.accentOrange, icon: `${ICON_BASE}Auto%20CAD.png` },
+            RHINO: { color: DS.moduleGreen, icon: `${ICON_BASE}Rhino.png` },
+            SOLIDWORKS: { color: DS.moduleOrange, icon: `${ICON_BASE}Solidworks.png` },
+            PYTHON: { color: DS.ink, icon: `${ICON_BASE}Python.png` },
+            JAVA: { color: DS.accentOrange, icon: `${ICON_BASE}JAVA.png` },
+            ARDUINO: { color: DS.moduleGreen, icon: `${ICON_BASE}Arduino.png` },
+            BLENDER: { color: DS.moduleYellow, fg: DS.ink, icon: `${ICON_BASE}Blender.png` },
+            KEYSHOT: { color: DS.accentOrange, icon: `${ICON_BASE}Keyshot.png` },
+            AE: { color: DS.labelYellow, fg: DS.ink, icon: `${ICON_BASE}AE.png` },
+            '雅思7(6.5)': { color: DS.accentOrange, icon: `${ICON_BASE}%E9%9B%85%E6%80%9D.png` }
+        };
+
+        function createFallbackIcon(label) {
+            const shortLabel = label.replace(/[()]/g, '').replace(/\s+/g, '').slice(0, 2).toUpperCase();
+            return `data:image/svg+xml;utf8,${encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                    <rect width="64" height="64" rx="32" fill="#ffffff" fill-opacity="0.22"/>
+                    <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="white">${shortLabel}</text>
+                </svg>
+            `)}`;
+        }
+
+        const wrappers = document.querySelectorAll('.skill-orb-wrapper');
+        wrappers.forEach(wrapper => {
+            const swArr = wrapper.dataset.sw.split(', ');
+            swArr.forEach(name => {
+                const config = softwareIconMap[name] || { color: DS.accentOrange, icon: '' };
+                const tag = document.createElement('div');
+                tag.className = 'software-tag';
+                tag.style.setProperty('--tag-bg', config.color);
+                tag.style.setProperty('--tag-fg', config.fg || '#ffffff');
+
+                const icon = document.createElement('img');
+                icon.className = 'software-tag-icon';
+                icon.src = config.icon || createFallbackIcon(name);
+                icon.alt = `${name} logo`;
+                icon.onerror = () => {
+                    icon.onerror = null;
+                    icon.src = createFallbackIcon(name);
+                };
+
+                const label = document.createElement('span');
+                label.className = 'software-tag-label';
+                label.innerText = name;
+
+                tag.appendChild(icon);
+                tag.appendChild(label);
+                wrapper.appendChild(tag);
+            });
+
+            wrapper.addEventListener('mouseenter', () => {
+                const rectA = wrapper.getBoundingClientRect();
+                const centerA = { x: rectA.left + rectA.width / 2, y: rectA.top + rectA.height / 2 };
+                wrappers.forEach(other => {
+                    if (other === wrapper) {
+                        other.classList.add('active');
+                        other.style.transform = 'scale(1.15)';
+                        const tags = other.querySelectorAll('.software-tag');
+                        tags.forEach((tag, i) => {
+                            const angle = (360 / tags.length * i) * (Math.PI / 180);
+                            tag.style.transform = `translate(calc(-50% + ${Math.cos(angle) * 115}px), calc(-50% + ${Math.sin(angle) * 115}px))`;
+                        });
+                    } else {
+                        const rectB = other.getBoundingClientRect();
+                        const centerB = { x: rectB.left + rectB.width / 2, y: rectB.top + rectB.height / 2 };
+                        const dx = centerB.x - centerA.x;
+                        const dy = centerB.y - centerA.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                        other.style.transform = `translate(${(dx / dist) * 50}px, ${(dy / dist) * 50}px) scale(0.85)`;
+                        other.style.opacity = '0.4';
+                    }
+                });
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                wrappers.forEach(other => {
+                    other.classList.remove('active');
+                    other.style.transform = '';
+                    other.style.opacity = '1';
+                });
+            });
+        });
+
+        const overlay = document.getElementById('project-detail-overlay');
+        const detailTitle = document.getElementById('detail-title');
+        const detailCopy = document.getElementById('detail-copy');
+        const detailGallery = document.getElementById('detail-gallery');
+        const detailVideoWrap = document.getElementById('detail-video-wrap');
+        const detailProjectVideo = document.getElementById('detail-project-video');
+        const detailVideoAspect = document.getElementById('detail-video-aspect');
+
+        function syncDetailVideoAspect() {
+            if (!detailVideoAspect || !detailProjectVideo) return;
+            const w = detailProjectVideo.videoWidth;
+            const h = detailProjectVideo.videoHeight;
+            if (w > 0 && h > 0) {
+                detailVideoAspect.style.aspectRatio = `${w} / ${h}`;
+            }
+        }
+
+        function resetDetailVideoAspect() {
+            if (detailVideoAspect) detailVideoAspect.style.aspectRatio = '';
+        }
+
+        if (detailProjectVideo) {
+            detailProjectVideo.addEventListener('loadedmetadata', syncDetailVideoAspect);
+        }
+
+        function pauseDetailVideo() {
+            if (!detailProjectVideo) return;
+            detailProjectVideo.pause();
+        }
+
+        function openProject(projectKey) {
+            const project = projectData[projectKey];
+            if (!project) return;
+            pauseDetailVideo();
+            detailTitle.innerText = project.title;
+            detailCopy.innerHTML = `
+                <div class="detail-intro-cn">${project.subtitleCn}</div>
+                <div class="detail-intro-en">${project.subtitleEn}</div>
+                <p class="detail-intro-body">${project.body}</p>
+            `;
+            if (project.video) {
+                detailVideoWrap.hidden = false;
+                resetDetailVideoAspect();
+                detailProjectVideo.src = project.video;
+                if (project.videoPoster) detailProjectVideo.poster = project.videoPoster;
+                else detailProjectVideo.removeAttribute('poster');
+                detailProjectVideo.load();
+            } else {
+                detailVideoWrap.hidden = true;
+                detailProjectVideo.removeAttribute('src');
+                detailProjectVideo.removeAttribute('poster');
+                detailProjectVideo.load();
+            }
+            detailGallery.innerHTML = '';
+            (project.gallery || []).forEach((src, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = 'detail-gallery-item';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = i === 0 ? `${project.title} · 封面` : `${project.title} · ${i}`;
+                img.loading = i < 2 ? 'eager' : 'lazy';
+                wrap.appendChild(img);
+                detailGallery.appendChild(wrap);
+            });
+            overlay.style.display = 'flex';
+            overlay.style.animation = 'unfold-down 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProject(instant) {
+            pauseDetailVideo();
+            if (instant) {
+                overlay.style.display = 'none';
+                overlay.style.animation = '';
+                document.body.style.overflow = 'auto';
+                return;
+            }
+            overlay.style.animation = 'fold-back 0.45s ease forwards';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                overlay.style.animation = '';
+                document.body.style.overflow = 'auto';
+            }, 430);
+        }
+
+        function isProjectOverlayOpen() {
+            return overlay.style.display === 'flex';
+        }
+
+        document.querySelectorAll('.project-stack').forEach(card => {
+            card.addEventListener('click', () => openProject(card.dataset.project));
+        });
+
+        window.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && overlay.style.display === 'flex') closeProject();
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) document.body.className = entry.target.dataset.theme;
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('[data-theme]').forEach(el => observer.observe(el));
+
+        if (location.hash === '#projects-board') {
+            history.replaceState(null, '', '#works');
+            const worksEl = document.getElementById('works');
+            if (worksEl) {
+                const navEl = document.querySelector('nav');
+                const off = navEl ? navEl.offsetHeight : 0;
+                const top = worksEl.getBoundingClientRect().top + window.scrollY - off;
+                window.scrollTo({ top, behavior: 'auto' });
+            }
+        }
+
+        const navBar = document.querySelector('nav');
+        document.querySelectorAll('.nav-link').forEach(button => {
+            button.addEventListener('click', () => {
+                const target = document.getElementById(button.dataset.target);
+                if (!target) return;
+                if (isProjectOverlayOpen()) closeProject(true);
+                requestAnimationFrame(() => {
+                    const offset = navBar.offsetHeight;
+                    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                });
+            });
+        });
+
+        document.querySelector('.nav-brand')?.addEventListener('click', () => {
+            if (isProjectOverlayOpen()) closeProject(true);
+            requestAnimationFrame(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
