@@ -908,6 +908,14 @@
                 flex-direction: column;
                 overflow: hidden;
             }
+            /* 手机端项目区改为纵向，取消固定高度限制 */
+            #works {
+                height: auto;
+                max-height: none;
+                min-height: 0;
+                padding-bottom: 3.8rem;
+                overflow: visible;
+            }
             #about > .content-wrap,
             #works > .content-wrap,
             #other-work > .content-wrap {
@@ -915,12 +923,21 @@
                 display: flex;
                 flex-direction: column;
                 min-height: 0;
+                width: 100%;
+                max-width: none;
+                margin-left: 0;
+                margin-right: 0;
             }
-            #works {
-                height: auto;
-                max-height: none;
-                min-height: var(--touch-panel-height);
-                overflow: visible;
+            #about h2,
+            #works h2,
+            #other-work h2 {
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+                text-align: left;
+                align-self: flex-start;
+            }
+            #works > .content-wrap {
+                display: block;
             }
             #about .skills-container {
                 flex: 1 1 auto;
@@ -929,18 +946,22 @@
                 gap: 48px;
             }
             #works .portfolio-grid {
-                grid-template-columns: 1fr;
-                flex: 1 1 auto;
-                align-content: start;
-                margin-top: 0;
+                display: block !important;
+                margin-top: 96px !important;
                 margin-bottom: 0;
-                gap: 2.6rem;
+                padding-bottom: 48px;
+                align-content: initial;
+            }
+            #works .project-stack {
+                width: min(900px, 92%);
+                max-width: none;
+                margin: 0 auto;
+            }
+            #works .project-stack + .project-stack {
+                margin-top: 120px !important;
             }
             #works .project-stack-caption {
-                padding-top: calc(1.15rem + 16px);
-            }
-            #works .project-card-title {
-                font-size: 1.35rem;
+                display: none;
             }
             #other-work .other-work-grid {
                 flex: 1 1 auto;
@@ -969,6 +990,7 @@
             .tag-group { justify-content: flex-start; }
             .tag-group:hover .detail-tag { opacity: 0; max-width: 0; padding: 10px 0; }
             .portfolio-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            #works .portfolio-grid { gap: 56px; margin-top: 48px; }
             .footer-meta { grid-template-columns: 1fr; gap: 0.8rem; }
             .close-detail {
                 right: 1.5rem;
