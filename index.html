@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
     <title>TU Siyu Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
         :root {
             --bg-beige: #f2e7df;
             --accent-orange: #d06444;
@@ -44,7 +49,7 @@
             filter: url(#rough-edge);
         }
         .mono-bold {
-            font-family: 'Space Mono', monospace;
+            font-family: 'PingFang SC', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -63,7 +68,7 @@
             font-size: 0.9em;
         }
         .en {
-            font-family: 'Space Mono', monospace !important;
+            font-family: 'PingFang SC', sans-serif !important;
             font-size: 0.85em;
         }
 
@@ -196,7 +201,7 @@
 
         .section-nav-header {
             color: var(--accent-orange);
-            font-family: 'Space Mono', monospace;
+            font-family: 'PingFang SC', sans-serif;
             font-weight: 700;
             font-size: 0.9rem;
             margin-bottom: 1.2rem;
@@ -302,7 +307,12 @@
             gap: 1.5rem;
         }
         .edu-row + .edu-row { margin-top: 0.25rem; }
-        .edu-time { color: var(--accent-orange); font-size: 1.4rem; font-weight: 700; }
+        .edu-time {
+            color: var(--accent-orange);
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'PingFang SC', sans-serif;
+        }
         .edu-school { font-size: 1.8rem; }
         .tag-group {
             position: relative;
@@ -351,6 +361,10 @@
         .exp-left {
             border-right: 1.5px solid var(--text-black);
             padding-right: 2.5rem;
+        }
+        .exp-left .mono-bold {
+            font-family: 'PingFang SC', sans-serif;
+            letter-spacing: 0;
         }
         .exp-title {
             font-size: 2.4rem;
@@ -782,7 +796,7 @@
             text-align: center;
             margin-top: 4rem;
             color: white;
-            font-family: 'PingFang SC', 'Space Mono', monospace;
+            font-family: 'PingFang SC', sans-serif;
             font-size: 0.95rem;
             line-height: 1.4;
         }
@@ -879,7 +893,7 @@
         </div>
         <div class="hero-welcome-note"><span class="hero-welcome-note-dot" aria-hidden="true"></span><span class="hero-welcome-note-text">Welcome to my playground</span></div>
         <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
-            <div class="mono-regular" style="font-family: 'Space Mono', monospace;">
+            <div class="mono-regular" style="font-family: 'PingFang SC', sans-serif;">
                 TEL/Wechat: 17358988562<br>
                 Email: tuesytu@gmail.com
             </div>
