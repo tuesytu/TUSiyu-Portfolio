@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
     <title>TU Siyu Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        html {
-            font-size: 16px;
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-
         :root {
             --bg-beige: #f2e7df;
             --accent-orange: #d06444;
@@ -24,8 +19,9 @@
             --nav-height: 72px;
             --uniform-padding: 8rem 4rem;
             --other-work-scroll-sec: 45s;
-            --other-work-card-height: 180px;
+            --other-work-card-height: 150px;
             --cover-panel-ratio: 1.39;
+            --desktop-zoom: 1.25;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
@@ -40,6 +36,11 @@
             overflow-x: hidden;
         }
 
+        /* 让桌面端 100% 视觉接近原先浏览器 125% 缩放效果 */
+        @media (hover: hover) and (pointer: fine) {
+            html { zoom: 1.25; }
+        }
+
         .hand-font {
             font-family: 'Arial Black', sans-serif;
             font-weight: 900;
@@ -49,7 +50,7 @@
             filter: url(#rough-edge);
         }
         .mono-bold {
-            font-family: 'PingFang SC', sans-serif;
+            font-family: 'Space Mono', monospace;
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -68,7 +69,7 @@
             font-size: 0.9em;
         }
         .en {
-            font-family: 'PingFang SC', sans-serif !important;
+            font-family: 'Space Mono', monospace !important;
             font-size: 0.85em;
         }
 
@@ -114,6 +115,8 @@
         }
 
         .content-wrap { max-width: 1200px; margin: 0 auto; }
+        /* 让封面文本左边界与下方 section 的 content-wrap 对齐 */
+        header.hero.content-wrap { max-width: 1328px; }
         header.hero, section { padding: var(--uniform-padding); border-bottom: 1.5px solid var(--text-black); }
         header.hero {
             min-height: calc(100vw / var(--cover-panel-ratio));
@@ -123,7 +126,7 @@
         .hero-title-wrap {
             position: relative;
             display: inline-block;
-            margin-bottom: 4rem;
+            margin-bottom: 6rem;
         }
         .hero-title {
             font-size: var(--title-size);
@@ -131,7 +134,7 @@
             line-height: 1.02;
         }
         .hero-welcome-note {
-            position: absolute;
+            position: fixed;
             left: var(--welcome-x, 1.5rem);
             top: var(--welcome-y, 1.5rem);
             display: inline-flex;
@@ -151,7 +154,7 @@
             z-index: 50;
             overflow: hidden;
             opacity: 0;
-            transform: translateY(10px) scale(0.95);
+            transform: translateY(2px) scale(0.98);
             pointer-events: none;
             transition: width 0.45s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: transparent;
@@ -191,6 +194,12 @@
         #about, #works, #other-work {
             padding: 5.5rem 4rem;
         }
+        #works {
+            min-height: calc(100vw / var(--cover-panel-ratio));
+        }
+        #other-work {
+            min-height: calc(100vw / var(--cover-panel-ratio));
+        }
         #about, #works, #education, #projects, #internships, #other-work { scroll-margin-top: var(--nav-height); }
         #education, #projects, #internships { padding-top: 4.2rem; padding-bottom: 3.5rem; }
 
@@ -201,7 +210,7 @@
 
         .section-nav-header {
             color: var(--accent-orange);
-            font-family: 'PingFang SC', sans-serif;
+            font-family: 'Space Mono', monospace;
             font-weight: 700;
             font-size: 0.9rem;
             margin-bottom: 1.2rem;
@@ -307,12 +316,7 @@
             gap: 1.5rem;
         }
         .edu-row + .edu-row { margin-top: 0.25rem; }
-        .edu-time {
-            color: var(--accent-orange);
-            font-size: 1.4rem;
-            font-weight: 700;
-            font-family: 'PingFang SC', sans-serif;
-        }
+        .edu-time { color: var(--accent-orange); font-size: 1.4rem; font-weight: 700; }
         .edu-school { font-size: 1.8rem; }
         .tag-group {
             position: relative;
@@ -362,10 +366,6 @@
             border-right: 1.5px solid var(--text-black);
             padding-right: 2.5rem;
         }
-        .exp-left .mono-bold {
-            font-family: 'PingFang SC', sans-serif;
-            letter-spacing: 0;
-        }
         .exp-title {
             font-size: 2.4rem;
             margin-bottom: 1rem;
@@ -392,7 +392,8 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 4rem;
-            margin-top: 3.25rem;
+            margin-top: 4.4rem;
+            margin-bottom: 2.4rem;
             perspective: 1500px;
         }
         .project-stack {
@@ -411,7 +412,7 @@
         .project-stack-caption {
             width: 100%;
             text-align: center;
-            padding-top: 0.65rem;
+            padding-top: calc(1.15rem + 28px);
             transition: transform 0.2s cubic-bezier(0.33, 1, 0.55, 1);
         }
         .stack-layer {
@@ -465,18 +466,28 @@
             filter: none;
         }
         .project-card-title {
+            display: inline-flex;
+            align-items: baseline;
             font-size: 1.35rem;
             color: var(--accent-orange);
             line-height: 1.15;
         }
+        .project-card-title .project-name {
+            font-family: 'Arial Black', sans-serif;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            filter: url(#rough-edge);
+        }
         .project-card-title .project-index {
             font-family: 'Space Mono', monospace;
             font-weight: 700;
-            font-size: 0.72em;
+            font-size: 0.86em;
             letter-spacing: 0.06em;
             margin-right: 0.5rem;
             opacity: 0.9;
             vertical-align: baseline;
+            filter: none;
         }
         .project-stack:hover .layer-bg-1 { transform: rotate(-10deg) translate(-12px, 5px); }
         .project-stack:hover .layer-bg-2 { transform: rotate(13deg) translate(12px, 5px); }
@@ -653,7 +664,7 @@
             flex-direction: column;
             gap: 0;
             width: 100%;
-            margin-top: 2rem;
+            margin-top: 1.4rem;
         }
         #other-work .other-work-row {
             position: relative;
@@ -661,7 +672,7 @@
             width: 100%;
             overflow: hidden;
             display: flex;
-            margin: -30px 0;
+            margin: -20px 0;
         }
         #other-work .other-work-row:hover {
             z-index: 50;
@@ -669,9 +680,9 @@
         #other-work .other-work-track {
             display: flex;
             align-items: center;
-            gap: 3.5rem;
+            gap: 2.5rem;
             width: max-content;
-            padding: 80px 0;
+            padding: 62px 0;
         }
         @keyframes other-work-scroll-left {
             0% { transform: translateX(0); }
@@ -694,7 +705,7 @@
             height: var(--other-work-card-height);
             width: auto;
             position: relative;
-            padding: 12px;
+            padding: 10px;
             flex-shrink: 0;
             transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s ease, filter 0.35s ease;
             transform: rotate(var(--other-work-rot, 0deg));
@@ -749,7 +760,7 @@
             transform: rotate(25deg) scale(0.2);
         }
         #other-work .other-work-card:hover {
-            transform: scale(1.18) rotate(0deg);
+            transform: scale(1.12) rotate(0deg);
             z-index: 100;
         }
         #other-work .other-work-card:hover .other-work-sticker {
@@ -796,16 +807,83 @@
             text-align: center;
             margin-top: 4rem;
             color: white;
-            font-family: 'PingFang SC', sans-serif;
+            font-family: 'PingFang SC', 'Space Mono', monospace;
             font-size: 0.95rem;
             line-height: 1.4;
         }
 
         /* 桌面端：封面和黑色页都以可视区域满屏为基准 */
         @media (hover: hover) and (pointer: fine) {
+            :root {
+                --panel-full-height: calc((100vh - var(--nav-height)) / var(--desktop-zoom));
+            }
             header.hero,
+            #about,
+            #works,
+            #other-work,
             footer {
-                min-height: calc(100vh - var(--nav-height));
+                min-height: var(--panel-full-height);
+            }
+            #about,
+            #works,
+            #other-work {
+                height: var(--panel-full-height);
+                min-height: 0;
+                padding-top: 4.3rem;
+                padding-bottom: 3.1rem;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            #about > .content-wrap,
+            #works > .content-wrap,
+            #other-work > .content-wrap {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+                width: 100%;
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+                align-self: stretch;
+            }
+            #about h2,
+            #works h2,
+            #other-work h2,
+            #about .section-nav-header,
+            #education .section-nav-header,
+            #projects .section-nav-header,
+            #internships .section-nav-header {
+                margin-left: 0 !important;
+                transform: none !important;
+                text-align: left;
+                align-self: flex-start;
+            }
+            #about .skills-container {
+                flex: 1 1 auto;
+                justify-content: center;
+                margin-top: 0;
+                gap: 56px;
+            }
+            #works .portfolio-grid {
+                flex: 1 1 auto;
+                align-content: center;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            #other-work {
+                height: var(--panel-full-height);
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            #other-work .other-work-grid {
+                flex: 1 1 auto;
+                margin-top: 0;
+                justify-content: center;
+                overflow: hidden;
             }
         }
 
@@ -887,13 +965,13 @@
     </nav>
 
     <header class="hero content-wrap" data-theme="theme-beige">
-        <div class="mono-bold" style="margin-bottom: 2rem; color: var(--accent-orange);">PORTFOLIO WORKS 2026</div>
+        <div class="mono-bold" style="margin-bottom: 3.2rem; color: var(--accent-orange);">PORTFOLIO WORKS 2026</div>
         <div class="hero-title-wrap">
             <h1 class="hand-font hero-title">TU Siyu<br>Portfolio</h1>
         </div>
         <div class="hero-welcome-note"><span class="hero-welcome-note-dot" aria-hidden="true"></span><span class="hero-welcome-note-text">Welcome to my playground</span></div>
         <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
-            <div class="mono-regular" style="font-family: 'PingFang SC', sans-serif;">
+            <div class="mono-regular" style="font-family: 'Space Mono', monospace;">
                 TEL/Wechat: 17358988562<br>
                 Email: tuesytu@gmail.com
             </div>
@@ -1024,7 +1102,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="hand-font project-card-title"><span class="project-index">01</span>PopMind</div>
+                        <div class="project-card-title"><span class="project-index">01</span><span class="project-name">PopMind</span></div>
                     </div>
                 </div>
                 <div class="project-stack" data-project="pawards">
@@ -1039,7 +1117,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="hand-font project-card-title"><span class="project-index">02</span>Pawards</div>
+                        <div class="project-card-title"><span class="project-index">02</span><span class="project-name">Pawards</span></div>
                     </div>
                 </div>
                 <div class="project-stack" data-project="mycloy">
@@ -1054,7 +1132,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="hand-font project-card-title"><span class="project-index">03</span>Mycloy</div>
+                        <div class="project-card-title"><span class="project-index">03</span><span class="project-name">Mycloy</span></div>
                     </div>
                 </div>
             </div>
@@ -1228,12 +1306,16 @@
 
         function placeHeroNote(clientX, clientY) {
             if (!hero || !heroWelcomeNote) return;
-            const rect = hero.getBoundingClientRect();
-            const margin = 8;
+            const margin = 2;
             const noteWidth = Math.min(window.innerWidth * 0.78, 260);
             const noteHeight = 40;
-            const x = Math.max(margin, Math.min(clientX - rect.left + 2, rect.width - noteWidth - margin));
-            const y = Math.max(margin, Math.min(clientY - rect.top + 2, rect.height - noteHeight - margin));
+            const rootZoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+            const pointerX = clientX / rootZoom;
+            const pointerY = clientY / rootZoom;
+            const viewportWidth = window.innerWidth / rootZoom;
+            const viewportHeight = window.innerHeight / rootZoom;
+            const x = Math.max(margin, Math.min(pointerX + 3, viewportWidth - noteWidth - margin));
+            const y = Math.max(margin, Math.min(pointerY - noteHeight * 0.45 + 4, viewportHeight - noteHeight - margin));
             heroWelcomeNote.style.setProperty('--welcome-x', `${x}px`);
             heroWelcomeNote.style.setProperty('--welcome-y', `${y}px`);
         }
@@ -1251,7 +1333,7 @@
             heroIdleTimer = setTimeout(() => {
                 placeHeroNote(heroLastPointer.x, heroLastPointer.y);
                 heroWelcomeNote.classList.add('is-active');
-            }, 500);
+            }, 200);
         }
 
         if (hero && heroWelcomeNote && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
