@@ -916,6 +916,12 @@
                 flex-direction: column;
                 min-height: 0;
             }
+            #works {
+                height: auto;
+                max-height: none;
+                min-height: var(--touch-panel-height);
+                overflow: visible;
+            }
             #about .skills-container {
                 flex: 1 1 auto;
                 justify-content: center;
@@ -923,10 +929,18 @@
                 gap: 48px;
             }
             #works .portfolio-grid {
+                grid-template-columns: 1fr;
                 flex: 1 1 auto;
-                align-content: center;
+                align-content: start;
                 margin-top: 0;
                 margin-bottom: 0;
+                gap: 2.6rem;
+            }
+            #works .project-stack-caption {
+                padding-top: calc(1.15rem + 16px);
+            }
+            #works .project-card-title {
+                font-size: 1.35rem;
             }
             #other-work .other-work-grid {
                 flex: 1 1 auto;
