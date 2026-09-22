@@ -195,7 +195,9 @@
             padding: 5.5rem 4rem;
         }
         #works {
-            min-height: calc(100vw / var(--cover-panel-ratio));
+            height: auto;
+            min-height: 0;
+            overflow: visible;
         }
         #other-work {
             min-height: calc(100vw / var(--cover-panel-ratio));
@@ -866,10 +868,20 @@
                 margin-top: 0;
                 gap: 56px;
             }
+            /* 作品区由所有卡片撑开高度，底部保留留白。 */
+            #works {
+                height: auto;
+                min-height: 0;
+                padding-bottom: 5.5rem;
+                overflow: visible;
+            }
+            #works > .content-wrap {
+                flex: none;
+            }
             #works .portfolio-grid {
-                flex: 1 1 auto;
-                align-content: center;
-                margin-top: 0;
+                flex: none;
+                align-content: start;
+                margin-top: 4.4rem;
                 margin-bottom: 0;
             }
             #other-work {
@@ -1011,6 +1023,24 @@
             }
         }
 
+        /* 展开的技能标签不参与文档流，因此为动画预留上下空间。 */
+        #about {
+            height: auto;
+            min-height: 0;
+            max-height: none;
+            overflow: visible;
+        }
+        #about > .content-wrap {
+            flex: none;
+        }
+        #about .skills-container {
+            flex: none;
+            justify-content: flex-start;
+            margin-top: 1rem;
+            padding-top: 40px;
+            padding-bottom: 16px;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             #other-work .other-work-track { animation: none !important; }
             #other-work .other-work-row:has(.other-work-card:hover) .other-work-card:not(:hover) {
@@ -1118,8 +1148,8 @@
                 <div class="exp-right">
                     <h3 class="hand-font exp-title">拓维信息海云天 · 产品中心</h3>
                     <div class="mono-regular">
-                        <p class="exp-bullet">负责教育类B端系统的需求优化设计，参与需求评审与开发走查</p>
-                        <p class="exp-bullet">完成AI产品的0–1设计，并完善Skill文档</p>
+                        <p class="exp-bullet">协同产研完成教育 B 端需求评审与界面设计，跟进走查，参与保密命题平台体验重构</p>
+                        <p class="exp-bullet">独立完成 AI 智能审校模块 0‑1 设计，沉淀并优化 Skill 设计规范，提升团队协作效率</p>
                     </div>
                 </div>
             </div>
@@ -1214,6 +1244,36 @@
         <div class="content-wrap">
             <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 0;"><span class="display-cn">作品集</span> PROJECTS</h2>
             <div class="portfolio-grid">
+                <div class="project-stack" data-project="haiyuntian">
+                    <div class="project-stack-visual">
+                        <div class="stack-layer layer-bg-1"></div>
+                        <div class="stack-layer layer-bg-2"></div>
+                        <div class="stack-layer layer-main">
+                            <div class="layer-main-frame" aria-hidden="true"></div>
+                            <div class="layer-main-body">
+                                <img class="project-card-cover" src="Project-images/haiyuntian-cover.webp" alt="海云天 封面">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-stack-caption">
+                        <div class="project-card-title"><span class="project-index">01</span><span class="project-name">海云天</span></div>
+                    </div>
+                </div>
+                <div class="project-stack" data-project="cofly">
+                    <div class="project-stack-visual">
+                        <div class="stack-layer layer-bg-1"></div>
+                        <div class="stack-layer layer-bg-2"></div>
+                        <div class="stack-layer layer-main">
+                            <div class="layer-main-frame" aria-hidden="true"></div>
+                            <div class="layer-main-body">
+                                <img class="project-card-cover" src="Project-images/cofly-cover.webp" alt="XPeng · CoFly 封面">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-stack-caption">
+                        <div class="project-card-title"><span class="project-index">02</span><span class="project-name">XPeng · CoFly</span></div>
+                    </div>
+                </div>
                 <div class="project-stack" data-project="popmind">
                     <div class="project-stack-visual">
                         <div class="stack-layer layer-bg-1"></div>
@@ -1226,7 +1286,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="project-card-title"><span class="project-index">01</span><span class="project-name">PopMind</span></div>
+                        <div class="project-card-title"><span class="project-index">03</span><span class="project-name">PopMind</span></div>
                     </div>
                 </div>
                 <div class="project-stack" data-project="pawards">
@@ -1241,7 +1301,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="project-card-title"><span class="project-index">02</span><span class="project-name">Pawards</span></div>
+                        <div class="project-card-title"><span class="project-index">04</span><span class="project-name">Pawards</span></div>
                     </div>
                 </div>
                 <div class="project-stack" data-project="mycloy">
@@ -1256,7 +1316,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="project-card-title"><span class="project-index">03</span><span class="project-name">Mycloy</span></div>
+                        <div class="project-card-title"><span class="project-index">05</span><span class="project-name">Mycloy</span></div>
                     </div>
                 </div>
             </div>
@@ -1380,6 +1440,45 @@
                     `${PJ_IMG}/3Mycloy/2ideation.png`,
                     `${PJ_IMG}/3Mycloy/3design%20system.png`,
                     `${PJ_IMG}/3Mycloy/4interface.png`
+                ]
+            },
+            haiyuntian: {
+                title: '海云天',
+                subtitleCn: '教育B端保密命题项目系统',
+                subtitleEn: 'Smart Confidential Question Bank System V2.0 - AI Review Module',
+                body: '海云天保密命题系统是一款面向教育场景中的保密命题需求的命题管理平台，服务学校教务管理部门及学科教师。支持题目编审、组卷、审卷与制卷等工作在保密要求下开展，为管理员、项目负责人和任务专家提供统一的命题协作环境。',
+                gallery: [
+                    `${PJ_IMG}/haiyuntian-cover.webp`,
+                    `${PJ_IMG}/haiyuntian-01-introduction.webp`,
+                    `${PJ_IMG}/haiyuntian-02-users.webp`,
+                    `${PJ_IMG}/haiyuntian-03-design-goals.webp`,
+                    `${PJ_IMG}/haiyuntian-04-grid-components.webp`,
+                    `${PJ_IMG}/haiyuntian-05-project-creation.webp`,
+                    `${PJ_IMG}/haiyuntian-06-project-progress.webp`,
+                    `${PJ_IMG}/haiyuntian-07-tasks.webp`,
+                    `${PJ_IMG}/haiyuntian-08-ai-review.webp`,
+                    `${PJ_IMG}/haiyuntian-09-skill.webp`
+                ]
+            },
+            cofly: {
+                title: 'XPeng · CoFly',
+                subtitleCn: '城市空中交通路线安全管理人机协同系统',
+                subtitleEn: 'A Human-AI Coordination System for Route Safety Management in Urban Air Mobility in the Greater Bay Area',
+                body: 'XPeng·CoFly 是一个面向未来城市空中交通的人机协同调度系统。随着 eVTOL 逐渐进入城市运行场景，CoFly 通过人工智能实时分析飞行状态、识别潜在冲突并生成调度建议，辅助调度人员完成复杂空域决策，实现 AI 智能分析与人类专业判断的协同',
+                gallery: [
+                    `${PJ_IMG}/cofly-cover.webp`,
+                    `${PJ_IMG}/cofly-02-background.webp`,
+                    `${PJ_IMG}/cofly-03-opportunities.webp`,
+                    `${PJ_IMG}/cofly-04-solution.webp`,
+                    `${PJ_IMG}/cofly-05-workflow.webp`,
+                    `${PJ_IMG}/cofly-06-interaction.webp`,
+                    `${PJ_IMG}/cofly-07-interface.webp`,
+                    `${PJ_IMG}/cofly-08-interface.webp`,
+                    `${PJ_IMG}/cofly-09-interface.webp`,
+                    `${PJ_IMG}/cofly-10-interface.webp`,
+                    `${PJ_IMG}/cofly-11-interface.webp`,
+                    `${PJ_IMG}/cofly-12-interface.webp`,
+                    `${PJ_IMG}/cofly-13-validation.webp`
                 ]
             }
         };
@@ -1518,7 +1617,7 @@
                         const tags = other.querySelectorAll('.software-tag');
                         tags.forEach((tag, i) => {
                             const angle = (360 / tags.length * i) * (Math.PI / 180);
-                            tag.style.transform = `translate(calc(-50% + ${Math.cos(angle) * 115}px), calc(-50% + ${Math.sin(angle) * 115}px))`;
+                            tag.style.transform = `translate(calc(-50% + ${Math.cos(angle) * 95}px), calc(-50% + ${Math.sin(angle) * 95}px))`;
                         });
                     } else {
                         const rectB = other.getBoundingClientRect();
