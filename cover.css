@@ -1,0 +1,157 @@
+/* Cover — Figma 797:383. Original crops; SDR display, subtle grain and paper edges. */
+:root { --nav-height: 64px; --cover-paper: #f2e8df; --cover-ink: #111970; --site-body-font: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; --site-body-size: 11px; --site-muted-text: #81817d; }
+.cover-nav {
+    background: var(--cover-paper);
+    border-bottom: 1px solid rgba(34,34,34,.08);
+    justify-content: flex-end;
+    height: var(--nav-height);
+}
+.cover-nav .nav-brand { font-family: 'Arial Black', sans-serif; font-weight: 900; filter: url(#rough-edge); letter-spacing: -1px; text-transform: none; font-size: 24px; }
+.cover-nav .nav-links { gap: 1.4rem; }
+.cover-nav .nav-link { padding: 7px 3px; border-radius: 0; font-family: Arial, 'PingFang SC', sans-serif; font-weight: 400; letter-spacing: 0; }
+.cover-nav .nav-link:hover { background: none; color: var(--cover-ink); filter: none; transform: none; text-decoration: underline; text-underline-offset: 5px; }
+header.cover-hero {
+    position: relative;
+    padding: 0;
+    width: 100%; max-width: none;
+    height: auto; max-height: none;
+    min-height: 0;
+    overflow: visible;
+    display: block;
+    background: var(--cover-paper);
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 60px 60px;
+    border-bottom: 1px solid rgba(34,34,34,.1);
+}
+.cover-inner {
+    width: 100%; max-width: 1320px;
+    margin-inline: auto;
+    min-height: calc((100svh - 80px) / 1.25);
+    display: grid;
+    grid-template-columns: minmax(210px, .86fr) minmax(0, 2fr);
+    align-items: center;
+    gap: 1.5rem;
+    padding: 28px 3.5rem 32px 5rem;
+}
+.cover-intro { padding-block: 20px 0; position: relative; z-index: 2; }
+.cover-name {
+    font-family: 'Arial Black', sans-serif;
+    font-size: clamp(54px, 7.1vw, 103px);
+    font-weight: 900; letter-spacing: -2px; line-height: 1.02;
+    text-transform: uppercase; filter: url(#rough-edge);
+    margin: 0 0 40px; color: #171717;
+}
+.cover-name > span { display: block; margin-top: .13em; }
+.name-dot { color: var(--accent-orange); }
+.cover-contact { display: flex; flex-direction: column; gap: 14px; font-style: normal; }
+.cover-contact a { display: flex; flex-direction: row; align-items: baseline; gap: 10px; width: fit-content; white-space: nowrap; font: 400 var(--site-body-size) var(--site-body-font); color: #30302f; text-decoration: none; cursor: pointer; }
+.cover-contact a span { flex: 0 0 auto; font: inherit; letter-spacing: 0; color: var(--site-muted-text); }
+.cover-contact a:hover { color: var(--cover-ink); text-decoration: underline; text-underline-offset: 4px; }
+.cover-scroll { display: inline-flex; gap: 7px; align-items: center; margin-top: 54px; font: 400 var(--site-body-size) var(--site-body-font); letter-spacing: 0; text-decoration: none; color: #787873; cursor: pointer; }
+.cover-scroll span { font-size: inherit; color: inherit; transition: transform .2s ease; }
+.cover-scroll:hover span { transform: translateY(3px); }
+.cover-intro a:focus-visible { outline: 2px solid var(--cover-ink); outline-offset: 6px; }
+.collage-viewport { min-width: 0; }
+.cover-collage { position: relative; width: 100%; max-width: calc((100svh - 165px) * .97687); margin-inline: auto; aspect-ratio: 2143 / 1755; isolation: isolate; }
+.cover-photo {
+    position: absolute; margin: 0;
+    filter: drop-shadow(0 1px 1px rgba(55,47,32,.12));
+    transform-origin: 50% 50%;
+    transform: rotate(0deg);
+    transition: transform 320ms cubic-bezier(.2,.75,.25,1), filter 320ms ease;
+}
+.cover-photo[data-photo="presentation"] { --photo-tilt: 3deg; }
+.cover-photo[data-photo="camera-portrait"] { --photo-tilt: -5deg; }
+.cover-photo[data-photo="robot-lab"] { --photo-tilt: 7deg; }
+.cover-photo[data-photo="cycling"] { --photo-tilt: -3deg; }
+.cover-photo[data-photo="camera-repair"] { --photo-tilt: 5deg; }
+.cover-photo[data-photo="instant-camera"] { --photo-tilt: -7deg; }
+.cover-photo[data-photo="night-portrait"] { --photo-tilt: 4deg; }
+.cover-photo[data-photo="tan-huan"] { --photo-tilt: -4deg; }
+.cover-photo::before { content: ''; position: absolute; inset: -7px -6px; background: #fffefa; clip-path: var(--paper-cut); transform: rotate(-.25deg); }
+.photo-surface { position: absolute; inset: 0; overflow: hidden; clip-path: var(--paper-cut); }
+.photo-surface img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
+.cover-ink { z-index: 20; position: absolute; inset: 0; width: 100%; height: 100%; color: var(--cover-ink); pointer-events: none; overflow: visible; }
+@media (max-width: 1100px) {
+    .cover-inner { padding: 24px 28px 32px; gap: 12px; grid-template-columns: minmax(180px,.85fr) minmax(0,2fr); }
+    .cover-name { font-size: 70px; }
+    .cover-nav .nav-links { gap: 1rem; }
+    .cover-nav .nav-link .cn { display: none; }
+}
+@media (max-width: 720px) {
+    .cover-inner { grid-template-columns: 1fr; padding: 40px 22px 28px; gap: 20px; }
+    .cover-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0; gap: 12px 22px; }
+    .cover-name { font-size: clamp(50px,12vw,76px); margin: 0; }
+    .cover-contact { gap: 10px; }
+    :root { --site-body-size: 11px; }
+    .cover-contact a span { flex-basis: auto; }
+    .cover-scroll { grid-column: 1 / -1; margin-top: 8px; }
+    .cover-collage { min-width: 500px; max-width: none; }
+    .collage-viewport { overflow-x: auto; scrollbar-width: thin; scrollbar-color: #d0cfc9 transparent; padding-block: 6px; }
+    .cover-nav { padding: 0 18px; }
+    .cover-nav .nav-brand { left: 18px; font-size: 20px; }
+    .cover-nav .nav-links { gap: 10px; }
+    .cover-nav .nav-link { padding-inline: 0; }
+    .cover-nav .nav-link .en { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .cover-scroll span { transition: none; } }
+
+
+/* Photo treatment: limit Apple HDR gain maps without changing the source photos. */
+.photo-surface img {
+    dynamic-range-limit: standard;
+}
+.photo-surface::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('封面/web/photo-grain.svg');
+    background-size: 160px 160px;
+    mix-blend-mode: soft-light;
+    opacity: .10;
+}
+@media (hover: hover) and (pointer: fine) {
+    .cover-photo:hover {
+        z-index: 15;
+        transform: rotate(var(--photo-hover, 5deg));
+        filter: drop-shadow(0 4px 5px rgba(55,47,32,.16));
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cover-photo { transition: none; }
+}
+
+/* Preserve the earlier tilted option for comparison; the homepage is upright. */
+html[data-cover-layout="tilted"] .cover-photo { transform: rotate(var(--photo-tilt)); }
+@media (hover: hover) and (pointer: fine) {
+    html[data-cover-layout="tilted"] .cover-photo:hover { transform: rotate(0deg); }
+}
+.cover-photo:nth-of-type(even) { --photo-hover: -5deg; }
+/* Figma Hand Regular labels are local outlined SVGs exported from the original text nodes. */
+.cover-note { pointer-events: none; }
+.cover-click-effects { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+.cover-click-burst { position: absolute; width: 33px; height: auto; pointer-events: none; transform-origin: center; animation: cover-click-pop 700ms ease-out both; }
+@keyframes cover-click-pop {
+    0% { opacity: 0; transform: translate(-50%,-50%) scale(.55); }
+    18% { opacity: 1; transform: translate(-50%,-50%) scale(1.06); }
+    60% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%,-50%) scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cover-click-burst { animation: cover-click-fade 450ms linear both; transform: translate(-50%,-50%); }
+}
+@keyframes cover-click-fade { 0%,60% { opacity: 1; } 100% { opacity: 0; } }
+/* Embedded comparison shows the cover only; photos retain their hover behavior. */
+html[data-cover-preview] { overflow: hidden; }
+html[data-cover-preview] body > section,
+html[data-cover-preview] body > footer { display: none; }
+html[data-cover-preview] .cover-nav,
+html[data-cover-preview] .cover-scroll { pointer-events: none; }
+
+.cover-note-ring { fill: none; stroke: var(--cover-ink); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 480px) { .cover-intro { grid-template-columns: 1fr; } .cover-contact { margin-top: 10px; } }
+
+/* Cover notes now use the same live handwritten typeface as project tickets. */
+.cover-note.cover-note-text { font-family: 'Gochi Hand', cursive; font-weight: 400; fill: #111970; }
+.cover-contact a { gap: 14px; }
