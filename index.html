@@ -1024,10 +1024,10 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="cover.css?v=nav-gap-20261021">
+    <link rel="stylesheet" href="cover.css?v=smooth-reveal-20261021">
     <link rel="stylesheet" href="about.css?v=scroll-entry-20261020">
     <link rel="stylesheet" href="resume.css?v=accordion-20261020">
-    <link rel="stylesheet" href="board.css?v=small-pencil-20261021">
+    <link rel="stylesheet" href="board.css?v=nav-compact-final-20261021">
 </head>
 <body class="theme-beige">
     <svg style="position: absolute; width: 0; height: 0;">
@@ -1064,10 +1064,10 @@
             <div class="cover-intro">
                 <h1 class="cover-name" aria-label="TU Siyu">TU<span>SIYU<span class="name-dot">.</span></span></h1>
                 <address class="cover-contact">
-                    <a href="tel:17358988562"><span>Tel / WeChat</span>17358988562</a>
-                    <a href="mailto:tuesytu@gmail.com"><span>Email</span>tuesytu@gmail.com</a>
+                    <div class="cover-contact-row"><span>Tel / WeChat</span><button type="button" class="copy-contact" data-copy="17358988562" aria-label="复制电话号码">17358988562</button></div>
+                    <div class="cover-contact-row"><span>Email</span><button type="button" class="copy-contact" data-copy="tuesytu@gmail.com" aria-label="复制邮箱">tuesytu@gmail.com</button></div>
                 </address>
-                <a class="cover-scroll" href="#about" data-target="about">SCROLL TO DISCOVER <span aria-hidden="true">↓</span></a>
+                <a class="cover-scroll" href="#about" data-target="about"><span>SCROLL TO DISCOVER</span><svg class="utility-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12m-4-4 4 4 4-4"/></svg></a>
             </div>
             <div class="collage-viewport">
                 <div class="cover-collage" aria-label="生活、设计与兴趣的照片拼贴" data-node-id="797:383">
@@ -1240,7 +1240,7 @@
 <div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>AI辅助快闪店设计优化工具</h4><p class="resume-position">UX设计 &amp; 软件开发</p><time>2025.10 - 2026.01</time></div><ul><li>主导用户调研，完成界面原型与核心交互设计</li><li>基于SwiftUI搭建可交互iOS原型，并完成二次迭代</li></ul></div>
 <div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>自动驾驶语境下的AR交互界面设计</h4><p class="resume-position">HMI设计</p><time>2023.12 - 2024.05</time></div><ul><li>完成用户调研与竞品分析，明确设计方向</li><li>迭代高低保真界面，制作交互视频并完成用户测试</li></ul></div>
 <div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>市政管道安装机器</h4><p class="resume-position">产品机械设计</p><time>2022.06 - 2023.06</time></div><ul><li>主导概念方案与机械结构设计</li><li>完成三维建模、运动仿真与实物样机搭建</li></ul></div>
-            </div><div class="resume-page-rail resume-page-footer"><a href="#about" class="resume-fold-back">↑ ABOUT ME</a><span>END / RESUME</span></div></div>
+            </div><div class="resume-page-rail resume-page-footer"><a href="#about" class="resume-fold-back"><svg class="utility-arrow utility-arrow-up" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12m-4-4 4 4 4-4"/></svg><span>ABOUT ME</span></a><span>END / RESUME</span></div></div>
         </article>
     </section>
     </div>
@@ -1388,8 +1388,8 @@
     <footer data-theme="theme-black">
         <div class="footer-main"><h2 class="hand-font footer-title">See You</h2></div>
         <div class="footer-meta">
-            <div>TEL/Wechat: 17358988562</div>
-            <div>E-mail: tuesytu@gmail.com</div>
+            <div>TEL/Wechat: <button type="button" class="copy-contact" data-copy="17358988562" aria-label="复制电话号码">17358988562</button></div>
+            <div>E-mail: <button type="button" class="copy-contact" data-copy="tuesytu@gmail.com" aria-label="复制邮箱">tuesytu@gmail.com</button></div>
             <div>TU Siyu Personal portfolio</div>
         </div>
     </footer>
@@ -1485,6 +1485,7 @@
                 subtitleCn: '城市空中交通路线安全管理人机协同系统',
                 subtitleEn: 'A Human-AI Coordination System for Route Safety Management in Urban Air Mobility in the Greater Bay Area',
                 body: 'XPeng·CoFly 是一个面向未来城市空中交通的人机协同调度系统。随着 eVTOL 逐渐进入城市运行场景，CoFly 通过人工智能实时分析飞行状态、识别潜在冲突并生成调度建议，辅助调度人员完成复杂空域决策，实现 AI 智能分析与人类专业判断的协同',
+                video: `evtol%20demo.mp4`,
                 gallery: [
                     `${PJ_IMG}/cofly-cover.webp`,
                     `${PJ_IMG}/cofly-02-background.webp`,
@@ -1717,10 +1718,10 @@
             });
         });
     </script>
-    <script src="cover.js?v=global-click-20261019"></script>
-    <script src="about.js?v=scroll-entry-20261020"></script>
+    <script src="cover.js?v=smooth-reveal-20261021"></script>
+    <script src="about.js?v=smooth-reveal-20261021"></script>
     <script src="resume.js?v=accordion-20261020"></script>
-    <script src="board.js?v=small-pencil-20261021"></script>
+    <script src="board.js?v=nav-compact-final-20261021"></script>
     <script src="project-tags.js?v=scroll-entry-20261020"></script>
 </body>
 </html>
