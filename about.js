@@ -167,16 +167,3 @@
     });
 })();
 
-(() => {
-    const section = document.querySelector('.about-intro');
-    if (!section || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    section.classList.add('is-reveal-pending');
-    const observer = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        section.classList.remove('is-reveal-pending');
-        section.classList.add('is-reveal-shown');
-        observer.disconnect();
-        section.querySelector('.about-paper-shadow').addEventListener('animationend', () => section.classList.remove('is-reveal-shown'), {once:true});
-    }, { rootMargin: '0px 0px -16% 0px', threshold: .12 });
-    observer.observe(section);
-})();

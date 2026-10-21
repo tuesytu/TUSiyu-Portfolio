@@ -114,6 +114,7 @@
         const available = width - pad * 2;
         const edge = (available - gap * (small ? 1 : 2)) / (small ? 2 : 2.5625);
         const shortEdge = edge * 9 / 16;
+        const rowGap = small ? 22 : 28;
         const lanes = (small ? [edge, edge] : [edge, edge, shortEdge]).map((w,i,all) => ({
             width:w, x:all.slice(0,i).reduce((a,b)=>a+b+gap,0), height:0, cards:[]
         }));
@@ -121,17 +122,17 @@
         board.querySelectorAll('.board-photo').forEach((card,index) => {
             const img = card.querySelector('img');
             const ratio = Number(img.getAttribute('width')) / Number(img.getAttribute('height'));
-            const w = ratio < 1 ? shortEdge : shortEdge * ratio;
-            const h = ratio < 1 ? shortEdge / ratio : shortEdge;
+            const w = (ratio < 1 ? shortEdge : shortEdge * ratio) * .88;
+            const h = (ratio < 1 ? shortEdge / ratio : shortEdge) * .88;
             const forced = !small && index < 6 ? [0,1,0,1,2,2][index] : null;
             const options = lanes.filter(lane => lane.width >= w - .1);
             const lane = forced !== null ? lanes[forced] : options.reduce((a,b)=>a.height<=b.height?a:b);
             lane.cards.push({card,w,h,y:lane.height});
-            lane.height += h + gap;
+            lane.height += h + rowGap;
         });
-        const contentHeight = Math.max(...lanes.map(lane=>lane.height)) - gap;
+        const contentHeight = Math.max(...lanes.map(lane=>lane.height)) - rowGap;
         lanes.forEach(lane => lane.cards.forEach(({card,w,h,y},i) => {
-            const spread = lane.cards.length > 1 ? (contentHeight - (lane.height-gap)) / (lane.cards.length-1) : 0;
+            const spread = lane.cards.length > 1 ? (contentHeight - (lane.height-rowGap)) / (lane.cards.length-1) : 0;
             card.style.left = `${pad + lane.x + (lane.width-w)/2}px`;
             card.style.top = `${pad + y + spread*i}px`;
             card.style.width = `${w}px`;

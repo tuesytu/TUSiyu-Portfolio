@@ -197,7 +197,7 @@ body.theme-black .cover-nav .nav-link:hover { color: var(--accent-yellow); }
 @media (hover: hover) {
     .work-pinboard .board-photo:hover {
         z-index: 30;
-        transform: translate(var(--drag-x, 0px), var(--drag-y, 0px)) rotate(0deg) scale(1.22);
+        transform: translate(var(--drag-x, 0px), var(--drag-y, 0px)) rotate(0deg) scale(1.42);
     }
 }
 .work-pinboard .board-photo:focus-visible { z-index: 30; }
