@@ -1,0 +1,97 @@
+/* One continuous sheet: the scroll track is only enabled by resume.js. */
+body.theme-yellow { background-color: var(--resume-scroll-background, #f9d371); }
+body.theme-yellow.is-resume-color-turning, body.is-resume-color-turning .cover-nav { transition: none; }
+.resume-journey { position: relative; }
+.resume-turn-track { position: relative; }
+.resume-journey #about { border: 0; }
+.resume-sheet-section { padding: 0 clamp(18px, 3vw, 40px) 48px; border: 0; min-height: 0; scroll-margin-top: 96px; }
+.resume-document { width: 100%; max-width: 650px; margin: 0 auto; font: 400 var(--site-body-size)/1.7 var(--site-body-font); color: var(--site-muted-text); }
+.resume-fold-slot { perspective: 1600px; perspective-origin: center top; }
+.resume-fold { position: relative; background: #fcfbf8; transform-origin: center top; backface-visibility: hidden; box-shadow: 3px 4px 0 rgba(41,35,30,.08); mask-image: radial-gradient(circle at 18px 30px, transparent 4px, #000 5px); mask-size: 100% 60px; mask-repeat: repeat-y; }
+.resume-fold::before { content: ''; position: absolute; top: 0; bottom: 0; left: 35px; border-left: 1px dashed rgba(17,25,112,.18); pointer-events: none; }
+.resume-fold::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(44,37,28,.26), transparent 70%); opacity: var(--fold-shade, 0); pointer-events: none; }
+.resume-fold-intro { border-radius: 14px 14px 0 0; }
+.resume-fold-projects { border-radius: 0 0 14px 14px; }
+.resume-fold-slot + .resume-fold-slot .resume-fold, .resume-fold + .resume-fold { border-top: 1px dashed rgba(17,25,112,.2); }
+.resume-page-content { padding: 28px 36px 30px 66px; }
+.resume-page-rail { display: flex; align-items: center; justify-content: space-between; height: 36px; padding: 0 25px 0 54px; color: var(--cover-ink); font-size: 10px; line-height: 1; letter-spacing: .03em; border-bottom: 1px dashed rgba(17,25,112,.2); }
+.resume-page-footer { border-bottom: 0; border-top: 1px dashed rgba(17,25,112,.2); }
+.resume-page-footer a { color: inherit; text-decoration: none; }
+.resume-page-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.resume-heading { margin-bottom: 14px; }
+.resume-heading h2 { margin: 0 0 8px; font: 600 28px/1.2 var(--site-body-font); color: #333; letter-spacing: -.5px; }
+.resume-heading h2 span { display: inline-block; margin-left: 14px; font: 400 15px/1.2 var(--site-body-font); color: var(--accent-orange); letter-spacing: 0; }
+.resume-heading p { margin: 0; color: var(--cover-ink); }
+.resume-contact { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 10px; }
+.resume-contact a { color: inherit; text-decoration: none; }
+.resume-section-heading { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; margin: 0 0 20px; color: var(--cover-ink); font: 600 14px/1.4 var(--site-body-font); }
+.resume-section-heading span { font-size: 10px; font-weight: 400; letter-spacing: .06em; opacity: .65; }
+.resume-entry + .resume-entry { margin-top: 22px; }
+.resume-entry-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.resume-entry-heading h4 { margin: 0; color: #444; font: 600 12px/1.65 var(--site-body-font); }
+.resume-entry-heading time { flex-shrink: 0; font-size: 10px; font-variant-numeric: tabular-nums; }
+.resume-position { margin: 3px 0 6px; }
+/* Shared columns keep roles and dates aligned across both experience sections. */
+.resume-experience-heading { display: grid; grid-template-columns: minmax(0, 1fr) 114px 100px; gap: 12px; align-items: baseline; margin-bottom: 6px; text-align: left; }
+.resume-experience-heading h4 { min-width: 0; overflow-wrap: anywhere; }
+.resume-experience-heading .resume-position { margin: 0; line-height: 1.65; }
+.resume-experience-heading time { white-space: nowrap; }
+.resume-entry ul { margin: 0; padding-left: 1.25em; }
+.resume-entry li { padding-left: 2px; }
+.resume-entry li + li { margin-top: 3px; }
+.resume-document a:focus-visible { outline: 2px solid var(--cover-ink); outline-offset: 4px; }
+.resume-journey.has-scroll-turn .resume-turn-track { height: var(--turn-track-height); }
+.resume-journey.has-scroll-turn #about { position: sticky; top: var(--turn-nav-top); z-index: 2; }
+.resume-journey.has-scroll-turn .resume-sheet-section { position: relative; z-index: 3; margin-top: calc(-1 * var(--turn-stage-height)); padding-top: var(--turn-paper-inset); }
+.resume-journey.is-turning .about-paper-shadow { will-change: transform, opacity; }
+.resume-journey.is-turning .resume-fold { will-change: transform, opacity; }
+@media (max-width: 650px) {
+    .resume-sheet-section { padding: 18px 14px 32px; }
+    .resume-page-content { padding: 24px 20px 26px 52px; }
+    .resume-page-rail { padding-inline: 50px 20px; font-size: 9px; }
+    .resume-heading h2 { font-size: 25px; }
+    .resume-heading h2 span { display: block; margin: 7px 0 0; font-size: 14px; }
+    .resume-entry-heading { display: block; }
+    .resume-entry-heading time { display: block; margin-top: 3px; }
+    .resume-experience-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 10px; }
+    .resume-experience-heading h4 { grid-column: 1 / -1; }
+    .resume-experience-heading time { margin-top: 0; }
+    .resume-section-heading { margin-bottom: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .resume-fold { transform: none !important; opacity: 1 !important; }
+}
+
+/* Compact name and left-aligned contact block share one header row. */
+.resume-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; }
+.resume-heading h2 { margin: 0; white-space: nowrap; }
+.resume-header-details { text-align: left; }
+.resume-header-details .resume-contact { flex-direction: column; gap: 2px; margin-top: 5px; }
+.resume-experience-heading .resume-position { color: var(--cover-ink); }
+@media (max-width: 450px) {
+    .resume-heading { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.resume-section-heading { color: var(--accent-orange); }
+.resume-education-heading { display: grid; grid-template-columns: minmax(0, 1fr) 150px 100px; gap: 12px; align-items: baseline; text-align: left; }
+.resume-education-heading .resume-position { margin: 0; color: var(--cover-ink); }
+.resume-education-heading time { white-space: nowrap; }
+@media (max-width: 650px) {
+    .resume-education-heading { grid-template-columns: minmax(0, 1fr) auto; gap: 3px 10px; }
+    .resume-education-heading h4 { grid-column: 1 / -1; }
+    .resume-education-heading time { margin: 0; }
+}
+
+/* Once unfolded, one paper backing seals subpixel seams between 3D panels.
+   Punch holes are then cut through the entire sheet, not separate panel edges. */
+.resume-document.is-unfolded { background: #fcfbf8; border-radius: 14px; box-shadow: 3px 4px 0 rgba(41,35,30,.08); mask-image: radial-gradient(circle at 18px 30px, transparent 4px, #000 5px); mask-size: 100% 60px; mask-repeat: repeat-y; }
+.resume-document.is-unfolded .resume-fold { mask-image: none; box-shadow: none; transform: none !important; }
+.resume-document.is-unfolded .resume-fold-slot { transform: none !important; perspective: none; }
+
+/* Accordion hinges use a shared perspective; separate panel perspectives
+   would pull the same seam apart. No per-panel shadow or punched seam. */
+.resume-document { perspective: 1800px; perspective-origin: center top; transform-style: preserve-3d; }
+.resume-fold-slot { perspective: none; transform-style: preserve-3d; transform-origin: center top; }
+.resume-fold { backface-visibility: visible; box-shadow: none; mask-image: none; }
+.resume-journey.is-turning .resume-fold-slot { will-change: transform; }
+.resume-document.is-unfolded { perspective: none; }
