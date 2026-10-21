@@ -2,9 +2,14 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TU Siyu Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        const coverOptions = new URLSearchParams(location.search);
+        document.documentElement.dataset.coverLayout = coverOptions.get('cover') === 'tilted' ? 'tilted' : 'straight';
+        if (coverOptions.get('preview') === 'cover') document.documentElement.dataset.coverPreview = '';
+    </script>
+    <link href="fonts/space-mono/font.css" rel="stylesheet">
     <style>
         :root {
             --bg-beige: #f2e7df;
@@ -191,18 +196,16 @@
             opacity: 1;
             transform: translateX(0);
         }
-        #about, #works, #other-work {
+        #resume, #works, #other-work {
             padding: 5.5rem 4rem;
         }
         #works {
-            height: auto;
-            min-height: 0;
-            overflow: visible;
+            min-height: calc(100vw / var(--cover-panel-ratio));
         }
         #other-work {
             min-height: calc(100vw / var(--cover-panel-ratio));
         }
-        #about, #works, #education, #projects, #internships, #other-work { scroll-margin-top: var(--nav-height); }
+        #resume, #works, #education, #projects, #internships, #other-work { scroll-margin-top: var(--nav-height); }
         #education, #projects, #internships { padding-top: 4.2rem; padding-bottom: 3.5rem; }
 
         .theme-beige { background-color: #f2e7df; }
@@ -781,7 +784,7 @@
         }
 
         footer {
-            background: var(--text-black);
+            background: transparent;
             color: white;
             padding: 10.5rem 4rem 3.5rem;
             text-align: center;
@@ -820,13 +823,13 @@
                 --panel-full-height: calc((100vh - var(--nav-height)) / var(--desktop-zoom));
             }
             header.hero,
-            #about,
+            #resume,
             #works,
             #other-work,
             footer {
                 min-height: var(--panel-full-height);
             }
-            #about,
+            #resume,
             #works,
             #other-work {
                 height: var(--panel-full-height);
@@ -837,7 +840,7 @@
                 flex-direction: column;
                 overflow: hidden;
             }
-            #about > .content-wrap,
+            #resume > .content-wrap,
             #works > .content-wrap,
             #other-work > .content-wrap {
                 flex: 1 1 auto;
@@ -850,10 +853,10 @@
                 margin-right: auto;
                 align-self: stretch;
             }
-            #about h2,
+            #resume h2,
             #works h2,
             #other-work h2,
-            #about .section-nav-header,
+            #resume .section-nav-header,
             #education .section-nav-header,
             #projects .section-nav-header,
             #internships .section-nav-header {
@@ -862,26 +865,16 @@
                 text-align: left;
                 align-self: flex-start;
             }
-            #about .skills-container {
+            #resume .skills-container {
                 flex: 1 1 auto;
                 justify-content: center;
                 margin-top: 0;
                 gap: 56px;
             }
-            /* 作品区由所有卡片撑开高度，底部保留留白。 */
-            #works {
-                height: auto;
-                min-height: 0;
-                padding-bottom: 5.5rem;
-                overflow: visible;
-            }
-            #works > .content-wrap {
-                flex: none;
-            }
             #works .portfolio-grid {
-                flex: none;
-                align-content: start;
-                margin-top: 4.4rem;
+                flex: 1 1 auto;
+                align-content: center;
+                margin-top: 0;
                 margin-bottom: 0;
             }
             #other-work {
@@ -907,7 +900,7 @@
                 --touch-panel-height: 620px;
             }
             header.hero,
-            #about,
+            #resume,
             #works,
             #other-work,
             footer {
@@ -928,7 +921,7 @@
                 padding-bottom: 3.8rem;
                 overflow: visible;
             }
-            #about > .content-wrap,
+            #resume > .content-wrap,
             #works > .content-wrap,
             #other-work > .content-wrap {
                 flex: 1 1 auto;
@@ -940,7 +933,7 @@
                 margin-left: 0;
                 margin-right: 0;
             }
-            #about h2,
+            #resume h2,
             #works h2,
             #other-work h2 {
                 margin-left: 0 !important;
@@ -951,7 +944,7 @@
             #works > .content-wrap {
                 display: block;
             }
-            #about .skills-container {
+            #resume .skills-container {
                 flex: 1 1 auto;
                 justify-content: center;
                 margin-top: 0;
@@ -988,7 +981,7 @@
 
         @media (max-width: 1024px) {
             :root { --title-size: 4rem; --uniform-padding: 5rem 1.5rem; }
-            #about, #works, #other-work { padding: 3.75rem 1.5rem; }
+            #resume, #works, #other-work { padding: 3.75rem 1.5rem; }
             nav { padding: 0 1.5rem; gap: 1rem; }
             .nav-brand { left: 1.5rem; }
             .nav-links { gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
@@ -1023,24 +1016,6 @@
             }
         }
 
-        /* 展开的技能标签不参与文档流，因此为动画预留上下空间。 */
-        #about {
-            height: auto;
-            min-height: 0;
-            max-height: none;
-            overflow: visible;
-        }
-        #about > .content-wrap {
-            flex: none;
-        }
-        #about .skills-container {
-            flex: none;
-            justify-content: flex-start;
-            margin-top: 1rem;
-            padding-top: 40px;
-            padding-bottom: 16px;
-        }
-
         @media (prefers-reduced-motion: reduce) {
             #other-work .other-work-track { animation: none !important; }
             #other-work .other-work-row:has(.other-work-card:hover) .other-work-card:not(:hover) {
@@ -1049,6 +1024,10 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="cover.css?v=nav-gap-20261021">
+    <link rel="stylesheet" href="about.css?v=scroll-entry-20261020">
+    <link rel="stylesheet" href="resume.css?v=accordion-20261020">
+    <link rel="stylesheet" href="board.css?v=small-pencil-20261021">
 </head>
 <body class="theme-beige">
     <svg style="position: absolute; width: 0; height: 0;">
@@ -1071,7 +1050,7 @@
         </filter>
     </svg>
 
-    <nav>
+    <nav class="cover-nav" aria-label="主导航">
         <div class="hand-font nav-brand">Portfolio</div>
         <div class="mono-bold nav-links">
             <button class="nav-link" data-target="about"><span class="cn">关于我</span> <span class="en">ABOUT ME</span></button>
@@ -1080,169 +1059,195 @@
         </div>
     </nav>
 
-    <header class="hero content-wrap" data-theme="theme-beige">
-        <div class="mono-bold" style="margin-bottom: 3.2rem; color: var(--accent-orange);">PORTFOLIO WORKS 2026</div>
-        <div class="hero-title-wrap">
-            <h1 class="hand-font hero-title">TU Siyu<br>Portfolio</h1>
-        </div>
-        <div class="hero-welcome-note"><span class="hero-welcome-note-dot" aria-hidden="true"></span><span class="hero-welcome-note-text">Welcome to my playground</span></div>
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
-            <div class="mono-regular" style="font-family: 'Space Mono', monospace;">
-                TEL/Wechat: 17358988562<br>
-                Email: tuesytu@gmail.com
+    <header id="cover" class="hero cover-hero" data-theme="theme-beige">
+        <div class="cover-inner">
+            <div class="cover-intro">
+                <h1 class="cover-name" aria-label="TU Siyu">TU<span>SIYU<span class="name-dot">.</span></span></h1>
+                <address class="cover-contact">
+                    <a href="tel:17358988562"><span>Tel / WeChat</span>17358988562</a>
+                    <a href="mailto:tuesytu@gmail.com"><span>Email</span>tuesytu@gmail.com</a>
+                </address>
+                <a class="cover-scroll" href="#about" data-target="about">SCROLL TO DISCOVER <span aria-hidden="true">↓</span></a>
             </div>
-            <div class="mono-bold">SCROLL TO DISCOVER ↓</div>
+            <div class="collage-viewport">
+                <div class="cover-collage" aria-label="生活、设计与兴趣的照片拼贴" data-node-id="797:383">
+<figure class="cover-photo" data-node-id="797:376" data-photo="presentation" style="left:53.0097993%;top:22.1082621%;width:26.0382641%;height:22.4501425%;--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)"><div class="photo-surface"><img src="封面/web/presentation.png" alt="课堂上的交互设计分享" style="width:113.5%;height:120.56%;left:-1.82%;top:-18.53%;object-fit:fill" width="558" height="394" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="791:370" data-photo="camera-portrait" style="left:6.1129258%;top:14.7578348%;width:36.5842277%;height:29.8005698%;--paper-cut:polygon(0.00% 0.17%,3.00% 0.42%,6.00% 0.20%,9.00% 0.30%,12.00% 3.43%,15.00% 0.19%,18.00% 0.42%,21.00% 0.24%,24.00% 1.17%,27.00% 0.59%,30.00% 0.37%,33.00% 0.49%,36.00% 0.99%,39.00% 0.44%,42.00% 0.98%,45.00% 0.46%,48.00% 0.31%,51.00% 1.08%,54.00% 0.05%,57.00% 1.09%,60.00% 0.40%,63.00% 0.89%,66.00% 0.55%,69.00% 0.09%,72.00% 0.07%,75.00% 0.12%,78.00% 0.14%,81.00% 2.82%,84.00% 0.33%,87.00% 0.26%,90.00% 0.84%,93.00% 0.56%,96.00% 0.21%,99.00% 0.04%,99.14% 0.00%,99.28% 3.00%,98.80% 6.00%,99.81% 9.00%,99.73% 12.00%,98.78% 15.00%,99.65% 18.00%,98.80% 21.00%,98.70% 24.00%,99.31% 27.00%,97.06% 30.00%,99.79% 33.00%,98.91% 36.00%,99.20% 39.00%,99.33% 42.00%,99.97% 45.00%,99.11% 48.00%,99.29% 51.00%,99.53% 54.00%,98.81% 57.00%,98.74% 60.00%,99.02% 63.00%,99.84% 66.00%,96.72% 69.00%,99.98% 72.00%,99.07% 75.00%,99.07% 78.00%,99.48% 81.00%,99.43% 84.00%,99.70% 87.00%,99.52% 90.00%,99.68% 93.00%,99.04% 96.00%,99.27% 99.00%,100.00% 99.10%,97.00% 99.13%,94.00% 99.43%,91.00% 99.35%,88.00% 99.94%,85.00% 99.57%,82.00% 99.34%,79.00% 99.41%,76.00% 96.71%,73.00% 99.79%,70.00% 99.32%,67.00% 99.44%,64.00% 99.76%,61.00% 99.01%,58.00% 99.66%,55.00% 99.68%,52.00% 99.11%,49.00% 99.71%,46.00% 98.89%,43.00% 99.69%,40.00% 99.72%,37.00% 99.87%,34.00% 99.29%,31.00% 99.40%,28.00% 99.06%,25.00% 98.81%,22.00% 99.99%,19.00% 97.43%,16.00% 99.15%,13.00% 99.63%,10.00% 98.93%,7.00% 99.57%,4.00% 99.55%,1.00% 99.35%,0.89% 100.00%,0.56% 97.00%,0.32% 94.00%,0.86% 91.00%,0.99% 88.00%,2.86% 85.00%,0.29% 82.00%,0.17% 79.00%,0.79% 76.00%,0.95% 73.00%,0.58% 70.00%,1.03% 67.00%,0.41% 64.00%,0.66% 61.00%,0.84% 58.00%,0.57% 55.00%,0.59% 52.00%,0.15% 49.00%,0.52% 46.00%,3.19% 43.00%,0.72% 40.00%,0.83% 37.00%,0.08% 34.00%,0.79% 31.00%,0.51% 28.00%,0.79% 25.00%,0.71% 22.00%,1.09% 19.00%,0.43% 16.00%,0.34% 13.00%,0.10% 10.00%,1.05% 7.00%,0.48% 4.00%,0.41% 1.00%)"><div class="photo-surface"><img src="封面/web/camera-portrait.png" alt="拿着相机记录生活"  width="784" height="523" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="797:377" data-photo="robot-lab" style="left:42.6971535%;top:3.9886040%;width:22.2585161%;height:22.2222222%;--paper-cut:polygon(0.00% 0.33%,3.00% 0.65%,6.00% 0.85%,9.00% 1.15%,12.00% 3.04%,15.00% 0.64%,18.00% 0.45%,21.00% 0.66%,24.00% 1.01%,27.00% 1.19%,30.00% 1.11%,33.00% 1.13%,36.00% 0.07%,39.00% 0.29%,42.00% 1.14%,45.00% 0.68%,48.00% 0.17%,51.00% 0.75%,54.00% 1.12%,57.00% 0.28%,60.00% 0.42%,63.00% 0.21%,66.00% 1.17%,69.00% 0.24%,72.00% 0.31%,75.00% 0.09%,78.00% 0.12%,81.00% 2.62%,84.00% 0.00%,87.00% 0.63%,90.00% 0.36%,93.00% 0.44%,96.00% 0.70%,99.00% 0.38%,99.04% 0.00%,99.68% 3.00%,99.35% 6.00%,99.52% 9.00%,99.04% 12.00%,99.41% 15.00%,99.64% 18.00%,98.79% 21.00%,98.98% 24.00%,99.55% 27.00%,97.12% 30.00%,99.35% 33.00%,99.95% 36.00%,99.72% 39.00%,99.15% 42.00%,99.99% 45.00%,99.95% 48.00%,99.65% 51.00%,99.38% 54.00%,100.00% 57.00%,98.73% 60.00%,98.71% 63.00%,98.99% 66.00%,96.89% 69.00%,98.82% 72.00%,98.90% 75.00%,99.45% 78.00%,99.79% 81.00%,99.43% 84.00%,99.16% 87.00%,98.91% 90.00%,99.01% 93.00%,99.91% 96.00%,99.80% 99.00%,100.00% 99.52%,97.00% 99.69%,94.00% 99.59%,91.00% 99.05%,88.00% 99.36%,85.00% 99.22%,82.00% 98.81%,79.00% 99.45%,76.00% 97.20%,73.00% 98.81%,70.00% 99.32%,67.00% 99.03%,64.00% 99.08%,61.00% 99.48%,58.00% 99.67%,55.00% 99.32%,52.00% 99.65%,49.00% 99.54%,46.00% 99.99%,43.00% 98.83%,40.00% 98.86%,37.00% 99.91%,34.00% 99.75%,31.00% 99.66%,28.00% 99.61%,25.00% 99.65%,22.00% 99.58%,19.00% 97.19%,16.00% 99.80%,13.00% 99.86%,10.00% 99.14%,7.00% 99.78%,4.00% 99.05%,1.00% 99.79%,1.08% 100.00%,0.12% 97.00%,0.51% 94.00%,0.94% 91.00%,0.90% 88.00%,3.36% 85.00%,0.78% 82.00%,1.02% 79.00%,0.21% 76.00%,0.94% 73.00%,1.02% 70.00%,0.11% 67.00%,0.66% 64.00%,0.96% 61.00%,0.96% 58.00%,1.08% 55.00%,0.30% 52.00%,0.78% 49.00%,0.35% 46.00%,2.87% 43.00%,0.99% 40.00%,0.25% 37.00%,0.36% 34.00%,0.92% 31.00%,0.70% 28.00%,0.60% 25.00%,0.87% 22.00%,1.10% 19.00%,0.46% 16.00%,0.65% 13.00%,0.03% 10.00%,0.71% 7.00%,0.02% 4.00%,0.36% 1.00%)"><div class="photo-surface"><img src="封面/web/robot-lab.png" alt="在工作室测试实体交互原型" style="width:101.26%;height:165.13%;left:-1.26%;top:-52.69%;object-fit:fill" width="477" height="390" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="796:373" data-photo="cycling" style="left:27.2048530%;top:23.3618234%;width:22.3051797%;height:36.2962963%;--paper-cut:polygon(0.00% 0.61%,3.00% 0.54%,6.00% 0.67%,9.00% 0.46%,12.00% 3.60%,15.00% 0.19%,18.00% 0.54%,21.00% 0.92%,24.00% 0.73%,27.00% 1.09%,30.00% 0.35%,33.00% 0.43%,36.00% 0.37%,39.00% 0.16%,42.00% 0.09%,45.00% 0.62%,48.00% 0.36%,51.00% 0.70%,54.00% 1.15%,57.00% 1.19%,60.00% 0.93%,63.00% 0.40%,66.00% 0.46%,69.00% 1.08%,72.00% 0.28%,75.00% 0.99%,78.00% 0.29%,81.00% 3.14%,84.00% 0.67%,87.00% 1.15%,90.00% 0.88%,93.00% 1.01%,96.00% 0.42%,99.00% 0.42%,98.87% 0.00%,99.24% 3.00%,99.06% 6.00%,99.87% 9.00%,99.92% 12.00%,99.44% 15.00%,99.60% 18.00%,99.65% 21.00%,98.94% 24.00%,98.80% 27.00%,97.71% 30.00%,99.87% 33.00%,99.75% 36.00%,99.76% 39.00%,99.06% 42.00%,99.50% 45.00%,98.73% 48.00%,99.98% 51.00%,99.30% 54.00%,99.83% 57.00%,98.90% 60.00%,99.50% 63.00%,99.69% 66.00%,97.24% 69.00%,98.87% 72.00%,99.98% 75.00%,99.70% 78.00%,98.83% 81.00%,99.45% 84.00%,99.87% 87.00%,98.79% 90.00%,98.77% 93.00%,99.45% 96.00%,99.75% 99.00%,100.00% 99.97%,97.00% 99.11%,94.00% 99.07%,91.00% 99.11%,88.00% 99.17%,85.00% 99.58%,82.00% 99.66%,79.00% 99.31%,76.00% 96.95%,73.00% 99.44%,70.00% 99.38%,67.00% 99.53%,64.00% 99.01%,61.00% 98.85%,58.00% 99.67%,55.00% 98.85%,52.00% 99.02%,49.00% 99.51%,46.00% 99.70%,43.00% 99.18%,40.00% 99.35%,37.00% 99.29%,34.00% 98.81%,31.00% 98.82%,28.00% 99.16%,25.00% 99.38%,22.00% 99.80%,19.00% 97.81%,16.00% 99.02%,13.00% 99.69%,10.00% 99.18%,7.00% 99.64%,4.00% 99.74%,1.00% 99.18%,0.19% 100.00%,0.08% 97.00%,1.10% 94.00%,0.44% 91.00%,0.40% 88.00%,3.37% 85.00%,0.23% 82.00%,0.87% 79.00%,0.26% 76.00%,0.80% 73.00%,0.83% 70.00%,0.12% 67.00%,0.42% 64.00%,0.93% 61.00%,0.54% 58.00%,0.48% 55.00%,0.07% 52.00%,0.17% 49.00%,1.04% 46.00%,3.59% 43.00%,0.57% 40.00%,0.73% 37.00%,0.15% 34.00%,1.04% 31.00%,0.69% 28.00%,0.80% 25.00%,0.94% 22.00%,0.26% 19.00%,0.77% 16.00%,0.52% 13.00%,0.33% 10.00%,0.19% 7.00%,0.79% 4.00%,0.21% 1.00%)"><div class="photo-surface"><img src="封面/web/cycling.png" alt="骑行中的生活照片"  width="478" height="637" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="797:380" data-photo="camera-repair" style="left:52.0298647%;top:51.8518519%;width:26.0849277%;height:22.5071225%;--paper-cut:polygon(0.00% 0.17%,3.00% 0.59%,6.00% 0.61%,9.00% 1.16%,12.00% 3.57%,15.00% 0.95%,18.00% 0.82%,21.00% 0.19%,24.00% 1.10%,27.00% 0.52%,30.00% 0.70%,33.00% 0.12%,36.00% 0.37%,39.00% 1.01%,42.00% 0.15%,45.00% 0.10%,48.00% 0.39%,51.00% 0.42%,54.00% 0.59%,57.00% 0.58%,60.00% 0.22%,63.00% 0.00%,66.00% 0.43%,69.00% 0.36%,72.00% 0.65%,75.00% 0.67%,78.00% 0.86%,81.00% 3.13%,84.00% 0.46%,87.00% 0.78%,90.00% 1.09%,93.00% 0.79%,96.00% 0.03%,99.00% 0.36%,98.75% 0.00%,98.75% 3.00%,99.61% 6.00%,99.72% 9.00%,99.99% 12.00%,99.84% 15.00%,99.91% 18.00%,98.72% 21.00%,98.77% 24.00%,99.56% 27.00%,97.97% 30.00%,98.81% 33.00%,99.19% 36.00%,98.82% 39.00%,99.61% 42.00%,98.88% 45.00%,98.95% 48.00%,99.13% 51.00%,99.13% 54.00%,99.09% 57.00%,99.40% 60.00%,98.76% 63.00%,99.87% 66.00%,97.47% 69.00%,99.52% 72.00%,99.37% 75.00%,98.91% 78.00%,99.90% 81.00%,99.46% 84.00%,99.42% 87.00%,99.51% 90.00%,99.20% 93.00%,99.09% 96.00%,99.19% 99.00%,100.00% 99.39%,97.00% 99.56%,94.00% 98.81%,91.00% 99.02%,88.00% 99.20%,85.00% 99.90%,82.00% 99.53%,79.00% 99.17%,76.00% 97.67%,73.00% 99.49%,70.00% 99.48%,67.00% 99.83%,64.00% 98.99%,61.00% 98.93%,58.00% 99.66%,55.00% 99.81%,52.00% 99.69%,49.00% 99.14%,46.00% 99.74%,43.00% 99.11%,40.00% 98.91%,37.00% 99.89%,34.00% 99.17%,31.00% 99.16%,28.00% 99.26%,25.00% 99.22%,22.00% 99.65%,19.00% 97.73%,16.00% 98.90%,13.00% 99.78%,10.00% 98.90%,7.00% 99.04%,4.00% 99.53%,1.00% 99.42%,0.32% 100.00%,0.25% 97.00%,0.89% 94.00%,0.08% 91.00%,0.23% 88.00%,3.57% 85.00%,0.39% 82.00%,0.65% 79.00%,0.68% 76.00%,0.76% 73.00%,0.93% 70.00%,0.88% 67.00%,0.32% 64.00%,0.38% 61.00%,1.09% 58.00%,1.00% 55.00%,0.47% 52.00%,0.31% 49.00%,0.43% 46.00%,3.40% 43.00%,0.25% 40.00%,0.04% 37.00%,0.12% 34.00%,0.23% 31.00%,0.97% 28.00%,0.17% 25.00%,0.15% 22.00%,0.81% 19.00%,0.98% 16.00%,1.07% 13.00%,0.99% 10.00%,1.02% 7.00%,0.91% 4.00%,1.05% 1.00%)"><div class="photo-surface"><img src="封面/web/camera-repair.png" alt="拆开相机进行维修" style="width:115.03%;height:122.09%;left:0%;top:-0.03%;object-fit:fill" width="559" height="395" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="797:379" data-photo="instant-camera" style="left:71.9552030%;top:41.5384615%;width:22.5851610%;height:20.6837607%;--paper-cut:polygon(0.00% 0.60%,3.00% 1.03%,6.00% 0.11%,9.00% 0.45%,12.00% 2.66%,15.00% 0.78%,18.00% 0.23%,21.00% 0.37%,24.00% 0.98%,27.00% 0.07%,30.00% 0.18%,33.00% 0.36%,36.00% 0.97%,39.00% 0.57%,42.00% 0.75%,45.00% 1.08%,48.00% 0.28%,51.00% 0.54%,54.00% 0.20%,57.00% 0.94%,60.00% 0.02%,63.00% 0.91%,66.00% 0.42%,69.00% 0.69%,72.00% 0.22%,75.00% 1.12%,78.00% 0.38%,81.00% 3.15%,84.00% 1.13%,87.00% 0.72%,90.00% 0.39%,93.00% 0.28%,96.00% 1.09%,99.00% 0.86%,99.18% 0.00%,99.28% 3.00%,98.80% 6.00%,99.83% 9.00%,99.52% 12.00%,98.94% 15.00%,99.15% 18.00%,99.19% 21.00%,99.15% 24.00%,99.39% 27.00%,97.27% 30.00%,99.44% 33.00%,98.77% 36.00%,99.65% 39.00%,99.67% 42.00%,99.59% 45.00%,99.79% 48.00%,99.20% 51.00%,99.25% 54.00%,99.91% 57.00%,99.67% 60.00%,98.85% 63.00%,99.65% 66.00%,97.13% 69.00%,99.46% 72.00%,99.79% 75.00%,98.74% 78.00%,99.18% 81.00%,99.68% 84.00%,99.25% 87.00%,99.61% 90.00%,98.97% 93.00%,99.97% 96.00%,99.43% 99.00%,100.00% 99.24%,97.00% 99.12%,94.00% 99.88%,91.00% 99.94%,88.00% 99.45%,85.00% 99.29%,82.00% 99.44%,79.00% 99.93%,76.00% 97.58%,73.00% 99.16%,70.00% 99.37%,67.00% 98.87%,64.00% 99.94%,61.00% 99.26%,58.00% 99.29%,55.00% 99.47%,52.00% 99.92%,49.00% 99.55%,46.00% 99.62%,43.00% 99.80%,40.00% 99.00%,37.00% 99.89%,34.00% 99.96%,31.00% 98.92%,28.00% 98.86%,25.00% 99.22%,22.00% 99.39%,19.00% 97.04%,16.00% 99.94%,13.00% 99.69%,10.00% 99.41%,7.00% 99.86%,4.00% 98.94%,1.00% 99.29%,0.26% 100.00%,0.67% 97.00%,0.92% 94.00%,0.71% 91.00%,0.97% 88.00%,3.35% 85.00%,0.60% 82.00%,1.00% 79.00%,0.97% 76.00%,0.31% 73.00%,0.24% 70.00%,0.17% 67.00%,0.79% 64.00%,0.89% 61.00%,0.59% 58.00%,1.09% 55.00%,0.37% 52.00%,0.25% 49.00%,0.39% 46.00%,3.26% 43.00%,0.49% 40.00%,1.02% 37.00%,0.40% 34.00%,0.96% 31.00%,0.79% 28.00%,0.58% 25.00%,1.08% 22.00%,0.74% 19.00%,0.98% 16.00%,1.09% 13.00%,0.78% 10.00%,0.48% 7.00%,0.31% 4.00%,1.03% 1.00%)"><div class="photo-surface"><img src="封面/web/instant-camera.png" alt="拍立得相机与照片"  width="484" height="363" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="797:378" data-photo="night-portrait" style="left:36.5375642%;top:69.8575499%;width:24.0783948%;height:23.5897436%;--paper-cut:polygon(0.00% 0.88%,3.00% 1.10%,6.00% 0.04%,9.00% 0.01%,12.00% 3.79%,15.00% 0.38%,18.00% 0.24%,21.00% 0.60%,24.00% 0.66%,27.00% 0.89%,30.00% 0.73%,33.00% 0.65%,36.00% 0.91%,39.00% 0.31%,42.00% 0.56%,45.00% 1.07%,48.00% 0.87%,51.00% 0.72%,54.00% 0.15%,57.00% 1.13%,60.00% 0.05%,63.00% 0.97%,66.00% 0.18%,69.00% 0.60%,72.00% 0.82%,75.00% 0.64%,78.00% 0.01%,81.00% 2.84%,84.00% 0.51%,87.00% 0.35%,90.00% 0.14%,93.00% 0.15%,96.00% 0.88%,99.00% 0.65%,99.40% 0.00%,99.96% 3.00%,99.01% 6.00%,98.71% 9.00%,99.05% 12.00%,99.37% 15.00%,99.08% 18.00%,99.18% 21.00%,99.82% 24.00%,99.29% 27.00%,97.20% 30.00%,99.75% 33.00%,99.66% 36.00%,99.59% 39.00%,99.52% 42.00%,99.60% 45.00%,98.76% 48.00%,98.85% 51.00%,99.36% 54.00%,99.78% 57.00%,98.80% 60.00%,98.90% 63.00%,99.98% 66.00%,96.94% 69.00%,99.98% 72.00%,98.89% 75.00%,99.23% 78.00%,98.80% 81.00%,99.17% 84.00%,99.81% 87.00%,99.31% 90.00%,98.84% 93.00%,99.49% 96.00%,99.19% 99.00%,100.00% 99.58%,97.00% 99.20%,94.00% 99.58%,91.00% 99.68%,88.00% 99.99%,85.00% 98.90%,82.00% 99.27%,79.00% 98.93%,76.00% 97.07%,73.00% 99.63%,70.00% 99.92%,67.00% 98.83%,64.00% 98.90%,61.00% 98.92%,58.00% 99.55%,55.00% 99.29%,52.00% 99.10%,49.00% 99.61%,46.00% 99.68%,43.00% 99.69%,40.00% 99.40%,37.00% 99.52%,34.00% 98.96%,31.00% 99.02%,28.00% 99.84%,25.00% 99.65%,22.00% 99.45%,19.00% 96.76%,16.00% 99.00%,13.00% 99.47%,10.00% 99.01%,7.00% 99.85%,4.00% 99.91%,1.00% 98.91%,0.20% 100.00%,0.91% 97.00%,1.00% 94.00%,0.47% 91.00%,0.38% 88.00%,2.54% 85.00%,0.03% 82.00%,1.04% 79.00%,0.96% 76.00%,0.12% 73.00%,0.40% 70.00%,0.74% 67.00%,0.39% 64.00%,0.02% 61.00%,1.03% 58.00%,0.60% 55.00%,0.31% 52.00%,0.99% 49.00%,0.38% 46.00%,3.59% 43.00%,0.74% 40.00%,1.02% 37.00%,0.40% 34.00%,0.67% 31.00%,0.85% 28.00%,0.61% 25.00%,0.66% 22.00%,0.68% 19.00%,1.06% 16.00%,1.01% 13.00%,0.50% 10.00%,0.36% 7.00%,0.87% 4.00%,0.58% 1.00%)"><div class="photo-surface"><img src="封面/web/night-portrait.png" alt="夜晚的生活照片" style="width:118.22%;height:110.51%;left:-5.43%;top:-10.45%;object-fit:fill" width="516" height="414" decoding="async" draggable="false"></div></figure>
+<figure class="cover-photo" data-node-id="797:381" data-photo="tan-huan" style="left:6.7195520%;top:50.5413105%;width:19.5520299%;height:31.9658120%;--paper-cut:polygon(0.00% 0.24%,3.00% 0.74%,6.00% 0.13%,9.00% 1.09%,12.00% 2.83%,15.00% 0.55%,18.00% 0.93%,21.00% 1.09%,24.00% 0.70%,27.00% 0.82%,30.00% 0.64%,33.00% 1.02%,36.00% 0.27%,39.00% 0.82%,42.00% 0.72%,45.00% 0.56%,48.00% 0.52%,51.00% 0.01%,54.00% 0.67%,57.00% 0.52%,60.00% 0.74%,63.00% 0.54%,66.00% 1.11%,69.00% 0.82%,72.00% 0.78%,75.00% 0.26%,78.00% 0.50%,81.00% 3.74%,84.00% 0.42%,87.00% 0.20%,90.00% 0.46%,93.00% 0.17%,96.00% 0.99%,99.00% 0.81%,99.70% 0.00%,98.77% 3.00%,99.41% 6.00%,99.57% 9.00%,98.85% 12.00%,99.79% 15.00%,99.66% 18.00%,99.46% 21.00%,98.88% 24.00%,99.53% 27.00%,97.28% 30.00%,99.78% 33.00%,99.68% 36.00%,99.53% 39.00%,99.07% 42.00%,98.94% 45.00%,98.99% 48.00%,99.81% 51.00%,99.41% 54.00%,99.79% 57.00%,99.04% 60.00%,99.59% 63.00%,98.74% 66.00%,96.93% 69.00%,98.85% 72.00%,99.55% 75.00%,98.76% 78.00%,98.99% 81.00%,99.82% 84.00%,98.74% 87.00%,99.83% 90.00%,98.71% 93.00%,99.62% 96.00%,99.66% 99.00%,100.00% 99.36%,97.00% 99.95%,94.00% 99.11%,91.00% 99.11%,88.00% 99.91%,85.00% 99.08%,82.00% 99.39%,79.00% 99.40%,76.00% 97.26%,73.00% 99.12%,70.00% 98.82%,67.00% 99.27%,64.00% 99.73%,61.00% 99.13%,58.00% 99.48%,55.00% 99.47%,52.00% 99.59%,49.00% 99.24%,46.00% 99.70%,43.00% 99.01%,40.00% 99.50%,37.00% 99.20%,34.00% 99.65%,31.00% 99.63%,28.00% 99.18%,25.00% 99.58%,22.00% 99.39%,19.00% 97.73%,16.00% 99.19%,13.00% 99.45%,10.00% 99.81%,7.00% 99.40%,4.00% 99.76%,1.00% 99.92%,0.26% 100.00%,0.21% 97.00%,0.35% 94.00%,0.05% 91.00%,1.02% 88.00%,3.40% 85.00%,0.75% 82.00%,0.86% 79.00%,0.45% 76.00%,0.10% 73.00%,0.03% 70.00%,0.43% 67.00%,1.03% 64.00%,0.54% 61.00%,0.79% 58.00%,0.88% 55.00%,0.18% 52.00%,1.07% 49.00%,0.97% 46.00%,2.80% 43.00%,0.06% 40.00%,1.02% 37.00%,1.01% 34.00%,0.18% 31.00%,0.35% 28.00%,0.16% 25.00%,0.11% 22.00%,0.76% 19.00%,0.09% 16.00%,0.85% 13.00%,0.24% 10.00%,1.10% 7.00%,0.96% 4.00%,0.95% 1.00%)"><div class="photo-surface"><img src="封面/web/tan-huan.png" alt="我的狗 TAN HUAN" style="width:115.27%;height:114.8%;left:0%;top:-14.71%;object-fit:fill" width="419" height="561" decoding="async" draggable="false"></div></figure><svg class="cover-ink" viewBox="0 0 2143 1755" xmlns="http://www.w3.org/2000/svg" aria-label="我的城市、兴趣和生活涂鸦">
+<g data-node-id="806:519" transform="translate(776.195 287.245) rotate(-13.93)"><image href="封面/web/doodles/imgVector9.svg?v=figma-updated-20261020" x="-51.5976" y="-76.7505" width="110.2350" height="153.5010" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:528" transform="translate(559.9315 1523.596) rotate(26.59)"><image href="封面/web/doodles/imgFrame4.svg?v=figma-updated-20261020" x="-39.4206" y="-33.8566" width="79.0713" height="67.1143" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:521" transform="translate(1334.5 1626.5) rotate(0)"><image href="封面/web/doodles/imgVector11.svg?v=figma-updated-20261020" x="-44.9455" y="-49.9436" width="88.2712" height="97.5212" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:508" transform="translate(1882.08975 1188.6615000000002) rotate(-112.16)"><image href="封面/web/doodles/imgVector1.svg?v=figma-updated-20261020" x="-51.9015" y="-91.3064" width="103.8030" height="193.1710" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:520" transform="translate(1431.25 1499.5) rotate(0)"><image href="封面/web/doodles/imgVector10.svg?v=figma-updated-20261020" x="-61.7175" y="-66.5460" width="124.8170" height="133.0920" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:517" transform="translate(1466.5805 129.07999999999998) rotate(51.24)"><image href="封面/web/doodles/imgFrame2.svg?v=figma-updated-20261020" x="-82.2505" y="-79.0005" width="164.5010" height="158.0010" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:535" transform="translate(1704.6855 410.1705) rotate(28.69)"><image href="封面/web/doodles/imgFrame5.svg?v=figma-updated-20261020" x="-117.8071" y="-96.3644" width="233.8100" height="190.9200" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:551" transform="translate(923.9590000000001 1196.712) rotate(0)"><image href="封面/web/doodles/imgFrame6.svg?v=figma-updated-20261020" x="-69.4590" y="-52.2125" width="138.9180" height="104.4250" preserveAspectRatio="none" aria-hidden="true"/></g>
+<g data-node-id="806:554" transform="translate(1678.25 1239.25) rotate(0)"><image href="封面/web/doodles/imgVector22.svg?v=figma-updated-20261020" x="-54.7500" y="-67.7500" width="109.5000" height="135.5000" preserveAspectRatio="none" aria-hidden="true"/></g>
+<image class="cover-note" data-node-id="806:536" href="封面/web/figma-hand-bold/806-536.svg" x="461.248" y="79.976" width="369" height="44" role="img" aria-label="CHENGDU, 2001" />
+<image class="cover-note" data-node-id="806:537" href="封面/web/figma-hand-bold/806-537.svg" x="414.328" y="161.076" width="418" height="44" role="img" aria-label="HONGKONG, 2025" />
+<image class="cover-note" data-node-id="806:538" href="封面/web/figma-hand-bold/806-538.svg" x="1705.204" y="149.976" width="302" height="33" role="img" aria-label="DESIGN X AI" />
+<image class="cover-note" data-node-id="806:539" href="封面/web/figma-hand-bold/806-539.svg" x="1732.628" y="592.904" width="343" height="83" role="img" aria-label="HARDWARE INTERACTION" />
+<g class="cover-note-ring" aria-hidden="true">
+    <path d="M1648 1553 C1608 1538 1524 1545 1518 1585 C1511 1631 1653 1642 1676 1598 C1697 1557 1598 1536 1540 1556"/>
+    <path d="M1232 1657 C1161 1639 1020 1651 1011 1703 C1002 1759 1258 1774 1290 1719 C1320 1669 1148 1640 1056 1661"/>
+</g>
+<image class="cover-note" data-node-id="806:540" href="封面/web/figma-hand-bold/806-540.svg" x="1545.628" y="1573.976" width="117" height="37" role="img" aria-label="INFJ" />
+<image class="cover-note" data-node-id="806:541" href="封面/web/figma-hand-bold/806-541.svg" x="1045.204" y="1684.156" width="231" height="34" role="img" aria-label="TUESY TU" />
+<image class="cover-note" data-node-id="806:542" href="封面/web/figma-hand-bold/806-542.svg" x="245.204" y="1506.976" width="211" height="33" role="img" aria-label="TAN HUA" />
+<image class="cover-note" data-node-id="806:543" href="封面/web/figma-hand-bold/806-543.svg" x="616.248" y="1104.976" width="203" height="34" role="img" aria-label="CYCLING" />
+<image class="cover-note" data-node-id="806:544" href="封面/web/figma-hand-bold/806-544.svg" x="1612.628" y="1334.688" width="504" height="33" role="img" aria-label="INSTANT MEMORIES" />
+<image class="cover-note" data-node-id="806:545" href="封面/web/figma-hand-bold/806-545.svg" x="1129.580" y="844.976" width="172" height="33" role="img" aria-label="FIXING" />
+</svg>
+                </div>
+            </div>
         </div>
     </header>
 
-    <section id="about" data-theme="theme-beige">
-        <div class="content-wrap">
-            <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 3rem;"><span class="display-cn">关于我</span> ABOUT ME</h2>
-            <div class="section-nav-header">01 / <span class="cn">技能概括</span> <span class="en">SKILLS OVERVIEW</span></div>
-            <div class="skills-container">
-                <div class="skill-row">
-                    <div class="skill-orb-wrapper" data-sw="CURSOR, CLAUDE, STITCH"><div class="skill-orb">VIBE<br>CODING</div></div>
-                    <div class="skill-orb-wrapper" data-sw="FIGMA, PS"><div class="skill-orb">UI/UX<br>设计</div></div>
-                    <div class="skill-orb-wrapper" data-sw="AUTOCAD, RHINO, SOLIDWORKS"><div class="skill-orb">硬件产品<br>设计</div></div>
+    <div class="resume-journey" data-theme="theme-yellow">
+        <div class="resume-turn-track">
+    <section id="about" data-theme="theme-yellow" class="about-intro" aria-labelledby="about-title">
+        <div class="about-paper-shadow">
+            <article class="about-paper">
+                <div class="about-sheet-top"><span>01 / ABOUT ME</span><span aria-hidden="true">&lt;PROFILE&gt;</span></div>
+                <div class="about-sheet-body">
+                    <aside class="about-photo-column">
+                        <figure class="about-polaroid">
+                            <img src="about me/照片 - 人物(3)_1.jpg" alt="Tuesy 的竖版拍立得照片" width="1740" height="2731" loading="lazy" decoding="async">
+                            <a class="about-resume-link" href="#resume-sheet"><span aria-hidden="true">[</span> MY RESUME <span aria-hidden="true">↗ ]</span></a>
+                        </figure>
+                    </aside>
+                    <div class="about-copy">
+                        <h2 id="about-title"><span class="about-greeting">Hi, this is</span> <strong>Tuesy TU.</strong></h2>
+                        <p class="about-roles">人机交互 <span aria-hidden="true">·</span> 产品设计 <span aria-hidden="true">·</span> AI 协作</p>
+                        <div class="about-metadata">
+                            <div class="about-meta-row"><span class="about-code-tag" aria-hidden="true">&lt;/education&gt;</span><div>重庆大学 · 工业设计<br>香港理工大学 · 智能交互设计</div></div>
+                            <div class="about-meta-row"><span class="about-code-tag" aria-hidden="true">&lt;/skills&gt;</span><div>用户研究 | 体验策略 | 交互设计 | 原型验证</div></div>
+                        </div>
+                        <div class="about-typewriter">
+                            <p class="about-type-line"><span class="about-list-mark" aria-hidden="true">*</span><span class="about-typed-copy">喜欢观察生活，也喜欢把想法变成真实的体验。</span></p>
+                            <p class="about-type-line"><span class="about-list-mark" aria-hidden="true">*</span><span class="about-typed-copy">从实体产品到数字体验，关心一个设计能做什么，也关心它用起来怎么样。</span></p>
+                            <p class="about-type-line"><span class="about-list-mark" aria-hidden="true">*</span><span class="about-typed-copy">有了想法就想试一试，AI 是经常一起琢磨的搭档，遇到不会的就边做边学。</span></p>
+                            <p class="about-type-line"><span class="about-list-mark" aria-hidden="true">*</span><span class="about-typed-copy">关掉电脑之后，喜欢骑行、硬件改造和复古相机。</span></p>
+                        </div>
+                    </div>
+                    <aside class="about-software" aria-label="软件技能，涂鸦图标">
+                        <ul class="about-software-group" aria-label="VIBE CODING">
+                            <li class="software-ticket ticket-family-1" style="--tilt:-5deg;--scatter-x:0px;--scatter-y:0px" title="VIBE CODING · CURSOR" aria-label="CURSOR，VIBE CODING">
+                                <img src="about me/skills/doodle-icons/cursor.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/cursor.svg');--glyph-width:5.000000em;--glyph-height:0.875000em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-1" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="VIBE CODING · CLAUDE" aria-label="CLAUDE，VIBE CODING">
+                                <img src="about me/skills/doodle-icons/claude.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/claude.svg');--glyph-width:4.875000em;--glyph-height:0.875000em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-1" style="--tilt:-5deg;--scatter-x:0px;--scatter-y:0px" title="VIBE CODING · CODEX" aria-label="CODEX，VIBE CODING">
+                                <img src="about me/skills/doodle-icons/codex.svg?v=outline-20261021" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/codex.svg');--glyph-width:4.256958em;--glyph-height:0.958333em"></span>
+                            </li>
+                        </ul>
+                        <ul class="about-software-group" aria-label="UI/UX 设计">
+                            <li class="software-ticket ticket-family-2" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="UI/UX 设计 · FIGMA" aria-label="FIGMA，UI/UX 设计">
+                                <img src="about me/skills/doodle-icons/figma.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/figma.svg');--glyph-width:4.000000em;--glyph-height:0.916667em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-2" style="--tilt:-5deg;--scatter-x:0px;--scatter-y:0px" title="UI/UX 设计 · PS" aria-label="PS，UI/UX 设计">
+                                <img src="about me/skills/doodle-icons/ps.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/ps.svg');--glyph-width:1.375000em;--glyph-height:0.875000em"></span>
+                            </li>
+                        </ul>
+                        <ul class="about-software-group" aria-label="硬件产品 设计">
+                            <li class="software-ticket ticket-family-3" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="硬件产品 设计 · AUTOCAD" aria-label="AUTOCAD，硬件产品 设计">
+                                <img src="about me/skills/doodle-icons/autocad.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/autocad.svg');--glyph-width:5.791667em;--glyph-height:0.875000em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-3" style="--tilt:-5deg;--scatter-x:0px;--scatter-y:0px" title="硬件产品 设计 · RHINO" aria-label="RHINO，硬件产品 设计">
+                                <img src="about me/skills/doodle-icons/rhino.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/rhino.svg');--glyph-width:4.291667em;--glyph-height:0.916667em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-3" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="硬件产品 设计 · SOLIDWORKS" aria-label="SOLIDWORKS，硬件产品 设计">
+                                <img src="about me/skills/doodle-icons/solidworks.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/solidworks.svg');--glyph-width:8.500000em;--glyph-height:0.958333em"></span>
+                            </li>
+                        </ul>
+                        <ul class="about-software-group" aria-label="硬件 编程">
+                            <li class="software-ticket ticket-family-4" style="--tilt:-5deg;--scatter-x:0px;--scatter-y:0px" title="硬件 编程 · PYTHON" aria-label="PYTHON，硬件 编程">
+                                <img src="about me/skills/doodle-icons/python.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/python.svg');--glyph-width:5.083333em;--glyph-height:0.958333em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-4" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="硬件 编程 · JAVA" aria-label="JAVA，硬件 编程">
+                                <img src="about me/skills/doodle-icons/java.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/java.svg');--glyph-width:2.958333em;--glyph-height:1.041667em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-4" style="--tilt:-4deg;--scatter-x:0px;--scatter-y:0px" title="硬件 编程 · ARDUINO" aria-label="ARDUINO，硬件 编程">
+                                <img src="about me/skills/doodle-icons/arduino.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/arduino.svg');--glyph-width:6.000000em;--glyph-height:0.916667em"></span>
+                            </li>
+                        </ul>
+                        <ul class="about-software-group" aria-label="3D建模 渲染">
+                            
+                            <li class="software-ticket ticket-family-5" style="--tilt:-5deg;--scatter-x:0px;--scatter-y:0px" title="3D建模 渲染 · BLENDER" aria-label="BLENDER，3D建模 渲染">
+                                <img src="about me/skills/doodle-icons/blender.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/blender.svg');--glyph-width:5.916667em;--glyph-height:0.916667em"></span>
+                            </li>
+                            <li class="software-ticket ticket-family-5" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="3D建模 渲染 · KEYSHOT" aria-label="KEYSHOT，3D建模 渲染">
+                                <img src="about me/skills/doodle-icons/keyshot.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/keyshot.svg');--glyph-width:5.916667em;--glyph-height:1.000000em"></span>
+                            </li>
+                        </ul>
+                        <ul class="about-software-group" aria-label="界面 动效">
+                            <li class="software-ticket ticket-family-6" style="--tilt:5deg;--scatter-x:0px;--scatter-y:0px" title="界面 动效 · AE" aria-label="AE，界面 动效">
+                                <img src="about me/skills/doodle-icons/ae.svg" alt="" width="28" height="28" loading="lazy" decoding="async">
+                                <span class="software-handwriting" aria-hidden="true" style="--lettering:url('about me/skills/labels/ae.svg');--glyph-width:1.625000em;--glyph-height:0.833333em"></span>
+                            </li>
+                        </ul>
+                    </aside>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-orb-wrapper" data-sw="PYTHON, JAVA, ARDUINO"><div class="skill-orb">硬件<br>编程</div></div>
-                    <div class="skill-orb-wrapper" data-sw="RHINO, BLENDER, KEYSHOT"><div class="skill-orb">3D建模<br>渲染</div></div>
-                    <div class="skill-orb-wrapper" data-sw="FIGMA, AE"><div class="skill-orb">界面<br>动效</div></div>
-                    <div class="skill-orb-wrapper" data-sw="雅思7(6.5)"><div class="skill-orb">商务<br>英语</div></div>
-                </div>
-            </div>
+                <div class="about-sheet-bottom"><span>TUESY TU / ABOUT ME</span><span aria-hidden="true">&lt;/PROFILE&gt;</span></div>
+            </article>
         </div>
     </section>
-
-    <section id="education" data-theme="theme-green">
-        <div class="content-wrap">
-            <div class="section-nav-header">02 / <span class="cn">教育背景</span> <span class="en">ACADEMIC BACKGROUND</span></div>
-            <div class="edu-row">
-                <div class="edu-time">2025 - PRESENT</div>
-                <div class="edu-school hand-font">香港理工大学</div>
-                <div class="tag-group">
-                    <div class="main-tag">硕士 · 智能系统设计</div>
-                    <div class="detail-tag">UIUX, 硬件交互, AI编程</div>
-                </div>
-            </div>
-            <div class="edu-row">
-                <div class="edu-time">2020 - 2024</div>
-                <div class="edu-school hand-font">重庆大学</div>
-                <div class="tag-group">
-                    <div class="main-tag">本科 · 工业设计</div>
-                    <div class="detail-tag">产品设计, 汽车设计, 机械设计</div>
-                </div>
-            </div>
         </div>
+    <section id="resume-sheet" class="resume-sheet-section" data-theme="theme-yellow" aria-labelledby="resume-sheet-title">
+        <article class="resume-document">
+            <div class="resume-fold resume-fold-intro">
+                <div class="resume-page-rail"><span>02 / RESUME</span><span>PROFILE</span></div>
+                <div class="resume-page-content">
+                    <header class="resume-heading">
+                        <h2 id="resume-sheet-title">TU SIYU</h2>
+                        <div class="resume-header-details">
+                        <p>人机交互 · 产品设计 · AI 协作</p>
+                        <div class="resume-contact"><a href="mailto:tuesytu@gmail.com">tuesytu@gmail.com</a><a href="tel:17358988562">17358988562</a></div></div>
+                    </header>
+                    <h3 class="resume-section-heading">教育背景 <span>EDUCATION</span></h3>
+                    <div class="resume-entry"><div class="resume-entry-heading resume-education-heading"><h4>香港理工大学</h4><p class="resume-position">硕士 · 智能系统设计</p><time>2025 - PRESENT</time></div></div>
+<div class="resume-entry"><div class="resume-entry-heading resume-education-heading"><h4>重庆大学</h4><p class="resume-position">本科 · 工业设计</p><time>2020 - 2024</time></div></div>
+                </div>
+            </div>
+            <div class="resume-fold resume-fold-internships"><div class="resume-page-content">
+                <h3 class="resume-section-heading">实习经历 <span>INTERNSHIPS</span></h3>
+                <div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>拓维信息海云天 · 产品中心</h4><p class="resume-position">B端 UX/UI设计</p><time>2026.06 - 2026.08</time></div><ul><li>负责教育类B端系统的需求优化设计，参与需求评审与开发走查</li><li>完成AI产品的0–1设计，并完善Skill文档</li></ul></div>
+<div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>和德石油天然气工程公司</h4><p class="resume-position">管道工程设计实习</p><time>2024.07 - 2025.05</time></div><ul><li>根据现场施工情况修改与优化管道设计图</li><li>协助管道工程设计，制作竣工图纸</li></ul></div>
+<div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>碧昂设计工作室</h4><p class="resume-position">产品设计实习</p><time>2023.06 - 2023.09</time></div><ul><li>协助外观设计与提案讨论，参与用户调研并产出渲染图</li><li>3D打印与模型制作，独立完成样机组装与功能测试</li></ul></div>
+            </div></div>
+            <div class="resume-fold resume-fold-projects"><div class="resume-page-content">
+                <h3 class="resume-section-heading">项目经历 <span>PROJECTS</span></h3>
+                <div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>eVTOL人机协同调度操作系统设计（校企合作 · 小鹏）</h4><p class="resume-position">G端系统设计</p><time>2026.05 - 2026.07</time></div><ul><li>设计面向空中调度员的人机协同调度系统</li><li>完成信息架构、高保真界面与可交互原型，并结合AI制作演示demo</li></ul></div>
+<div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>AI辅助快闪店设计优化工具</h4><p class="resume-position">UX设计 &amp; 软件开发</p><time>2025.10 - 2026.01</time></div><ul><li>主导用户调研，完成界面原型与核心交互设计</li><li>基于SwiftUI搭建可交互iOS原型，并完成二次迭代</li></ul></div>
+<div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>自动驾驶语境下的AR交互界面设计</h4><p class="resume-position">HMI设计</p><time>2023.12 - 2024.05</time></div><ul><li>完成用户调研与竞品分析，明确设计方向</li><li>迭代高低保真界面，制作交互视频并完成用户测试</li></ul></div>
+<div class="resume-entry"><div class="resume-entry-heading resume-experience-heading"><h4>市政管道安装机器</h4><p class="resume-position">产品机械设计</p><time>2022.06 - 2023.06</time></div><ul><li>主导概念方案与机械结构设计</li><li>完成三维建模、运动仿真与实物样机搭建</li></ul></div>
+            </div><div class="resume-page-rail resume-page-footer"><a href="#about" class="resume-fold-back">↑ ABOUT ME</a><span>END / RESUME</span></div></div>
+        </article>
     </section>
+    </div>
 
-    <section id="internships" data-theme="theme-yellow">
+    <section id="works" data-theme="theme-projects">
         <div class="content-wrap">
-            <div class="section-nav-header">03 / <span class="cn">实习经历</span> <span class="en">INTERNSHIP EXPERIENCE</span></div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2026.06 - 2026.08</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">B端 UX/UI设计</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">拓维信息海云天 · 产品中心</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">协同产研完成教育 B 端需求评审与界面设计，跟进走查，参与保密命题平台体验重构</p>
-                        <p class="exp-bullet">独立完成 AI 智能审校模块 0‑1 设计，沉淀并优化 Skill 设计规范，提升团队协作效率</p>
-                    </div>
-                </div>
-            </div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2024.07 - 2025.05</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">管道工程设计实习</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">和德石油天然气工程公司</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">根据现场施工情况修改与优化管道设计图</p>
-                        <p class="exp-bullet">协助管道工程设计，制作竣工图纸</p>
-                    </div>
-                </div>
-            </div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2023.06 - 2023.09</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">产品设计实习</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">碧昂设计工作室</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">协助外观设计与提案讨论，参与用户调研并产出渲染图</p>
-                        <p class="exp-bullet">3D打印与模型制作，独立完成样机组装与功能测试</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" data-theme="theme-orange">
-        <div class="content-wrap">
-            <div class="section-nav-header">04 / <span class="cn">项目经历</span> <span class="en">PROJECT EXPERIENCE</span></div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2026.05 - 2026.07</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">G端系统设计</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">eVTOL人机协同调度操作系统设计（校企合作 · 小鹏）</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">设计面向空中调度员的人机协同调度系统</p>
-                        <p class="exp-bullet">完成信息架构、高保真界面与可交互原型，并结合AI制作演示demo</p>
-                    </div>
-                </div>
-            </div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2025.10 - 2026.01</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">UX设计 & 软件开发</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">AI辅助快闪店设计优化工具</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">主导用户调研，完成界面原型与核心交互设计</p>
-                        <p class="exp-bullet">基于SwiftUI搭建可交互iOS原型，并完成二次迭代</p>
-                    </div>
-                </div>
-            </div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2023.12 - 2024.05</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">HMI设计</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">自动驾驶语境下的AR交互界面设计</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">完成用户调研与竞品分析，明确设计方向</p>
-                        <p class="exp-bullet">迭代高低保真界面，制作交互视频并完成用户测试</p>
-                    </div>
-                </div>
-            </div>
-            <div class="exp-row">
-                <div class="exp-left">
-                    <div class="mono-bold">2022.06 - 2023.06</div>
-                    <div class="mono-regular" style="font-weight:700; margin-top:1rem;">产品机械设计</div>
-                </div>
-                <div class="exp-right">
-                    <h3 class="hand-font exp-title">市政管道安装机器</h3>
-                    <div class="mono-regular">
-                        <p class="exp-bullet">主导概念方案与机械结构设计</p>
-                        <p class="exp-bullet">完成三维建模、运动仿真与实物样机搭建</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="works" data-theme="theme-beige">
-        <div class="content-wrap">
-            <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 0;"><span class="display-cn">作品集</span> PROJECTS</h2>
+            <h2 class="hand-font section-hand-title">PROJECTS</h2>
             <div class="portfolio-grid">
                 <div class="project-stack" data-project="haiyuntian">
                     <div class="project-stack-visual">
@@ -1289,6 +1294,21 @@
                         <div class="project-card-title"><span class="project-index">03</span><span class="project-name">PopMind</span></div>
                     </div>
                 </div>
+                <div class="project-stack" data-project="xiaohongshu">
+                    <div class="project-stack-visual">
+                        <div class="stack-layer layer-bg-1"></div>
+                        <div class="stack-layer layer-bg-2"></div>
+                        <div class="stack-layer layer-main">
+                            <div class="layer-main-frame" aria-hidden="true"></div>
+                            <div class="layer-main-body">
+                                <img class="project-card-cover" src="Project-images/xiaohongshu/01-cover.png?v=updated-20261020" alt="XIAOHNGSHU 封面">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-stack-caption">
+                        <div class="project-card-title"><span class="project-index">04</span><span class="project-name">XIAOHNGSHU</span></div>
+                    </div>
+                </div>
                 <div class="project-stack" data-project="pawards">
                     <div class="project-stack-visual">
                         <div class="stack-layer layer-bg-1"></div>
@@ -1301,7 +1321,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="project-card-title"><span class="project-index">04</span><span class="project-name">Pawards</span></div>
+                        <div class="project-card-title"><span class="project-index">05</span><span class="project-name">Pawards</span></div>
                     </div>
                 </div>
                 <div class="project-stack" data-project="mycloy">
@@ -1316,7 +1336,7 @@
                         </div>
                     </div>
                     <div class="project-stack-caption">
-                        <div class="project-card-title"><span class="project-index">05</span><span class="project-name">Mycloy</span></div>
+                        <div class="project-card-title"><span class="project-index">06</span><span class="project-name">Mycloy</span></div>
                     </div>
                 </div>
             </div>
@@ -1343,47 +1363,29 @@
         </div>
     </div>
 
-    <section id="other-work" data-theme="theme-beige">
-        <div class="content-wrap">
-            <h2 class="hand-font" style="font-size: 4rem; margin-bottom: 3rem;"><span class="display-cn">其他作品</span> OTHER WORKS</h2>
-        </div>
-        <div class="other-work-grid">
-            <div class="other-work-row row-one">
-                <div class="other-work-track">
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/01.png" alt="Other work 01"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/02.png" alt="Other work 02"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/03.png" alt="Other work 03"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/04.png" alt="Other work 04"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/05.png" alt="Other work 05"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/06.png" alt="Other work 06"></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/01.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/02.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/03.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/04.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/05.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/06.png" alt=""></div>
-                </div>
-            </div>
-            <div class="other-work-row row-two">
-                <div class="other-work-track">
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/07.png" alt="Other work 07"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/08.png" alt="Other work 08"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/09.png" alt="Other work 09"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/10.png" alt="Other work 10"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/11.png" alt="Other work 11"></div>
-                    <div class="other-work-card"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/12.png" alt="Other work 12"></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/07.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/08.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/09.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/10.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/11.png" alt=""></div>
-                    <div class="other-work-card" aria-hidden="true"><div class="other-work-sticker other-work-sticker-yellow" aria-hidden="true"></div><div class="other-work-sticker other-work-sticker-red" aria-hidden="true"></div><img src="other-work-images/12.png" alt=""></div>
-                </div>
-            </div>
+    <section id="other-work" data-theme="theme-black">
+        <div class="content-wrap"><h2 class="hand-font section-hand-title">OTHER WORKS</h2></div>
+        <div class="work-pinboard" aria-label="其他作品图片板，可拖动图片，悬停放大">
+            <button class="board-photo" data-frame="raw" aria-label="硬件交互 · 手套原型" type="button" style="--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)" data-figma-node="855:875"><img src="other-work-images/hardware/hardware-glove.png" width="4096" height="2304" alt="硬件交互 · 手套原型" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="raw" aria-label="硬件交互 · 儿童训练机械臂" type="button" style="--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)" data-figma-node="855:877"><img src="other-work-images/hardware/robotic-arm.png" width="3840" height="2160" alt="硬件交互 · 儿童训练机械臂" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="raw" aria-label="硬件交互 · LingGanGu" type="button" style="--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)" data-figma-node="855:878"><img src="other-work-images/hardware/linggangu.png" width="4096" height="2304" alt="硬件交互 · LingGanGu" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="raw" aria-label="硬件交互 · BUZZ-Light Maze" type="button" style="--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)" data-figma-node="855:879"><img src="other-work-images/hardware/buzz-light-maze.png" width="3840" height="2160" alt="硬件交互 · BUZZ-Light Maze" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="white" aria-label="其他作品 05" type="button" style="--paper-cut:polygon(0.00% 0.17%,3.00% 0.59%,6.00% 0.61%,9.00% 1.16%,12.00% 3.57%,15.00% 0.95%,18.00% 0.82%,21.00% 0.19%,24.00% 1.10%,27.00% 0.52%,30.00% 0.70%,33.00% 0.12%,36.00% 0.37%,39.00% 1.01%,42.00% 0.15%,45.00% 0.10%,48.00% 0.39%,51.00% 0.42%,54.00% 0.59%,57.00% 0.58%,60.00% 0.22%,63.00% 0.00%,66.00% 0.43%,69.00% 0.36%,72.00% 0.65%,75.00% 0.67%,78.00% 0.86%,81.00% 3.13%,84.00% 0.46%,87.00% 0.78%,90.00% 1.09%,93.00% 0.79%,96.00% 0.03%,99.00% 0.36%,98.75% 0.00%,98.75% 3.00%,99.61% 6.00%,99.72% 9.00%,99.99% 12.00%,99.84% 15.00%,99.91% 18.00%,98.72% 21.00%,98.77% 24.00%,99.56% 27.00%,97.97% 30.00%,98.81% 33.00%,99.19% 36.00%,98.82% 39.00%,99.61% 42.00%,98.88% 45.00%,98.95% 48.00%,99.13% 51.00%,99.13% 54.00%,99.09% 57.00%,99.40% 60.00%,98.76% 63.00%,99.87% 66.00%,97.47% 69.00%,99.52% 72.00%,99.37% 75.00%,98.91% 78.00%,99.90% 81.00%,99.46% 84.00%,99.42% 87.00%,99.51% 90.00%,99.20% 93.00%,99.09% 96.00%,99.19% 99.00%,100.00% 99.39%,97.00% 99.56%,94.00% 98.81%,91.00% 99.02%,88.00% 99.20%,85.00% 99.90%,82.00% 99.53%,79.00% 99.17%,76.00% 97.67%,73.00% 99.49%,70.00% 99.48%,67.00% 99.83%,64.00% 98.99%,61.00% 98.93%,58.00% 99.66%,55.00% 99.81%,52.00% 99.69%,49.00% 99.14%,46.00% 99.74%,43.00% 99.11%,40.00% 98.91%,37.00% 99.89%,34.00% 99.17%,31.00% 99.16%,28.00% 99.26%,25.00% 99.22%,22.00% 99.65%,19.00% 97.73%,16.00% 98.90%,13.00% 99.78%,10.00% 98.90%,7.00% 99.04%,4.00% 99.53%,1.00% 99.42%,0.32% 100.00%,0.25% 97.00%,0.89% 94.00%,0.08% 91.00%,0.23% 88.00%,3.57% 85.00%,0.39% 82.00%,0.65% 79.00%,0.68% 76.00%,0.76% 73.00%,0.93% 70.00%,0.88% 67.00%,0.32% 64.00%,0.38% 61.00%,1.09% 58.00%,1.00% 55.00%,0.47% 52.00%,0.31% 49.00%,0.43% 46.00%,3.40% 43.00%,0.25% 40.00%,0.04% 37.00%,0.12% 34.00%,0.23% 31.00%,0.97% 28.00%,0.17% 25.00%,0.15% 22.00%,0.81% 19.00%,0.98% 16.00%,1.07% 13.00%,0.99% 10.00%,1.02% 7.00%,0.91% 4.00%,1.05% 1.00%)"><img src="other-work-images/05.png" width="326" height="434" alt="其他作品 05" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="white" aria-label="其他作品 09" type="button" style="--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)"><img src="other-work-images/09.png" width="326" height="432" alt="其他作品 09" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="torn" aria-label="其他作品 01" type="button" style="--paper-cut:polygon(0.00% 0.98%,3.00% 0.12%,6.00% 1.11%,9.00% 0.88%,12.00% 2.91%,15.00% 0.51%,18.00% 0.04%,21.00% 0.18%,24.00% 0.78%,27.00% 0.93%,30.00% 0.23%,33.00% 0.84%,36.00% 0.45%,39.00% 0.66%,42.00% 1.00%,45.00% 0.28%,48.00% 0.21%,51.00% 0.51%,54.00% 1.17%,57.00% 0.49%,60.00% 1.01%,63.00% 0.21%,66.00% 0.90%,69.00% 1.03%,72.00% 0.44%,75.00% 0.25%,78.00% 0.12%,81.00% 2.77%,84.00% 0.35%,87.00% 0.72%,90.00% 1.05%,93.00% 0.31%,96.00% 1.12%,99.00% 0.20%,99.35% 0.00%,99.03% 3.00%,98.83% 6.00%,98.81% 9.00%,98.76% 12.00%,99.89% 15.00%,98.87% 18.00%,100.00% 21.00%,99.40% 24.00%,99.53% 27.00%,97.44% 30.00%,99.89% 33.00%,99.47% 36.00%,99.12% 39.00%,99.13% 42.00%,99.99% 45.00%,98.97% 48.00%,99.59% 51.00%,99.30% 54.00%,99.61% 57.00%,99.13% 60.00%,99.34% 63.00%,98.86% 66.00%,97.93% 69.00%,99.48% 72.00%,98.72% 75.00%,99.97% 78.00%,99.86% 81.00%,99.06% 84.00%,98.73% 87.00%,99.89% 90.00%,99.75% 93.00%,99.10% 96.00%,99.34% 99.00%,100.00% 98.89%,97.00% 99.85%,94.00% 99.84%,91.00% 99.75%,88.00% 99.49%,85.00% 99.71%,82.00% 99.42%,79.00% 99.89%,76.00% 97.21%,73.00% 99.63%,70.00% 99.74%,67.00% 99.82%,64.00% 99.62%,61.00% 99.64%,58.00% 98.83%,55.00% 99.21%,52.00% 98.96%,49.00% 99.43%,46.00% 99.89%,43.00% 99.25%,40.00% 99.11%,37.00% 98.82%,34.00% 99.99%,31.00% 99.96%,28.00% 99.06%,25.00% 99.72%,22.00% 99.98%,19.00% 97.81%,16.00% 99.03%,13.00% 99.35%,10.00% 98.89%,7.00% 99.07%,4.00% 99.42%,1.00% 99.58%,0.38% 100.00%,0.18% 97.00%,1.02% 94.00%,0.45% 91.00%,0.52% 88.00%,2.95% 85.00%,0.60% 82.00%,0.94% 79.00%,0.71% 76.00%,0.54% 73.00%,0.74% 70.00%,0.85% 67.00%,0.67% 64.00%,0.58% 61.00%,0.21% 58.00%,0.17% 55.00%,0.73% 52.00%,0.79% 49.00%,0.92% 46.00%,2.79% 43.00%,0.46% 40.00%,0.01% 37.00%,0.64% 34.00%,0.62% 31.00%,0.29% 28.00%,0.74% 25.00%,0.99% 22.00%,0.47% 19.00%,0.68% 16.00%,0.65% 13.00%,0.61% 10.00%,0.24% 7.00%,0.02% 4.00%,1.09% 1.00%)"><img src="other-work-images/01.png" width="360" height="450" alt="其他作品 01" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="torn" aria-label="其他作品 02" type="button" style="--paper-cut:polygon(0.00% 0.17%,3.00% 0.42%,6.00% 0.20%,9.00% 0.30%,12.00% 3.43%,15.00% 0.19%,18.00% 0.42%,21.00% 0.24%,24.00% 1.17%,27.00% 0.59%,30.00% 0.37%,33.00% 0.49%,36.00% 0.99%,39.00% 0.44%,42.00% 0.98%,45.00% 0.46%,48.00% 0.31%,51.00% 1.08%,54.00% 0.05%,57.00% 1.09%,60.00% 0.40%,63.00% 0.89%,66.00% 0.55%,69.00% 0.09%,72.00% 0.07%,75.00% 0.12%,78.00% 0.14%,81.00% 2.82%,84.00% 0.33%,87.00% 0.26%,90.00% 0.84%,93.00% 0.56%,96.00% 0.21%,99.00% 0.04%,99.14% 0.00%,99.28% 3.00%,98.80% 6.00%,99.81% 9.00%,99.73% 12.00%,98.78% 15.00%,99.65% 18.00%,98.80% 21.00%,98.70% 24.00%,99.31% 27.00%,97.06% 30.00%,99.79% 33.00%,98.91% 36.00%,99.20% 39.00%,99.33% 42.00%,99.97% 45.00%,99.11% 48.00%,99.29% 51.00%,99.53% 54.00%,98.81% 57.00%,98.74% 60.00%,99.02% 63.00%,99.84% 66.00%,96.72% 69.00%,99.98% 72.00%,99.07% 75.00%,99.07% 78.00%,99.48% 81.00%,99.43% 84.00%,99.70% 87.00%,99.52% 90.00%,99.68% 93.00%,99.04% 96.00%,99.27% 99.00%,100.00% 99.10%,97.00% 99.13%,94.00% 99.43%,91.00% 99.35%,88.00% 99.94%,85.00% 99.57%,82.00% 99.34%,79.00% 99.41%,76.00% 96.71%,73.00% 99.79%,70.00% 99.32%,67.00% 99.44%,64.00% 99.76%,61.00% 99.01%,58.00% 99.66%,55.00% 99.68%,52.00% 99.11%,49.00% 99.71%,46.00% 98.89%,43.00% 99.69%,40.00% 99.72%,37.00% 99.87%,34.00% 99.29%,31.00% 99.40%,28.00% 99.06%,25.00% 98.81%,22.00% 99.99%,19.00% 97.43%,16.00% 99.15%,13.00% 99.63%,10.00% 98.93%,7.00% 99.57%,4.00% 99.55%,1.00% 99.35%,0.89% 100.00%,0.56% 97.00%,0.32% 94.00%,0.86% 91.00%,0.99% 88.00%,2.86% 85.00%,0.29% 82.00%,0.17% 79.00%,0.79% 76.00%,0.95% 73.00%,0.58% 70.00%,1.03% 67.00%,0.41% 64.00%,0.66% 61.00%,0.84% 58.00%,0.57% 55.00%,0.59% 52.00%,0.15% 49.00%,0.52% 46.00%,3.19% 43.00%,0.72% 40.00%,0.83% 37.00%,0.08% 34.00%,0.79% 31.00%,0.51% 28.00%,0.79% 25.00%,0.71% 22.00%,1.09% 19.00%,0.43% 16.00%,0.34% 13.00%,0.10% 10.00%,1.05% 7.00%,0.48% 4.00%,0.41% 1.00%)"><img src="other-work-images/02.png" width="360" height="450" alt="其他作品 02" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="raw" aria-label="其他作品 03" type="button" style="--paper-cut:polygon(0.00% 0.33%,3.00% 0.65%,6.00% 0.85%,9.00% 1.15%,12.00% 3.04%,15.00% 0.64%,18.00% 0.45%,21.00% 0.66%,24.00% 1.01%,27.00% 1.19%,30.00% 1.11%,33.00% 1.13%,36.00% 0.07%,39.00% 0.29%,42.00% 1.14%,45.00% 0.68%,48.00% 0.17%,51.00% 0.75%,54.00% 1.12%,57.00% 0.28%,60.00% 0.42%,63.00% 0.21%,66.00% 1.17%,69.00% 0.24%,72.00% 0.31%,75.00% 0.09%,78.00% 0.12%,81.00% 2.62%,84.00% 0.00%,87.00% 0.63%,90.00% 0.36%,93.00% 0.44%,96.00% 0.70%,99.00% 0.38%,99.04% 0.00%,99.68% 3.00%,99.35% 6.00%,99.52% 9.00%,99.04% 12.00%,99.41% 15.00%,99.64% 18.00%,98.79% 21.00%,98.98% 24.00%,99.55% 27.00%,97.12% 30.00%,99.35% 33.00%,99.95% 36.00%,99.72% 39.00%,99.15% 42.00%,99.99% 45.00%,99.95% 48.00%,99.65% 51.00%,99.38% 54.00%,100.00% 57.00%,98.73% 60.00%,98.71% 63.00%,98.99% 66.00%,96.89% 69.00%,98.82% 72.00%,98.90% 75.00%,99.45% 78.00%,99.79% 81.00%,99.43% 84.00%,99.16% 87.00%,98.91% 90.00%,99.01% 93.00%,99.91% 96.00%,99.80% 99.00%,100.00% 99.52%,97.00% 99.69%,94.00% 99.59%,91.00% 99.05%,88.00% 99.36%,85.00% 99.22%,82.00% 98.81%,79.00% 99.45%,76.00% 97.20%,73.00% 98.81%,70.00% 99.32%,67.00% 99.03%,64.00% 99.08%,61.00% 99.48%,58.00% 99.67%,55.00% 99.32%,52.00% 99.65%,49.00% 99.54%,46.00% 99.99%,43.00% 98.83%,40.00% 98.86%,37.00% 99.91%,34.00% 99.75%,31.00% 99.66%,28.00% 99.61%,25.00% 99.65%,22.00% 99.58%,19.00% 97.19%,16.00% 99.80%,13.00% 99.86%,10.00% 99.14%,7.00% 99.78%,4.00% 99.05%,1.00% 99.79%,1.08% 100.00%,0.12% 97.00%,0.51% 94.00%,0.94% 91.00%,0.90% 88.00%,3.36% 85.00%,0.78% 82.00%,1.02% 79.00%,0.21% 76.00%,0.94% 73.00%,1.02% 70.00%,0.11% 67.00%,0.66% 64.00%,0.96% 61.00%,0.96% 58.00%,1.08% 55.00%,0.30% 52.00%,0.78% 49.00%,0.35% 46.00%,2.87% 43.00%,0.99% 40.00%,0.25% 37.00%,0.36% 34.00%,0.92% 31.00%,0.70% 28.00%,0.60% 25.00%,0.87% 22.00%,1.10% 19.00%,0.46% 16.00%,0.65% 13.00%,0.03% 10.00%,0.71% 7.00%,0.02% 4.00%,0.36% 1.00%)"><img src="other-work-images/hardware/03.png" width="988" height="556" alt="其他作品 03" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="raw" aria-label="其他作品 04" type="button" style="--paper-cut:polygon(0.00% 0.61%,3.00% 0.54%,6.00% 0.67%,9.00% 0.46%,12.00% 3.60%,15.00% 0.19%,18.00% 0.54%,21.00% 0.92%,24.00% 0.73%,27.00% 1.09%,30.00% 0.35%,33.00% 0.43%,36.00% 0.37%,39.00% 0.16%,42.00% 0.09%,45.00% 0.62%,48.00% 0.36%,51.00% 0.70%,54.00% 1.15%,57.00% 1.19%,60.00% 0.93%,63.00% 0.40%,66.00% 0.46%,69.00% 1.08%,72.00% 0.28%,75.00% 0.99%,78.00% 0.29%,81.00% 3.14%,84.00% 0.67%,87.00% 1.15%,90.00% 0.88%,93.00% 1.01%,96.00% 0.42%,99.00% 0.42%,98.87% 0.00%,99.24% 3.00%,99.06% 6.00%,99.87% 9.00%,99.92% 12.00%,99.44% 15.00%,99.60% 18.00%,99.65% 21.00%,98.94% 24.00%,98.80% 27.00%,97.71% 30.00%,99.87% 33.00%,99.75% 36.00%,99.76% 39.00%,99.06% 42.00%,99.50% 45.00%,98.73% 48.00%,99.98% 51.00%,99.30% 54.00%,99.83% 57.00%,98.90% 60.00%,99.50% 63.00%,99.69% 66.00%,97.24% 69.00%,98.87% 72.00%,99.98% 75.00%,99.70% 78.00%,98.83% 81.00%,99.45% 84.00%,99.87% 87.00%,98.79% 90.00%,98.77% 93.00%,99.45% 96.00%,99.75% 99.00%,100.00% 99.97%,97.00% 99.11%,94.00% 99.07%,91.00% 99.11%,88.00% 99.17%,85.00% 99.58%,82.00% 99.66%,79.00% 99.31%,76.00% 96.95%,73.00% 99.44%,70.00% 99.38%,67.00% 99.53%,64.00% 99.01%,61.00% 98.85%,58.00% 99.67%,55.00% 98.85%,52.00% 99.02%,49.00% 99.51%,46.00% 99.70%,43.00% 99.18%,40.00% 99.35%,37.00% 99.29%,34.00% 98.81%,31.00% 98.82%,28.00% 99.16%,25.00% 99.38%,22.00% 99.80%,19.00% 97.81%,16.00% 99.02%,13.00% 99.69%,10.00% 99.18%,7.00% 99.64%,4.00% 99.74%,1.00% 99.18%,0.19% 100.00%,0.08% 97.00%,1.10% 94.00%,0.44% 91.00%,0.40% 88.00%,3.37% 85.00%,0.23% 82.00%,0.87% 79.00%,0.26% 76.00%,0.80% 73.00%,0.83% 70.00%,0.12% 67.00%,0.42% 64.00%,0.93% 61.00%,0.54% 58.00%,0.48% 55.00%,0.07% 52.00%,0.17% 49.00%,1.04% 46.00%,3.59% 43.00%,0.57% 40.00%,0.73% 37.00%,0.15% 34.00%,1.04% 31.00%,0.69% 28.00%,0.80% 25.00%,0.94% 22.00%,0.26% 19.00%,0.77% 16.00%,0.52% 13.00%,0.33% 10.00%,0.19% 7.00%,0.79% 4.00%,0.21% 1.00%)"><img src="other-work-images/hardware/04.png" width="988" height="556" alt="其他作品 04" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="white" aria-label="其他作品 06" type="button" style="--paper-cut:polygon(0.00% 0.60%,3.00% 1.03%,6.00% 0.11%,9.00% 0.45%,12.00% 2.66%,15.00% 0.78%,18.00% 0.23%,21.00% 0.37%,24.00% 0.98%,27.00% 0.07%,30.00% 0.18%,33.00% 0.36%,36.00% 0.97%,39.00% 0.57%,42.00% 0.75%,45.00% 1.08%,48.00% 0.28%,51.00% 0.54%,54.00% 0.20%,57.00% 0.94%,60.00% 0.02%,63.00% 0.91%,66.00% 0.42%,69.00% 0.69%,72.00% 0.22%,75.00% 1.12%,78.00% 0.38%,81.00% 3.15%,84.00% 1.13%,87.00% 0.72%,90.00% 0.39%,93.00% 0.28%,96.00% 1.09%,99.00% 0.86%,99.18% 0.00%,99.28% 3.00%,98.80% 6.00%,99.83% 9.00%,99.52% 12.00%,98.94% 15.00%,99.15% 18.00%,99.19% 21.00%,99.15% 24.00%,99.39% 27.00%,97.27% 30.00%,99.44% 33.00%,98.77% 36.00%,99.65% 39.00%,99.67% 42.00%,99.59% 45.00%,99.79% 48.00%,99.20% 51.00%,99.25% 54.00%,99.91% 57.00%,99.67% 60.00%,98.85% 63.00%,99.65% 66.00%,97.13% 69.00%,99.46% 72.00%,99.79% 75.00%,98.74% 78.00%,99.18% 81.00%,99.68% 84.00%,99.25% 87.00%,99.61% 90.00%,98.97% 93.00%,99.97% 96.00%,99.43% 99.00%,100.00% 99.24%,97.00% 99.12%,94.00% 99.88%,91.00% 99.94%,88.00% 99.45%,85.00% 99.29%,82.00% 99.44%,79.00% 99.93%,76.00% 97.58%,73.00% 99.16%,70.00% 99.37%,67.00% 98.87%,64.00% 99.94%,61.00% 99.26%,58.00% 99.29%,55.00% 99.47%,52.00% 99.92%,49.00% 99.55%,46.00% 99.62%,43.00% 99.80%,40.00% 99.00%,37.00% 99.89%,34.00% 99.96%,31.00% 98.92%,28.00% 98.86%,25.00% 99.22%,22.00% 99.39%,19.00% 97.04%,16.00% 99.94%,13.00% 99.69%,10.00% 99.41%,7.00% 99.86%,4.00% 98.94%,1.00% 99.29%,0.26% 100.00%,0.67% 97.00%,0.92% 94.00%,0.71% 91.00%,0.97% 88.00%,3.35% 85.00%,0.60% 82.00%,1.00% 79.00%,0.97% 76.00%,0.31% 73.00%,0.24% 70.00%,0.17% 67.00%,0.79% 64.00%,0.89% 61.00%,0.59% 58.00%,1.09% 55.00%,0.37% 52.00%,0.25% 49.00%,0.39% 46.00%,3.26% 43.00%,0.49% 40.00%,1.02% 37.00%,0.40% 34.00%,0.96% 31.00%,0.79% 28.00%,0.58% 25.00%,1.08% 22.00%,0.74% 19.00%,0.98% 16.00%,1.09% 13.00%,0.78% 10.00%,0.48% 7.00%,0.31% 4.00%,1.03% 1.00%)"><img src="other-work-images/06.png" width="530" height="384" alt="其他作品 06" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="white" aria-label="其他作品 07" type="button" style="--paper-cut:polygon(0.00% 0.88%,3.00% 1.10%,6.00% 0.04%,9.00% 0.01%,12.00% 3.79%,15.00% 0.38%,18.00% 0.24%,21.00% 0.60%,24.00% 0.66%,27.00% 0.89%,30.00% 0.73%,33.00% 0.65%,36.00% 0.91%,39.00% 0.31%,42.00% 0.56%,45.00% 1.07%,48.00% 0.87%,51.00% 0.72%,54.00% 0.15%,57.00% 1.13%,60.00% 0.05%,63.00% 0.97%,66.00% 0.18%,69.00% 0.60%,72.00% 0.82%,75.00% 0.64%,78.00% 0.01%,81.00% 2.84%,84.00% 0.51%,87.00% 0.35%,90.00% 0.14%,93.00% 0.15%,96.00% 0.88%,99.00% 0.65%,99.40% 0.00%,99.96% 3.00%,99.01% 6.00%,98.71% 9.00%,99.05% 12.00%,99.37% 15.00%,99.08% 18.00%,99.18% 21.00%,99.82% 24.00%,99.29% 27.00%,97.20% 30.00%,99.75% 33.00%,99.66% 36.00%,99.59% 39.00%,99.52% 42.00%,99.60% 45.00%,98.76% 48.00%,98.85% 51.00%,99.36% 54.00%,99.78% 57.00%,98.80% 60.00%,98.90% 63.00%,99.98% 66.00%,96.94% 69.00%,99.98% 72.00%,98.89% 75.00%,99.23% 78.00%,98.80% 81.00%,99.17% 84.00%,99.81% 87.00%,99.31% 90.00%,98.84% 93.00%,99.49% 96.00%,99.19% 99.00%,100.00% 99.58%,97.00% 99.20%,94.00% 99.58%,91.00% 99.68%,88.00% 99.99%,85.00% 98.90%,82.00% 99.27%,79.00% 98.93%,76.00% 97.07%,73.00% 99.63%,70.00% 99.92%,67.00% 98.83%,64.00% 98.90%,61.00% 98.92%,58.00% 99.55%,55.00% 99.29%,52.00% 99.10%,49.00% 99.61%,46.00% 99.68%,43.00% 99.69%,40.00% 99.40%,37.00% 99.52%,34.00% 98.96%,31.00% 99.02%,28.00% 99.84%,25.00% 99.65%,22.00% 99.45%,19.00% 96.76%,16.00% 99.00%,13.00% 99.47%,10.00% 99.01%,7.00% 99.85%,4.00% 99.91%,1.00% 98.91%,0.20% 100.00%,0.91% 97.00%,1.00% 94.00%,0.47% 91.00%,0.38% 88.00%,2.54% 85.00%,0.03% 82.00%,1.04% 79.00%,0.96% 76.00%,0.12% 73.00%,0.40% 70.00%,0.74% 67.00%,0.39% 64.00%,0.02% 61.00%,1.03% 58.00%,0.60% 55.00%,0.31% 52.00%,0.99% 49.00%,0.38% 46.00%,3.59% 43.00%,0.74% 40.00%,1.02% 37.00%,0.40% 34.00%,0.67% 31.00%,0.85% 28.00%,0.61% 25.00%,0.66% 22.00%,0.68% 19.00%,1.06% 16.00%,1.01% 13.00%,0.50% 10.00%,0.36% 7.00%,0.87% 4.00%,0.58% 1.00%)"><img src="other-work-images/07.png" width="530" height="384" alt="其他作品 07" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="white" aria-label="其他作品 08" type="button" style="--paper-cut:polygon(0.00% 0.24%,3.00% 0.74%,6.00% 0.13%,9.00% 1.09%,12.00% 2.83%,15.00% 0.55%,18.00% 0.93%,21.00% 1.09%,24.00% 0.70%,27.00% 0.82%,30.00% 0.64%,33.00% 1.02%,36.00% 0.27%,39.00% 0.82%,42.00% 0.72%,45.00% 0.56%,48.00% 0.52%,51.00% 0.01%,54.00% 0.67%,57.00% 0.52%,60.00% 0.74%,63.00% 0.54%,66.00% 1.11%,69.00% 0.82%,72.00% 0.78%,75.00% 0.26%,78.00% 0.50%,81.00% 3.74%,84.00% 0.42%,87.00% 0.20%,90.00% 0.46%,93.00% 0.17%,96.00% 0.99%,99.00% 0.81%,99.70% 0.00%,98.77% 3.00%,99.41% 6.00%,99.57% 9.00%,98.85% 12.00%,99.79% 15.00%,99.66% 18.00%,99.46% 21.00%,98.88% 24.00%,99.53% 27.00%,97.28% 30.00%,99.78% 33.00%,99.68% 36.00%,99.53% 39.00%,99.07% 42.00%,98.94% 45.00%,98.99% 48.00%,99.81% 51.00%,99.41% 54.00%,99.79% 57.00%,99.04% 60.00%,99.59% 63.00%,98.74% 66.00%,96.93% 69.00%,98.85% 72.00%,99.55% 75.00%,98.76% 78.00%,98.99% 81.00%,99.82% 84.00%,98.74% 87.00%,99.83% 90.00%,98.71% 93.00%,99.62% 96.00%,99.66% 99.00%,100.00% 99.36%,97.00% 99.95%,94.00% 99.11%,91.00% 99.11%,88.00% 99.91%,85.00% 99.08%,82.00% 99.39%,79.00% 99.40%,76.00% 97.26%,73.00% 99.12%,70.00% 98.82%,67.00% 99.27%,64.00% 99.73%,61.00% 99.13%,58.00% 99.48%,55.00% 99.47%,52.00% 99.59%,49.00% 99.24%,46.00% 99.70%,43.00% 99.01%,40.00% 99.50%,37.00% 99.20%,34.00% 99.65%,31.00% 99.63%,28.00% 99.18%,25.00% 99.58%,22.00% 99.39%,19.00% 97.73%,16.00% 99.19%,13.00% 99.45%,10.00% 99.81%,7.00% 99.40%,4.00% 99.76%,1.00% 99.92%,0.26% 100.00%,0.21% 97.00%,0.35% 94.00%,0.05% 91.00%,1.02% 88.00%,3.40% 85.00%,0.75% 82.00%,0.86% 79.00%,0.45% 76.00%,0.10% 73.00%,0.03% 70.00%,0.43% 67.00%,1.03% 64.00%,0.54% 61.00%,0.79% 58.00%,0.88% 55.00%,0.18% 52.00%,1.07% 49.00%,0.97% 46.00%,2.80% 43.00%,0.06% 40.00%,1.02% 37.00%,1.01% 34.00%,0.18% 31.00%,0.35% 28.00%,0.16% 25.00%,0.11% 22.00%,0.76% 19.00%,0.09% 16.00%,0.85% 13.00%,0.24% 10.00%,1.10% 7.00%,0.96% 4.00%,0.95% 1.00%)"><img src="other-work-images/08.png" width="324" height="434" alt="其他作品 08" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="white" aria-label="其他作品 10" type="button" style="--paper-cut:polygon(0.00% 0.17%,3.00% 0.42%,6.00% 0.20%,9.00% 0.30%,12.00% 3.43%,15.00% 0.19%,18.00% 0.42%,21.00% 0.24%,24.00% 1.17%,27.00% 0.59%,30.00% 0.37%,33.00% 0.49%,36.00% 0.99%,39.00% 0.44%,42.00% 0.98%,45.00% 0.46%,48.00% 0.31%,51.00% 1.08%,54.00% 0.05%,57.00% 1.09%,60.00% 0.40%,63.00% 0.89%,66.00% 0.55%,69.00% 0.09%,72.00% 0.07%,75.00% 0.12%,78.00% 0.14%,81.00% 2.82%,84.00% 0.33%,87.00% 0.26%,90.00% 0.84%,93.00% 0.56%,96.00% 0.21%,99.00% 0.04%,99.14% 0.00%,99.28% 3.00%,98.80% 6.00%,99.81% 9.00%,99.73% 12.00%,98.78% 15.00%,99.65% 18.00%,98.80% 21.00%,98.70% 24.00%,99.31% 27.00%,97.06% 30.00%,99.79% 33.00%,98.91% 36.00%,99.20% 39.00%,99.33% 42.00%,99.97% 45.00%,99.11% 48.00%,99.29% 51.00%,99.53% 54.00%,98.81% 57.00%,98.74% 60.00%,99.02% 63.00%,99.84% 66.00%,96.72% 69.00%,99.98% 72.00%,99.07% 75.00%,99.07% 78.00%,99.48% 81.00%,99.43% 84.00%,99.70% 87.00%,99.52% 90.00%,99.68% 93.00%,99.04% 96.00%,99.27% 99.00%,100.00% 99.10%,97.00% 99.13%,94.00% 99.43%,91.00% 99.35%,88.00% 99.94%,85.00% 99.57%,82.00% 99.34%,79.00% 99.41%,76.00% 96.71%,73.00% 99.79%,70.00% 99.32%,67.00% 99.44%,64.00% 99.76%,61.00% 99.01%,58.00% 99.66%,55.00% 99.68%,52.00% 99.11%,49.00% 99.71%,46.00% 98.89%,43.00% 99.69%,40.00% 99.72%,37.00% 99.87%,34.00% 99.29%,31.00% 99.40%,28.00% 99.06%,25.00% 98.81%,22.00% 99.99%,19.00% 97.43%,16.00% 99.15%,13.00% 99.63%,10.00% 98.93%,7.00% 99.57%,4.00% 99.55%,1.00% 99.35%,0.89% 100.00%,0.56% 97.00%,0.32% 94.00%,0.86% 91.00%,0.99% 88.00%,2.86% 85.00%,0.29% 82.00%,0.17% 79.00%,0.79% 76.00%,0.95% 73.00%,0.58% 70.00%,1.03% 67.00%,0.41% 64.00%,0.66% 61.00%,0.84% 58.00%,0.57% 55.00%,0.59% 52.00%,0.15% 49.00%,0.52% 46.00%,3.19% 43.00%,0.72% 40.00%,0.83% 37.00%,0.08% 34.00%,0.79% 31.00%,0.51% 28.00%,0.79% 25.00%,0.71% 22.00%,1.09% 19.00%,0.43% 16.00%,0.34% 13.00%,0.10% 10.00%,1.05% 7.00%,0.48% 4.00%,0.41% 1.00%)"><img src="other-work-images/10.png" width="324" height="432" alt="其他作品 10" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="film" aria-label="其他作品 11" type="button" style="--paper-cut:polygon(0.00% 0.33%,3.00% 0.65%,6.00% 0.85%,9.00% 1.15%,12.00% 3.04%,15.00% 0.64%,18.00% 0.45%,21.00% 0.66%,24.00% 1.01%,27.00% 1.19%,30.00% 1.11%,33.00% 1.13%,36.00% 0.07%,39.00% 0.29%,42.00% 1.14%,45.00% 0.68%,48.00% 0.17%,51.00% 0.75%,54.00% 1.12%,57.00% 0.28%,60.00% 0.42%,63.00% 0.21%,66.00% 1.17%,69.00% 0.24%,72.00% 0.31%,75.00% 0.09%,78.00% 0.12%,81.00% 2.62%,84.00% 0.00%,87.00% 0.63%,90.00% 0.36%,93.00% 0.44%,96.00% 0.70%,99.00% 0.38%,99.04% 0.00%,99.68% 3.00%,99.35% 6.00%,99.52% 9.00%,99.04% 12.00%,99.41% 15.00%,99.64% 18.00%,98.79% 21.00%,98.98% 24.00%,99.55% 27.00%,97.12% 30.00%,99.35% 33.00%,99.95% 36.00%,99.72% 39.00%,99.15% 42.00%,99.99% 45.00%,99.95% 48.00%,99.65% 51.00%,99.38% 54.00%,100.00% 57.00%,98.73% 60.00%,98.71% 63.00%,98.99% 66.00%,96.89% 69.00%,98.82% 72.00%,98.90% 75.00%,99.45% 78.00%,99.79% 81.00%,99.43% 84.00%,99.16% 87.00%,98.91% 90.00%,99.01% 93.00%,99.91% 96.00%,99.80% 99.00%,100.00% 99.52%,97.00% 99.69%,94.00% 99.59%,91.00% 99.05%,88.00% 99.36%,85.00% 99.22%,82.00% 98.81%,79.00% 99.45%,76.00% 97.20%,73.00% 98.81%,70.00% 99.32%,67.00% 99.03%,64.00% 99.08%,61.00% 99.48%,58.00% 99.67%,55.00% 99.32%,52.00% 99.65%,49.00% 99.54%,46.00% 99.99%,43.00% 98.83%,40.00% 98.86%,37.00% 99.91%,34.00% 99.75%,31.00% 99.66%,28.00% 99.61%,25.00% 99.65%,22.00% 99.58%,19.00% 97.19%,16.00% 99.80%,13.00% 99.86%,10.00% 99.14%,7.00% 99.78%,4.00% 99.05%,1.00% 99.79%,1.08% 100.00%,0.12% 97.00%,0.51% 94.00%,0.94% 91.00%,0.90% 88.00%,3.36% 85.00%,0.78% 82.00%,1.02% 79.00%,0.21% 76.00%,0.94% 73.00%,1.02% 70.00%,0.11% 67.00%,0.66% 64.00%,0.96% 61.00%,0.96% 58.00%,1.08% 55.00%,0.30% 52.00%,0.78% 49.00%,0.35% 46.00%,2.87% 43.00%,0.99% 40.00%,0.25% 37.00%,0.36% 34.00%,0.92% 31.00%,0.70% 28.00%,0.60% 25.00%,0.87% 22.00%,1.10% 19.00%,0.46% 16.00%,0.65% 13.00%,0.03% 10.00%,0.71% 7.00%,0.02% 4.00%,0.36% 1.00%)"><img src="other-work-images/11.png" width="436" height="409" alt="其他作品 11" loading="lazy" draggable="false"></button>
+            <button class="board-photo" data-frame="film" aria-label="其他作品 12" type="button" style="--paper-cut:polygon(0.00% 0.61%,3.00% 0.54%,6.00% 0.67%,9.00% 0.46%,12.00% 3.60%,15.00% 0.19%,18.00% 0.54%,21.00% 0.92%,24.00% 0.73%,27.00% 1.09%,30.00% 0.35%,33.00% 0.43%,36.00% 0.37%,39.00% 0.16%,42.00% 0.09%,45.00% 0.62%,48.00% 0.36%,51.00% 0.70%,54.00% 1.15%,57.00% 1.19%,60.00% 0.93%,63.00% 0.40%,66.00% 0.46%,69.00% 1.08%,72.00% 0.28%,75.00% 0.99%,78.00% 0.29%,81.00% 3.14%,84.00% 0.67%,87.00% 1.15%,90.00% 0.88%,93.00% 1.01%,96.00% 0.42%,99.00% 0.42%,98.87% 0.00%,99.24% 3.00%,99.06% 6.00%,99.87% 9.00%,99.92% 12.00%,99.44% 15.00%,99.60% 18.00%,99.65% 21.00%,98.94% 24.00%,98.80% 27.00%,97.71% 30.00%,99.87% 33.00%,99.75% 36.00%,99.76% 39.00%,99.06% 42.00%,99.50% 45.00%,98.73% 48.00%,99.98% 51.00%,99.30% 54.00%,99.83% 57.00%,98.90% 60.00%,99.50% 63.00%,99.69% 66.00%,97.24% 69.00%,98.87% 72.00%,99.98% 75.00%,99.70% 78.00%,98.83% 81.00%,99.45% 84.00%,99.87% 87.00%,98.79% 90.00%,98.77% 93.00%,99.45% 96.00%,99.75% 99.00%,100.00% 99.97%,97.00% 99.11%,94.00% 99.07%,91.00% 99.11%,88.00% 99.17%,85.00% 99.58%,82.00% 99.66%,79.00% 99.31%,76.00% 96.95%,73.00% 99.44%,70.00% 99.38%,67.00% 99.53%,64.00% 99.01%,61.00% 98.85%,58.00% 99.67%,55.00% 98.85%,52.00% 99.02%,49.00% 99.51%,46.00% 99.70%,43.00% 99.18%,40.00% 99.35%,37.00% 99.29%,34.00% 98.81%,31.00% 98.82%,28.00% 99.16%,25.00% 99.38%,22.00% 99.80%,19.00% 97.81%,16.00% 99.02%,13.00% 99.69%,10.00% 99.18%,7.00% 99.64%,4.00% 99.74%,1.00% 99.18%,0.19% 100.00%,0.08% 97.00%,1.10% 94.00%,0.44% 91.00%,0.40% 88.00%,3.37% 85.00%,0.23% 82.00%,0.87% 79.00%,0.26% 76.00%,0.80% 73.00%,0.83% 70.00%,0.12% 67.00%,0.42% 64.00%,0.93% 61.00%,0.54% 58.00%,0.48% 55.00%,0.07% 52.00%,0.17% 49.00%,1.04% 46.00%,3.59% 43.00%,0.57% 40.00%,0.73% 37.00%,0.15% 34.00%,1.04% 31.00%,0.69% 28.00%,0.80% 25.00%,0.94% 22.00%,0.26% 19.00%,0.77% 16.00%,0.52% 13.00%,0.33% 10.00%,0.19% 7.00%,0.79% 4.00%,0.21% 1.00%)"><img src="other-work-images/12.png" width="434" height="408" alt="其他作品 12" loading="lazy" draggable="false"></button>
         </div>
     </section>
 
-    <footer>
+    <footer data-theme="theme-black">
         <div class="footer-main"><h2 class="hand-font footer-title">See You</h2></div>
         <div class="footer-meta">
             <div>TEL/Wechat: 17358988562</div>
@@ -1396,6 +1398,24 @@
         const PJ_IMG = 'Project-images';
         const PJ_RAW_IMG = 'Project-images';
         const projectData = {
+            xiaohongshu: {
+                "title": "XIAOHNGSHU",
+                "subtitleCn": "AI 优化长文笔记阅读体验",
+                "subtitleEn": "AI-Enhanced Reading Experience for Long-Form Notes",
+                "body": "小红书的经验价值不仅来自正文，也来自「后续的评论讨论」。但这些信息分散，用户需要自行建立正文与反馈的联系。因此，我们利用AI「关联正文片段与相关评论」，帮助用户快速找到反馈，同时保留自主阅读与判断。<br><br>用户可开启「全文评论标注」，也可「局部选中文字」查找相关讨论。AI归纳评论的同时保留原评论，支持信息溯源；用户还可定位至对应评论，继续参与讨论。<br><br>虽然现有 AI 能够总结全文，本方案选择「保留原文阅读」，将AI嵌入阅读过程，负责语义关联、相近合并与概括；不判定信息真假、不替用户决策，让概括有来源、判断由用户完成。",
+                "gallery": [
+                                "Project-images/xiaohongshu/01-cover.png?v=updated-20261020",
+                                "Project-images/xiaohongshu/02-background.png",
+                                "Project-images/xiaohongshu/03-problem-discovery.png",
+                                "Project-images/xiaohongshu/04-current-experience.png",
+                                "Project-images/xiaohongshu/05-competitors.png",
+                                "Project-images/xiaohongshu/06.png",
+                                "Project-images/xiaohongshu/07-1-solution.png",
+                                "Project-images/xiaohongshu/07-2-solution.png",
+                                "Project-images/xiaohongshu/07-3-solution.png",
+                                "Project-images/xiaohongshu/08-ai.png"
+                ]
+},
             popmind: {
                 title: 'PopMind',
                 subtitleCn: 'AI辅助快闪店设计优化工具',
@@ -1483,45 +1503,6 @@
             }
         };
 
-        const DS = {
-            ink: '#222222',
-            accentOrange: '#d06444',
-            moduleOrange: '#e8a08a',
-            moduleGreen: '#96a388',
-            moduleYellow: '#f9d371',
-            labelYellow: '#ffc12d'
-        };
-
-        const ICON_BASE = 'icon-image/';
-        const softwareIconMap = {
-            CURSOR: { color: DS.ink, icon: `${ICON_BASE}Cursor.png` },
-            CLAUDE: { color: DS.moduleOrange, icon: `${ICON_BASE}Claude.png` },
-            STITCH: { color: DS.moduleGreen, icon: `${ICON_BASE}Stitch.png` },
-            FIGMA: { color: DS.accentOrange, icon: `${ICON_BASE}figma.png` },
-            PS: { color: DS.ink, icon: `${ICON_BASE}PS.png` },
-            AUTOCAD: { color: DS.accentOrange, icon: `${ICON_BASE}Auto%20CAD.png` },
-            RHINO: { color: DS.moduleGreen, icon: `${ICON_BASE}Rhino.png` },
-            SOLIDWORKS: { color: DS.moduleOrange, icon: `${ICON_BASE}Solidworks.png` },
-            PYTHON: { color: DS.ink, icon: `${ICON_BASE}Python.png` },
-            JAVA: { color: DS.accentOrange, icon: `${ICON_BASE}JAVA.png` },
-            ARDUINO: { color: DS.moduleGreen, icon: `${ICON_BASE}Arduino.png` },
-            BLENDER: { color: DS.moduleYellow, fg: DS.ink, icon: `${ICON_BASE}Blender.png` },
-            KEYSHOT: { color: DS.accentOrange, icon: `${ICON_BASE}Keyshot.png` },
-            AE: { color: DS.labelYellow, fg: DS.ink, icon: `${ICON_BASE}AE.png` },
-            '雅思7(6.5)': { color: DS.accentOrange, icon: `${ICON_BASE}%E9%9B%85%E6%80%9D.png` }
-        };
-
-        function createFallbackIcon(label) {
-            const shortLabel = label.replace(/[()]/g, '').replace(/\s+/g, '').slice(0, 2).toUpperCase();
-            return `data:image/svg+xml;utf8,${encodeURIComponent(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-                    <rect width="64" height="64" rx="32" fill="#ffffff" fill-opacity="0.22"/>
-                    <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
-                        font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="white">${shortLabel}</text>
-                </svg>
-            `)}`;
-        }
-
         const hero = document.querySelector('header.hero');
         const heroWelcomeNote = hero ? hero.querySelector('.hero-welcome-note') : null;
         let heroIdleTimer = null;
@@ -1578,67 +1559,6 @@
                 heroWelcomeNote.classList.remove('is-active');
             });
         }
-
-        const wrappers = document.querySelectorAll('.skill-orb-wrapper');
-        wrappers.forEach(wrapper => {
-            const swArr = wrapper.dataset.sw.split(', ');
-            swArr.forEach(name => {
-                const config = softwareIconMap[name] || { color: DS.accentOrange, icon: '' };
-                const tag = document.createElement('div');
-                tag.className = 'software-tag';
-                tag.style.setProperty('--tag-bg', config.color);
-                tag.style.setProperty('--tag-fg', config.fg || '#ffffff');
-
-                const icon = document.createElement('img');
-                icon.className = 'software-tag-icon';
-                icon.src = config.icon || createFallbackIcon(name);
-                icon.alt = `${name} logo`;
-                icon.onerror = () => {
-                    icon.onerror = null;
-                    icon.src = createFallbackIcon(name);
-                };
-
-                const label = document.createElement('span');
-                label.className = 'software-tag-label';
-                label.innerText = name;
-
-                tag.appendChild(icon);
-                tag.appendChild(label);
-                wrapper.appendChild(tag);
-            });
-
-            wrapper.addEventListener('mouseenter', () => {
-                const rectA = wrapper.getBoundingClientRect();
-                const centerA = { x: rectA.left + rectA.width / 2, y: rectA.top + rectA.height / 2 };
-                wrappers.forEach(other => {
-                    if (other === wrapper) {
-                        other.classList.add('active');
-                        other.style.transform = 'scale(1.15)';
-                        const tags = other.querySelectorAll('.software-tag');
-                        tags.forEach((tag, i) => {
-                            const angle = (360 / tags.length * i) * (Math.PI / 180);
-                            tag.style.transform = `translate(calc(-50% + ${Math.cos(angle) * 95}px), calc(-50% + ${Math.sin(angle) * 95}px))`;
-                        });
-                    } else {
-                        const rectB = other.getBoundingClientRect();
-                        const centerB = { x: rectB.left + rectB.width / 2, y: rectB.top + rectB.height / 2 };
-                        const dx = centerB.x - centerA.x;
-                        const dy = centerB.y - centerA.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                        other.style.transform = `translate(${(dx / dist) * 50}px, ${(dy / dist) * 50}px) scale(0.85)`;
-                        other.style.opacity = '0.4';
-                    }
-                });
-            });
-
-            wrapper.addEventListener('mouseleave', () => {
-                wrappers.forEach(other => {
-                    other.classList.remove('active');
-                    other.style.transform = '';
-                    other.style.opacity = '1';
-                });
-            });
-        });
 
         const overlay = document.getElementById('project-detail-overlay');
         const detailTitle = document.getElementById('detail-title');
@@ -1737,12 +1657,31 @@
             if (event.key === 'Escape' && overlay.style.display === 'flex') closeProject();
         });
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) document.body.className = entry.target.dataset.theme;
-            });
-        }, { threshold: 0.3 });
-        document.querySelectorAll('[data-theme]').forEach(el => observer.observe(el));
+        // Choose the section crossing a consistent reading line, including short sections.
+        const themeSections = [...document.querySelectorAll('[data-theme]')];
+        const themeNames = ['theme-beige', 'theme-green', 'theme-orange', 'theme-yellow', 'theme-projects', 'theme-black'];
+        let themeFrame = 0;
+        function updatePageTheme() {
+            themeFrame = 0;
+            const navHeight = document.querySelector('nav').getBoundingClientRect().height;
+            const readingLine = navHeight + (window.innerHeight - navHeight) * .35;
+            let active = themeSections[0];
+            for (const section of themeSections) {
+                if (section.getBoundingClientRect().top <= readingLine) active = section;
+                else break;
+            }
+            if (active && !document.body.classList.contains(active.dataset.theme)) {
+                document.body.classList.remove(...themeNames);
+                document.body.classList.add(active.dataset.theme);
+            }
+        }
+        function schedulePageTheme() {
+            if (!themeFrame) themeFrame = requestAnimationFrame(updatePageTheme);
+        }
+        window.addEventListener('scroll', schedulePageTheme, { passive: true });
+        window.addEventListener('resize', schedulePageTheme);
+        window.addEventListener('pageshow', schedulePageTheme);
+        updatePageTheme();
 
         if (location.hash === '#projects-board') {
             history.replaceState(null, '', '#works');
@@ -1756,14 +1695,16 @@
         }
 
         const navBar = document.querySelector('nav');
-        document.querySelectorAll('.nav-link').forEach(button => {
-            button.addEventListener('click', () => {
+        document.querySelectorAll('.nav-link, .cover-scroll').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
                 const target = document.getElementById(button.dataset.target);
                 if (!target) return;
                 if (isProjectOverlayOpen()) closeProject(true);
                 requestAnimationFrame(() => {
-                    const offset = navBar.offsetHeight;
-                    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    const offset = navBar.getBoundingClientRect().height;
+                    const scrollTarget = target.id === 'about' ? (target.closest('.resume-turn-track') || target) : target;
+                    const top = scrollTarget.getBoundingClientRect().top + window.scrollY - offset;
                     window.scrollTo({ top, behavior: 'smooth' });
                 });
             });
@@ -1776,5 +1717,10 @@
             });
         });
     </script>
+    <script src="cover.js?v=global-click-20261019"></script>
+    <script src="about.js?v=scroll-entry-20261020"></script>
+    <script src="resume.js?v=accordion-20261020"></script>
+    <script src="board.js?v=small-pencil-20261021"></script>
+    <script src="project-tags.js?v=scroll-entry-20261020"></script>
 </body>
 </html>
